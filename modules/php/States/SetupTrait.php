@@ -25,7 +25,7 @@ trait SetupTrait
     $playersDatas = Players::setupNewGame($players, $options);
     Stats::setupNewGame($playersDatas);
     Cards::setupNewGame($playersDatas,$options);
-    Tokens::setupNewGame($players,[]);
+    Tokens::setupNewGame($players,$options);
 
     $this->setGameStateInitialValue('logging', true); 
 

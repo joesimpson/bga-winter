@@ -154,6 +154,7 @@ class Game extends \Bga\GameFramework\Table
         // Get information about players.
         $result["players"] = Players::getUiData($current_player_id);
         $result["cards"] = Cards::getUiData($current_player_id);
+        $result["deckSize"] = Cards::countInLocation(CARD_LOCATION_DECK);
         $result["tokens"] = Tokens::getUiData($current_player_id);
         $result["prefs"] = Preferences::getUiData($current_player_id);
         $result["version"] = intval($this->gamestate->table_globals[BGA_GAMESTATE_GAMEVERSION]);

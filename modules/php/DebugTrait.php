@@ -41,22 +41,31 @@ trait DebugTrait
 
   function debug_Setup(){
     $this->debug_ClearLogs();
+    $options = [];
     $players = self::loadPlayersBasicInfos();
     $playersDatas = Players::getAll();
+    
     Stats::DB()->delete()->run();
     Cards::DB()->delete()->run();
     Tokens::DB()->delete()->run();
     Globals::DB()->delete()->run();
     Notifications::refreshUI($this->getAllDatas());
+    /* V1
     Players::DB()->delete()->run();
+    Game::get()->setupNewGame($players,$options);
+    */
 
-    $this->setupNewGame($players,[]);
+    //V2
+    Globals::setupNewGame($players, $options);
+    Stats::setupNewGame($playersDatas);
+    Cards::setupNewGame($playersDatas,$options);
+    Tokens::setupNewGame($players,$options);
 
     $players = self::loadPlayersBasicInfos();
     Notifications::refreshUI($this->getAllDatas());
     
-    $this->addCheckpoint(ST_NEXT_TURN);
-    $this->gamestate->jumpToState(ST_NEXT_TURN);
+    $this->addCheckpoint(ST_PLAYER_TURN);
+    $this->gamestate->jumpToState(ST_PLAYER_TURN);
   }
 
   //Clear logs

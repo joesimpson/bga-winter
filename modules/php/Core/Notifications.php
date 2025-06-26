@@ -5,10 +5,7 @@ namespace Bga\Games\winter\Core;
 use Bga\Games\winter\Game;
 use Bga\Games\winter\Helpers\Collection;
 use Bga\Games\winter\Helpers\Utils;
-use Bga\Games\winter\Managers\Cards;
-use Bga\Games\winter\Managers\Tiles;
 use Bga\Games\winter\Models\Card;
-use Bga\Games\winter\Models\MasteryTile;
 use Bga\Games\winter\Models\Player;
 use Bga\Games\winter\Models\Token;
 
@@ -110,7 +107,6 @@ class Notifications
       'players' => $datas['players'],
       'cards' => $datas['cards'],
       'deckSize' => $datas['deckSize'],
-      'tiles' => $datas['tiles'],
       'tokens' => $datas['tokens'],
     ];
 
