@@ -1,0 +1,189 @@
+/**
+ *------
+ * BGA framework: Gregory Isabelli & Emmanuel Colin & BoardGameArena
+ * Winter implementation : © joesimpson <1324811+joesimpson@users.noreply.github.com>
+ *
+ * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
+ * See http://en.boardgamearena.com/#!doc/Studio for more information.
+ * -----
+ *
+ * winter.scss
+ *
+ * Winter stylesheet
+ *
+ */
+
+@use "sass:math";
+@import "modules/css/variables";
+@import "modules/css/icons";
+@import "modules/css/player-panel";
+@import "modules/css/cards";
+@import "modules/css/meeples";
+@import "modules/css/settings";
+@import "modules/css/nouislider";
+/**
+    PREFIX FOR THIS GAME PROJECT : "winter" because game name is short enough :)
+*/
+ 
+#winter_main_zone{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-flow: row;
+    column-gap: 5px;
+    opacity: 1;
+ 
+    #winter_board_zone{
+        //width: 80%;
+        max-width: 80%;
+        align-self: start;
+    }
+}
+
+.winter_nodisplay{
+    display: none !important;
+}
+.winter_hidden{
+    visibility: hidden !important;
+}
+
+.winter_h1{
+    font-size: 28px;
+    font-weight: 400;
+}
+.winter_h2{
+    font-size: 18px;
+    font-weight: 700;
+}
+.winter_h3{
+    font-size: 16px;
+    font-weight: 700;
+}
+
+// For animations : 
+.phantom {
+    visibility: hidden;
+}  
+#pagemaintitletext,
+#gameaction_status 
+{
+    .winter_card{
+        position: absolute;
+    }
+}
+//Buttons :
+
+body[data-winter_undo_style='1']{//PREF_UNDO_STYLE_TEXT
+    #btnIconUndoLastStep, 
+    #btnIconRestartTurn
+    {
+        display: none !important;
+    }
+}
+body[data-winter_undo_style='2']{//PREF_UNDO_STYLE_ICON
+    #btnTextUndoLastStep,
+    #btnTextRestartTurn
+    {
+        display: none !important;
+    }
+}
+ 
+
+body.lockedInterface{
+
+    #customActions,
+    #restartAction{
+        pointer-events: none;
+    }
+}
+ 
+// SAFE MODE --------------------------
+#ebd-body.help-mode {
+    .tooltipable {
+        cursor: help;
+    }
+    #help-mode-switch{
+        svg{
+            color: #1b69ff;
+        }
+    }
+}
+.help-marker-background{
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+}
+.help-marker {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    z-index: 900;
+    color: black;
+    border: 1px solid black;
+    border-radius: 50%;
+
+    svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+#ebd-body:not(.help-mode) {
+    .help-marker {
+        opacity: 0;
+        pointer-events: none;
+    }
+}
+
+//--------------------------------------
+/* Cancelled notification messages */
+.log.cancel {
+    color: #c62828 !important;
+    text-decoration: line-through;
+}
+/* Desktop logs */
+.log.cancel .roundedbox {
+    background-color: rgba(240, 186, 117, 0.6) !important;
+}
+/* Mobile logs */
+.log.cancel.roundedbox {
+    background-color: #ef9a9a;
+}
+// ------------------------------------------------------------------------------
+// Override BGA style for log player_name
+.playername_wrapper_ffa500,
+.playername_wrapper_bdd002,
+.playername_wrapper_72c3b1,
+.playername_wrapper_ffffff{//WHITE
+    .playername, // Different in replay ?
+    &.playername {
+        text-shadow: 2px 0px 2px black, 
+                    0px 2px 2px black,
+                    -2px 0px 2px black,
+                    0px -2px 2px black; 
+    }
+}
+
+// ------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------
+// Re enable list style over BGA common CSS, only for wanted section : game WIKI and some tooltips 
+#pagesection_howtoplay li, .midSizeDialog li { margin-left: 2em; } 
+#pagesection_howtoplay ol li { list-style: decimal; } /* BEFORE ul in case there are ul under ol */ 
+#pagesection_howtoplay ul li, .midSizeDialog ul li { list-style: disc; }
+// ------------------------------------------------------------------------------
+
+// ------------------------------------------------------------------------------
+/*** FIX BGA 3D mode clicks : **/
+.mode_3d #game_play_area_wrap {
+    pointer-events: none;
+ }
+ #winter_game_container {
+    pointer-events: all;
+ } 
+// ------------------------------------------------------------------------------

@@ -1,0 +1,45 @@
+
+
+$card_width: 100px;
+$card_height: 200px;
+
+.winter_card_back,
+.winter_card {
+    width: $card_width;
+    height: $card_height;
+    border: 1px solid black;
+    box-shadow: 1px 1px 5px black;
+    border-radius: 5px;
+    border-radius: 5%;//% to avoid a different radius whent card is resized (on board reserve)
+
+    //TODO JSA 18 sprite positions
+    background-size: 700% 400%;
+    background-image: url("img/cards.jpg");
+    @for $i from 0 through 26 {
+        &[data-type="#{$i + 1}"] {
+            background-position-x: math.div(($i % 7) * 100%, 6);//7 columns
+            background-position-y: math.div(math.div($i - ($i % 7), 7) * 100%, 3);//7 columns , 4 rows
+        }
+    }
+
+    &.winter_card_back{
+        background-position-x: 100%;
+        background-position-y: 33.33%;
+    }
+
+    position: relative; 
+    &.selectable {
+        box-shadow: 0px 0px 6px 6px #00ffff;
+        cursor: pointer;
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
+
+    &.selected,
+    &.selected:hover {
+        box-shadow: 0px 0px 6px 6px #d3ff00, 0px 0px 6px 6px #dfff00, 0px 0px 6px 6px #fffb00;
+    }
+ 
+}
+ 

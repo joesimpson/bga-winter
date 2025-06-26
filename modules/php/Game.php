@@ -18,7 +18,10 @@ declare(strict_types=1);
 
 namespace Bga\Games\winter;
 
+use Bga\Games\winter\Core\Preferences;
+use Bga\Games\winter\Managers\Cards;
 use Bga\Games\winter\Managers\Players;
+use Bga\Games\winter\Managers\Tokens;
 
 require_once 'constants.inc.php';
 
@@ -150,8 +153,10 @@ class Game extends \Bga\GameFramework\Table
 
         // Get information about players.
         $result["players"] = Players::getUiData($current_player_id);
-
-        // TODO: Gather all information about current game situation (visible by player $current_player_id).
+        $result["cards"] = Cards::getUiData($current_player_id);
+        $result["tokens"] = Tokens::getUiData($current_player_id);
+        $result["prefs"] = Preferences::getUiData($current_player_id);
+        $result["version"] = intval($this->gamestate->table_globals[BGA_GAMESTATE_GAMEVERSION]);
 
         return $result;
     }
