@@ -49,53 +49,42 @@
 
 //    !! It is not a good idea to modify this file when a game is running !!
 
+use Bga\GameFramework\GameStateBuilder;
+use Bga\GameFramework\StateType;
 
 $machinestates = [
-
-    // The initial state. Please do not modify.
-
-    1 => array(
-        "name" => "gameSetup",
-        "description" => "",
-        "type" => "manager",
-        "action" => "stGameSetup",
-        "transitions" => ["" => 2]
-    ),
-
+ 
+    // only keep this line if your initial state is not 2. In that case, uncomment and replace '2' by your first state id.
+    // 1 => GameStateBuilder::gameSetup(2)->build(),
     // Note: ID=2 => your first state
 
-    2 => [
-        "name" => "playerTurn",
-        "description" => clienttranslate('${actplayer} must play a card or pass'),
-        "descriptionmyturn" => clienttranslate('${you} must play a card or pass'),
-        "type" => "activeplayer",
-        "args" => "argPlayerTurn",
-        "possibleactions" => [
+    2 => GameStateBuilder::create()
+        ->name('playerTurn')
+        ->description(clienttranslate('${actplayer} must play a card or pass'))
+        ->descriptionmyturn(clienttranslate('${you} must play a card or pass'))
+        ->type(StateType::ACTIVE_PLAYER)
+        ->args('argPlayerTurn')
+        ->possibleactions([
             // these actions are called from the front with bgaPerformAction, and matched to the function on the game.php file
-            "actPlayCard", 
-            "actPass",
-        ],
-        "transitions" => ["playCard" => 3, "pass" => 3]
-    ],
+            'actPlayCard', 
+            'actPass',
+        ])
+        ->transitions([
+            'playCard' => 3, 
+            'pass' => 3,
+        ])
+        ->build(),
 
-    3 => [
-        "name" => "nextPlayer",
-        "description" => '',
-        "type" => "game",
-        "action" => "stNextPlayer",
-        "updateGameProgression" => true,
-        "transitions" => ["endGame" => 99, "nextPlayer" => 2]
-    ],
-
-    // Final state.
-    // Please do not modify (and do not overload action/args methods).
-    99 => [
-        "name" => "gameEnd",
-        "description" => clienttranslate("End of game"),
-        "type" => "manager",
-        "action" => "stGameEnd",
-        "args" => "argGameEnd"
-    ],
+    3 => GameStateBuilder::create()
+        ->name('nextPlayer')
+        ->type(StateType::GAME)
+        ->action("stNextPlayer")
+        ->transitions([
+            'endGame' => 99, 
+            'nextPlayer' => 2,
+        ])
+        ->updateGameProgression(true)
+        ->build(),
 
 ];
 

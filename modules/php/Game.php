@@ -18,9 +18,7 @@ declare(strict_types=1);
 
 namespace Bga\Games\winter;
 
-require_once(APP_GAMEMODULE_PATH . "module/table/table.game.php");
-
-class Game extends \Table
+class Game extends \Bga\GameFramework\Table
 {
     private static array $CARD_TYPES;
 
@@ -229,16 +227,6 @@ class Game extends \Table
         // TODO: Gather all information about current game situation (visible by player $current_player_id).
 
         return $result;
-    }
-
-    /**
-     * Returns the game name.
-     *
-     * IMPORTANT: Please do not modify.
-     */
-    protected function getGameName()
-    {
-        return "winter";
     }
 
     /**
