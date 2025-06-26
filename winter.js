@@ -22,6 +22,7 @@ define([
     "dojo","dojo/_base/declare",
     "ebg/core/gamegui",
     "ebg/counter",
+    "ebg/scrollmap",
     g_gamethemeurl + 'modules/js/Core/game.js',
     g_gamethemeurl + 'modules/js/Core/modal.js',
 ],
@@ -73,16 +74,42 @@ function (dojo, declare) {
                 <div id="winter_game_container">
                     <div id="winter_overall_background"></div>
                     <div id="winter_main_zone">
+
+                        <!-- BGA SCROLLMAP Component -->
+                        <div id="winter_map_container">
+                            <div id="winter_map_scrollable"></div>
+                            <div id="winter_map_surface"></div>
+                            <div id="winter_map_scrollable_oversurface"></div>
                         
-                        <div id="winter_board_zone">
-                             
+                            <div class="movetop"></div> 
+                            <div class="movedown"></div> 
+                            <div class="moveleft"></div> 
+                            <div class="moveright"></div> 
+
                         </div>
                     </div>
                     <div id="winter_players_table"></div>
                 </div>
             `);
+            /*
+                        <div id="winter_map_footer" class="whiteblock">
+                            <a href="#" id="enlargedisplay">↓  ${_("Enlarge display")}  ↓</a>
+                        </div>
+            */
 
-            // TODO: Set up your game interface here, according to "gamedatas"
+            //ScrollMAP
+            this.scrollmap = new ebg.scrollmap();
+            this.scrollmap.create( 
+                $('winter_map_container'),
+                $('winter_map_scrollable'),
+                $('winter_map_surface'),
+                $('winter_map_scrollable_oversurface') 
+            ); // use ids from template
+            this.scrollmap.setupOnScreenArrows( 150 ); // this will hook buttons to onclick functions with 150px scroll step
+            //dojo.connect( $('enlargedisplay'), 'onclick', this, 'onIncreaseDisplayHeight' );
+
+            dojo.create("div",{innerHTML: "TODO Fill Scrollmap" },"winter_map_scrollable_oversurface");
+
             this.setupPlayers();
             this.setupInfoPanel();
             this.setupCards();
@@ -215,7 +242,14 @@ function (dojo, declare) {
             this.inherited(arguments);
             //SPECIFIC GAME elements to clear : 
         },
-
+ 
+        onIncreaseDisplayHeight: function(evt) {
+            debug('Event: onIncreaseDisplayHeight');
+            evt.preventDefault();
+        	
+            let cur_h = toint(dojo.style( $('winter_map_container'), 'height'));
+            dojo.style($('winter_map_container'), 'height', (cur_h + 300) + 'px');
+        },
         ////////////////////////////////////////////////////////////
         // _____                          _   _   _
         // |  ___|__  _ __ _ __ ___   __ _| |_| |_(_)_ __   __ _

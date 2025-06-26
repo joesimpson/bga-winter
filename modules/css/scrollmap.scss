@@ -1,0 +1,57 @@
+/** Scrollable area **/
+
+#winter_map_container {
+    position: relative;
+    overflow: hidden;
+
+    width: 100%;
+    height: 400px;
+}
+#winter_map_scrollable, #winter_map_scrollable_oversurface {
+    position: absolute;
+}
+#winter_map_surface {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    cursor: move;
+}
+
+/** This is some extra stuff to extend the container **/
+
+#winter_map_footer {
+    text-align: center;
+}
+
+/** Move arrows **/
+
+.movetop,.moveleft,.moveright,.movedown {
+    display: block;
+    position: absolute;
+    background-image: url('../../../img/common/arrows.png');
+    width: 32px;
+    height: 32px;
+}
+
+.movetop {
+    top: 0px;
+    left: 50%;
+    background-position: 0px 32px;
+}
+.moveleft {
+    top: 50%;
+    left: 0px;
+    background-position: 32px 0px;
+}
+.moveright {
+    top: 50%;
+    right: 0px;
+    background-position: 0px 0px;
+}
+.movedown {
+    bottom: 0px;
+    left: 50%;
+    background-position: 32px 32px;
+}

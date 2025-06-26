@@ -19,6 +19,7 @@
 @import "modules/css/player-panel";
 @import "modules/css/cards";
 @import "modules/css/meeples";
+@import "modules/css/scrollmap";
 @import "modules/css/settings";
 @import "modules/css/nouislider";
 /**
@@ -34,12 +35,7 @@
     flex-flow: row;
     column-gap: 5px;
     opacity: 1;
- 
-    #winter_board_zone{
-        //width: 80%;
-        max-width: 80%;
-        align-self: start;
-    }
+  
 }
 
 .winter_nodisplay{
