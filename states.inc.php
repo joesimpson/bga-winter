@@ -2,7 +2,7 @@
 /**
  *------
  * BGA framework: Gregory Isabelli & Emmanuel Colin & BoardGameArena
- * winter implementation : © <Your name here> <Your email address here>
+ * winter implementation : © joesimpson <1324811+joesimpson@users.noreply.github.com>
  *
  * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
  * See http://en.boardgamearena.com/#!doc/Studio for more information.
@@ -58,7 +58,7 @@ $machinestates = [
     // 1 => GameStateBuilder::gameSetup(2)->build(),
     // Note: ID=2 => your first state
 
-    2 => GameStateBuilder::create()
+    ST_PLAYER_TURN => GameStateBuilder::create()
         ->name('playerTurn')
         ->description(clienttranslate('${actplayer} must play a card or pass'))
         ->descriptionmyturn(clienttranslate('${you} must play a card or pass'))
@@ -70,18 +70,18 @@ $machinestates = [
             'actPass',
         ])
         ->transitions([
-            'playCard' => 3, 
-            'pass' => 3,
+            'playCard' => ST_NEXT_TURN, 
+            'pass' => ST_NEXT_TURN,
         ])
         ->build(),
 
-    3 => GameStateBuilder::create()
+    ST_NEXT_TURN => GameStateBuilder::create()
         ->name('nextPlayer')
         ->type(StateType::GAME)
         ->action("stNextPlayer")
         ->transitions([
-            'endGame' => 99, 
-            'nextPlayer' => 2,
+            'endGame' => ST_END_GAME, 
+            'nextPlayer' => ST_PLAYER_TURN,
         ])
         ->updateGameProgression(true)
         ->build(),

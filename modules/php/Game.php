@@ -2,7 +2,7 @@
 /**
  *------
  * BGA framework: Gregory Isabelli & Emmanuel Colin & BoardGameArena
- * winter implementation : © <Your name here> <Your email address here>
+ * winter implementation : © joesimpson <1324811+joesimpson@users.noreply.github.com>
  *
  * This code has been produced on the BGA studio platform for use on http://boardgamearena.com.
  * See http://en.boardgamearena.com/#!doc/Studio for more information.
@@ -18,9 +18,21 @@ declare(strict_types=1);
 
 namespace Bga\Games\winter;
 
+use Bga\Games\winter\Managers\Players;
+
+require_once 'constants.inc.php';
+
 class Game extends \Bga\GameFramework\Table
 {
-    private static array $CARD_TYPES;
+    use DebugTrait;
+    use States\ConfirmUndoTrait;
+    use States\NextTurnTrait;
+    use States\PlayerTurnTrait;
+    use States\SetupTrait;
+
+    public static $instance = null;
+    //TODO JSA CLEAN TEMPLATE
+    public static array $CARD_TYPES;
 
     /**
      * Your global variables labels:
@@ -35,12 +47,10 @@ class Game extends \Bga\GameFramework\Table
     public function __construct()
     {
         parent::__construct();
+        self::$instance = $this;
 
         $this->initGameStateLabels([
-            "my_first_global_variable" => 10,
-            "my_second_global_variable" => 11,
-            "my_first_game_variant" => 100,
-            "my_second_game_variant" => 101,
+            'logging' => 10,
         ]);        
 
         self::$CARD_TYPES = [
@@ -69,73 +79,12 @@ class Game extends \Bga\GameFramework\Table
         });*/
     }
 
-    /**
-     * Player action, example content.
-     *
-     * In this scenario, each time a player plays a card, this method will be called. This method is called directly
-     * by the action trigger on the front side with `bgaPerformAction`.
-     *
-     * @throws BgaUserException
-     */
-    public function actPlayCard(int $card_id): void
+    public static function get() 
     {
-        // Retrieve the active player ID.
-        $player_id = (int)$this->getActivePlayerId();
-
-        // check input values
-        $args = $this->argPlayerTurn();
-        $playableCardsIds = $args['playableCardsIds'];
-        if (!in_array($card_id, $playableCardsIds)) {
-            throw new \BgaUserException('Invalid card choice');
-        }
-
-        // Add your game logic to play a card here.
-        $card_name = self::$CARD_TYPES[$card_id]['card_name'];
-
-        // Notify all players about the card played.
-        $this->notify->all("cardPlayed", clienttranslate('${player_name} plays ${card_name}'), [
-            "player_id" => $player_id,
-            "player_name" => $this->getActivePlayerName(), // remove this line if you uncomment notification decorator
-            "card_name" => $card_name, // remove this line if you uncomment notification decorator
-            "card_id" => $card_id,
-            "i18n" => ['card_name'], // remove this line if you uncomment notification decorator
-        ]);
-
-        // at the end of the action, move to the next state
-        $this->gamestate->nextState("playCard");
+        return self::$instance;
     }
 
-    public function actPass(): void
-    {
-        // Retrieve the active player ID.
-        $player_id = (int)$this->getActivePlayerId();
-
-        // Notify all players about the choice to pass.
-        $this->notify->all("pass", clienttranslate('${player_name} passes'), [
-            "player_id" => $player_id,
-            "player_name" => $this->getActivePlayerName(), // remove this line if you uncomment notification decorator
-        ]);
-
-        // at the end of the action, move to the next state
-        $this->gamestate->nextState("pass");
-    }
-
-    /**
-     * Game state arguments, example content.
-     *
-     * This method returns some additional information that is very specific to the `playerTurn` game state.
-     *
-     * @return array
-     * @see ./states.inc.php
-     */
-    public function argPlayerTurn(): array
-    {
-        // Get some values from the current game situation from the database.
-
-        return [
-            "playableCardsIds" => [1, 2],
-        ];
-    }
+    //-> See States package for game states arguments and actions
 
     /**
      * Compute and return the current game progression.
@@ -153,26 +102,7 @@ class Game extends \Bga\GameFramework\Table
 
         return 0;
     }
-
-    /**
-     * Game state action, example content.
-     *
-     * The action method of state `nextPlayer` is called everytime the current game state is set to `nextPlayer`.
-     */
-    public function stNextPlayer(): void {
-        // Retrieve the active player ID.
-        $player_id = (int)$this->getActivePlayerId();
-
-        // Give some extra time to the active player when he completed an action
-        $this->giveExtraTime($player_id);
-        
-        $this->activeNextPlayer();
-
-        // Go to another gamestate
-        // Here, we would detect if the game is over, and in this case use "endGame" transition instead 
-        $this->gamestate->nextState("nextPlayer");
-    }
-
+     
     /**
      * Migrate database.
      *
@@ -219,69 +149,11 @@ class Game extends \Bga\GameFramework\Table
         $current_player_id = (int) $this->getCurrentPlayerId();
 
         // Get information about players.
-        // NOTE: you can retrieve some extra field you added for "player" table in `dbmodel.sql` if you need it.
-        $result["players"] = $this->getCollectionFromDb(
-            "SELECT `player_id` `id`, `player_score` `score` FROM `player`"
-        );
+        $result["players"] = Players::getUiData($current_player_id);
 
         // TODO: Gather all information about current game situation (visible by player $current_player_id).
 
         return $result;
-    }
-
-    /**
-     * This method is called only once, when a new game is launched. In this method, you must setup the game
-     *  according to the game rules, so that the game is ready to be played.
-     */
-    protected function setupNewGame($players, $options = [])
-    {
-        // Set the colors of the players with HTML color code. The default below is red/green/blue/orange/brown. The
-        // number of colors defined here must correspond to the maximum number of players allowed for the gams.
-        $gameinfos = $this->getGameinfos();
-        $default_colors = $gameinfos['player_colors'];
-
-        foreach ($players as $player_id => $player) {
-            // Now you can access both $player_id and $player array
-            $query_values[] = vsprintf("('%s', '%s', '%s', '%s', '%s')", [
-                $player_id,
-                array_shift($default_colors),
-                $player["player_canal"],
-                addslashes($player["player_name"]),
-                addslashes($player["player_avatar"]),
-            ]);
-        }
-
-        // Create players based on generic information.
-        //
-        // NOTE: You can add extra field on player table in the database (see dbmodel.sql) and initialize
-        // additional fields directly here.
-        static::DbQuery(
-            sprintf(
-                "INSERT INTO player (player_id, player_color, player_canal, player_name, player_avatar) VALUES %s",
-                implode(",", $query_values)
-            )
-        );
-
-        $this->reattributeColorsBasedOnPreferences($players, $gameinfos["player_colors"]);
-        $this->reloadPlayersBasicInfos();
-
-        // Init global values with their initial values.
-
-        // Dummy content.
-        $this->setGameStateInitialValue("my_first_global_variable", 0);
-
-        // Init game statistics.
-        //
-        // NOTE: statistics used in this file must be defined in your `stats.inc.php` file.
-
-        // Dummy content.
-        // $this->initStat("table", "table_teststat1", 0);
-        // $this->initStat("player", "player_teststat1", 0);
-
-        // TODO: Setup the initial game situation here.
-
-        // Activate first player once everything has been initialized and ready.
-        $this->activeNextPlayer();
     }
 
     /**
@@ -323,5 +195,20 @@ class Game extends \Bga\GameFramework\Table
         }
 
         throw new \feException("Zombie mode not supported at this game state: \"{$state_name}\".");
+    }
+
+    /////////////////////////////////////////////////////////////
+    // Exposing protected methods, please use at your own risk //
+    /////////////////////////////////////////////////////////////
+
+    // Exposing protected method getCurrentPlayerId
+    public function getCurrentPId($bReturnNullIfNotLogged = false)
+    {
+        return $this->getCurrentPlayerId($bReturnNullIfNotLogged);
+    }
+    // Exposing protected method translation
+    public function translate($text)
+    {
+        return $this->_($text);
     }
 }

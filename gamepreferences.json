@@ -1,1 +1,29 @@
-{}
+{
+    "101": {
+        "name": "Undo buttons style",
+        "needReload": false,
+        "values": {
+            "1": {
+                "name": "Text"
+            },
+            "2": {
+                "name": "Icon"
+            }
+        },
+        "default": 2,
+        "attribute": "winter_undo_style"
+    },
+    "102": {
+        "name": "Ask for turn confirmation",
+        "needReload": false,
+        "values": {
+            "2": {
+                "name": "Enabled"
+            },
+            "0": {
+                "name": "Disabled"
+            }
+        },
+        "default": 0
+    }
+}
