@@ -112,6 +112,38 @@ trait DebugTrait
 
     Notifications::refreshUI($this->getAllDatas());
   }
+  
+  function debug_GridTokens(int $nbTokens){
+    Tokens::moveAllInLocation(TOKEN_LOCATION_BOARD,TOKEN_LOCATION_DECK);
+    Tokens::pickForLocation($nbTokens,TOKEN_LOCATION_DECK,TOKEN_LOCATION_BOARD);
+    $tokens = Tokens::getInLocation(TOKEN_LOCATION_BOARD);
+
+    $k =0;
+    foreach($tokens as $token){
+      $token->setCol( $k /4 );
+      $token->setCol( $k );
+      //Test with 2 rows + row between them
+      if(($k % 5) == 0){
+        $token->setRow(1);
+      }
+      else if(($k % 4) == 0){
+        $token->setRow(-2);
+      }
+      else if(($k % 3) == 0){
+        $token->setRow(1);
+        $token->setCol( -$k );
+      }
+      else if(($k % 2) == 0){
+        $token->setRow(0);
+      }
+      else {
+        $token->setRow(2);
+      }
+      $k++;
+    } 
+
+    Notifications::refreshUI($this->getAllDatas());
+  }
 
   function debug_Scoring(){
     $players = Players::getAll();

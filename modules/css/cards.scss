@@ -1,7 +1,7 @@
 
 
-$card_width: 102px;
-$card_height: 158px;
+$card_width: var(--winter_board_card_width);
+$card_height: var(--winter_board_card_height);
 
 .winter_card_back,
 .winter_card {
@@ -74,7 +74,7 @@ $card_height: 158px;
         //pointer-events: none;// Don't do it if we want tooltips
         position: absolute;
 
-        @for $i from -40 through 40 {//18 cards MAX, where each offset is a half card
+        @for $i from -100 through 100 {//18 cards MAX, where each offset is a half card
             &[data-row="#{$i}"] {
                 top: calc(($i) /2 * $card_height);
             }

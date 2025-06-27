@@ -22,6 +22,7 @@ const CARD_COLOR_BLUE_DARK = 2;
 /////////////////////////////////////////////////////////
 //          MEEPLES
 /////////////////////////////////////////////////////////
+const TOKEN_LOCATION_DECK = 'deck';
 const TOKEN_LOCATION_BOARD = 'board';
 const TOKEN_LOCATION_HAND = 'hand';
 

@@ -14,8 +14,8 @@
  *
  */
 :root {
-  --winter_board_card_width: 465px;
-  --winter_board_card_height: 930px;
+  --winter_board_card_width: 102px;
+  --winter_board_card_height: 158px;
 }
 
 .player_board_inner > .player-name {
@@ -71,8 +71,8 @@
 
 .winter_card_back,
 .winter_card {
-  width: 102px;
-  height: 158px;
+  width: var(--winter_board_card_width);
+  height: var(--winter_board_card_height);
   border: 1px solid black;
   box-shadow: 1px 1px 5px black;
   border-radius: 5px;
@@ -165,498 +165,1218 @@
   width: 100%;
 }
 .winter_card_tooltip .winter_card {
-  width: 204px;
-  height: 316px;
+  width: calc(var(--winter_board_card_width) * 2);
+  height: calc(var(--winter_board_card_height) * 2);
 }
 
 #winter_map_container .winter_card {
   position: absolute;
 }
+#winter_map_container .winter_card[data-row="-100"] {
+  top: calc(-50 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-100"] {
+  left: calc(-50 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-99"] {
+  top: calc(-49.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-99"] {
+  left: calc(-49.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-98"] {
+  top: calc(-49 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-98"] {
+  left: calc(-49 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-97"] {
+  top: calc(-48.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-97"] {
+  left: calc(-48.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-96"] {
+  top: calc(-48 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-96"] {
+  left: calc(-48 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-95"] {
+  top: calc(-47.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-95"] {
+  left: calc(-47.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-94"] {
+  top: calc(-47 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-94"] {
+  left: calc(-47 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-93"] {
+  top: calc(-46.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-93"] {
+  left: calc(-46.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-92"] {
+  top: calc(-46 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-92"] {
+  left: calc(-46 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-91"] {
+  top: calc(-45.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-91"] {
+  left: calc(-45.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-90"] {
+  top: calc(-45 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-90"] {
+  left: calc(-45 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-89"] {
+  top: calc(-44.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-89"] {
+  left: calc(-44.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-88"] {
+  top: calc(-44 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-88"] {
+  left: calc(-44 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-87"] {
+  top: calc(-43.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-87"] {
+  left: calc(-43.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-86"] {
+  top: calc(-43 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-86"] {
+  left: calc(-43 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-85"] {
+  top: calc(-42.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-85"] {
+  left: calc(-42.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-84"] {
+  top: calc(-42 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-84"] {
+  left: calc(-42 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-83"] {
+  top: calc(-41.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-83"] {
+  left: calc(-41.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-82"] {
+  top: calc(-41 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-82"] {
+  left: calc(-41 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-81"] {
+  top: calc(-40.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-81"] {
+  left: calc(-40.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-80"] {
+  top: calc(-40 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-80"] {
+  left: calc(-40 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-79"] {
+  top: calc(-39.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-79"] {
+  left: calc(-39.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-78"] {
+  top: calc(-39 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-78"] {
+  left: calc(-39 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-77"] {
+  top: calc(-38.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-77"] {
+  left: calc(-38.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-76"] {
+  top: calc(-38 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-76"] {
+  left: calc(-38 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-75"] {
+  top: calc(-37.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-75"] {
+  left: calc(-37.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-74"] {
+  top: calc(-37 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-74"] {
+  left: calc(-37 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-73"] {
+  top: calc(-36.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-73"] {
+  left: calc(-36.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-72"] {
+  top: calc(-36 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-72"] {
+  left: calc(-36 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-71"] {
+  top: calc(-35.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-71"] {
+  left: calc(-35.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-70"] {
+  top: calc(-35 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-70"] {
+  left: calc(-35 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-69"] {
+  top: calc(-34.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-69"] {
+  left: calc(-34.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-68"] {
+  top: calc(-34 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-68"] {
+  left: calc(-34 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-67"] {
+  top: calc(-33.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-67"] {
+  left: calc(-33.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-66"] {
+  top: calc(-33 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-66"] {
+  left: calc(-33 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-65"] {
+  top: calc(-32.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-65"] {
+  left: calc(-32.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-64"] {
+  top: calc(-32 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-64"] {
+  left: calc(-32 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-63"] {
+  top: calc(-31.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-63"] {
+  left: calc(-31.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-62"] {
+  top: calc(-31 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-62"] {
+  left: calc(-31 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-61"] {
+  top: calc(-30.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-61"] {
+  left: calc(-30.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-60"] {
+  top: calc(-30 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-60"] {
+  left: calc(-30 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-59"] {
+  top: calc(-29.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-59"] {
+  left: calc(-29.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-58"] {
+  top: calc(-29 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-58"] {
+  left: calc(-29 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-57"] {
+  top: calc(-28.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-57"] {
+  left: calc(-28.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-56"] {
+  top: calc(-28 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-56"] {
+  left: calc(-28 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-55"] {
+  top: calc(-27.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-55"] {
+  left: calc(-27.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-54"] {
+  top: calc(-27 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-54"] {
+  left: calc(-27 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-53"] {
+  top: calc(-26.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-53"] {
+  left: calc(-26.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-52"] {
+  top: calc(-26 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-52"] {
+  left: calc(-26 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-51"] {
+  top: calc(-25.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-51"] {
+  left: calc(-25.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-50"] {
+  top: calc(-25 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-50"] {
+  left: calc(-25 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-49"] {
+  top: calc(-24.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-49"] {
+  left: calc(-24.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-48"] {
+  top: calc(-24 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-48"] {
+  left: calc(-24 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-47"] {
+  top: calc(-23.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-47"] {
+  left: calc(-23.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-46"] {
+  top: calc(-23 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-46"] {
+  left: calc(-23 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-45"] {
+  top: calc(-22.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-45"] {
+  left: calc(-22.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-44"] {
+  top: calc(-22 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-44"] {
+  left: calc(-22 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-43"] {
+  top: calc(-21.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-43"] {
+  left: calc(-21.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-42"] {
+  top: calc(-21 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-42"] {
+  left: calc(-21 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="-41"] {
+  top: calc(-20.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="-41"] {
+  left: calc(-20.5 * var(--winter_board_card_width));
+}
 #winter_map_container .winter_card[data-row="-40"] {
-  top: -3160px;
+  top: calc(-20 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-40"] {
-  left: -2040px;
+  left: calc(-20 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-39"] {
-  top: -3081px;
+  top: calc(-19.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-39"] {
-  left: -1989px;
+  left: calc(-19.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-38"] {
-  top: -3002px;
+  top: calc(-19 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-38"] {
-  left: -1938px;
+  left: calc(-19 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-37"] {
-  top: -2923px;
+  top: calc(-18.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-37"] {
-  left: -1887px;
+  left: calc(-18.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-36"] {
-  top: -2844px;
+  top: calc(-18 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-36"] {
-  left: -1836px;
+  left: calc(-18 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-35"] {
-  top: -2765px;
+  top: calc(-17.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-35"] {
-  left: -1785px;
+  left: calc(-17.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-34"] {
-  top: -2686px;
+  top: calc(-17 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-34"] {
-  left: -1734px;
+  left: calc(-17 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-33"] {
-  top: -2607px;
+  top: calc(-16.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-33"] {
-  left: -1683px;
+  left: calc(-16.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-32"] {
-  top: -2528px;
+  top: calc(-16 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-32"] {
-  left: -1632px;
+  left: calc(-16 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-31"] {
-  top: -2449px;
+  top: calc(-15.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-31"] {
-  left: -1581px;
+  left: calc(-15.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-30"] {
-  top: -2370px;
+  top: calc(-15 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-30"] {
-  left: -1530px;
+  left: calc(-15 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-29"] {
-  top: -2291px;
+  top: calc(-14.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-29"] {
-  left: -1479px;
+  left: calc(-14.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-28"] {
-  top: -2212px;
+  top: calc(-14 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-28"] {
-  left: -1428px;
+  left: calc(-14 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-27"] {
-  top: -2133px;
+  top: calc(-13.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-27"] {
-  left: -1377px;
+  left: calc(-13.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-26"] {
-  top: -2054px;
+  top: calc(-13 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-26"] {
-  left: -1326px;
+  left: calc(-13 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-25"] {
-  top: -1975px;
+  top: calc(-12.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-25"] {
-  left: -1275px;
+  left: calc(-12.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-24"] {
-  top: -1896px;
+  top: calc(-12 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-24"] {
-  left: -1224px;
+  left: calc(-12 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-23"] {
-  top: -1817px;
+  top: calc(-11.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-23"] {
-  left: -1173px;
+  left: calc(-11.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-22"] {
-  top: -1738px;
+  top: calc(-11 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-22"] {
-  left: -1122px;
+  left: calc(-11 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-21"] {
-  top: -1659px;
+  top: calc(-10.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-21"] {
-  left: -1071px;
+  left: calc(-10.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-20"] {
-  top: -1580px;
+  top: calc(-10 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-20"] {
-  left: -1020px;
+  left: calc(-10 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-19"] {
-  top: -1501px;
+  top: calc(-9.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-19"] {
-  left: -969px;
+  left: calc(-9.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-18"] {
-  top: -1422px;
+  top: calc(-9 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-18"] {
-  left: -918px;
+  left: calc(-9 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-17"] {
-  top: -1343px;
+  top: calc(-8.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-17"] {
-  left: -867px;
+  left: calc(-8.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-16"] {
-  top: -1264px;
+  top: calc(-8 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-16"] {
-  left: -816px;
+  left: calc(-8 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-15"] {
-  top: -1185px;
+  top: calc(-7.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-15"] {
-  left: -765px;
+  left: calc(-7.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-14"] {
-  top: -1106px;
+  top: calc(-7 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-14"] {
-  left: -714px;
+  left: calc(-7 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-13"] {
-  top: -1027px;
+  top: calc(-6.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-13"] {
-  left: -663px;
+  left: calc(-6.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-12"] {
-  top: -948px;
+  top: calc(-6 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-12"] {
-  left: -612px;
+  left: calc(-6 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-11"] {
-  top: -869px;
+  top: calc(-5.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-11"] {
-  left: -561px;
+  left: calc(-5.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-10"] {
-  top: -790px;
+  top: calc(-5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-10"] {
-  left: -510px;
+  left: calc(-5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-9"] {
-  top: -711px;
+  top: calc(-4.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-9"] {
-  left: -459px;
+  left: calc(-4.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-8"] {
-  top: -632px;
+  top: calc(-4 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-8"] {
-  left: -408px;
+  left: calc(-4 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-7"] {
-  top: -553px;
+  top: calc(-3.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-7"] {
-  left: -357px;
+  left: calc(-3.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-6"] {
-  top: -474px;
+  top: calc(-3 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-6"] {
-  left: -306px;
+  left: calc(-3 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-5"] {
-  top: -395px;
+  top: calc(-2.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-5"] {
-  left: -255px;
+  left: calc(-2.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-4"] {
-  top: -316px;
+  top: calc(-2 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-4"] {
-  left: -204px;
+  left: calc(-2 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-3"] {
-  top: -237px;
+  top: calc(-1.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-3"] {
-  left: -153px;
+  left: calc(-1.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-2"] {
-  top: -158px;
+  top: calc(-1 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-2"] {
-  left: -102px;
+  left: calc(-1 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="-1"] {
-  top: -79px;
+  top: calc(-0.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="-1"] {
-  left: -51px;
+  left: calc(-0.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="0"] {
-  top: 0px;
+  top: calc(0 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="0"] {
-  left: 0px;
+  left: calc(0 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="1"] {
-  top: 79px;
+  top: calc(0.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="1"] {
-  left: 51px;
+  left: calc(0.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="2"] {
-  top: 158px;
+  top: calc(1 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="2"] {
-  left: 102px;
+  left: calc(1 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="3"] {
-  top: 237px;
+  top: calc(1.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="3"] {
-  left: 153px;
+  left: calc(1.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="4"] {
-  top: 316px;
+  top: calc(2 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="4"] {
-  left: 204px;
+  left: calc(2 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="5"] {
-  top: 395px;
+  top: calc(2.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="5"] {
-  left: 255px;
+  left: calc(2.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="6"] {
-  top: 474px;
+  top: calc(3 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="6"] {
-  left: 306px;
+  left: calc(3 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="7"] {
-  top: 553px;
+  top: calc(3.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="7"] {
-  left: 357px;
+  left: calc(3.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="8"] {
-  top: 632px;
+  top: calc(4 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="8"] {
-  left: 408px;
+  left: calc(4 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="9"] {
-  top: 711px;
+  top: calc(4.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="9"] {
-  left: 459px;
+  left: calc(4.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="10"] {
-  top: 790px;
+  top: calc(5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="10"] {
-  left: 510px;
+  left: calc(5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="11"] {
-  top: 869px;
+  top: calc(5.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="11"] {
-  left: 561px;
+  left: calc(5.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="12"] {
-  top: 948px;
+  top: calc(6 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="12"] {
-  left: 612px;
+  left: calc(6 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="13"] {
-  top: 1027px;
+  top: calc(6.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="13"] {
-  left: 663px;
+  left: calc(6.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="14"] {
-  top: 1106px;
+  top: calc(7 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="14"] {
-  left: 714px;
+  left: calc(7 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="15"] {
-  top: 1185px;
+  top: calc(7.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="15"] {
-  left: 765px;
+  left: calc(7.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="16"] {
-  top: 1264px;
+  top: calc(8 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="16"] {
-  left: 816px;
+  left: calc(8 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="17"] {
-  top: 1343px;
+  top: calc(8.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="17"] {
-  left: 867px;
+  left: calc(8.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="18"] {
-  top: 1422px;
+  top: calc(9 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="18"] {
-  left: 918px;
+  left: calc(9 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="19"] {
-  top: 1501px;
+  top: calc(9.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="19"] {
-  left: 969px;
+  left: calc(9.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="20"] {
-  top: 1580px;
+  top: calc(10 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="20"] {
-  left: 1020px;
+  left: calc(10 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="21"] {
-  top: 1659px;
+  top: calc(10.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="21"] {
-  left: 1071px;
+  left: calc(10.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="22"] {
-  top: 1738px;
+  top: calc(11 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="22"] {
-  left: 1122px;
+  left: calc(11 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="23"] {
-  top: 1817px;
+  top: calc(11.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="23"] {
-  left: 1173px;
+  left: calc(11.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="24"] {
-  top: 1896px;
+  top: calc(12 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="24"] {
-  left: 1224px;
+  left: calc(12 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="25"] {
-  top: 1975px;
+  top: calc(12.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="25"] {
-  left: 1275px;
+  left: calc(12.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="26"] {
-  top: 2054px;
+  top: calc(13 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="26"] {
-  left: 1326px;
+  left: calc(13 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="27"] {
-  top: 2133px;
+  top: calc(13.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="27"] {
-  left: 1377px;
+  left: calc(13.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="28"] {
-  top: 2212px;
+  top: calc(14 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="28"] {
-  left: 1428px;
+  left: calc(14 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="29"] {
-  top: 2291px;
+  top: calc(14.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="29"] {
-  left: 1479px;
+  left: calc(14.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="30"] {
-  top: 2370px;
+  top: calc(15 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="30"] {
-  left: 1530px;
+  left: calc(15 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="31"] {
-  top: 2449px;
+  top: calc(15.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="31"] {
-  left: 1581px;
+  left: calc(15.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="32"] {
-  top: 2528px;
+  top: calc(16 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="32"] {
-  left: 1632px;
+  left: calc(16 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="33"] {
-  top: 2607px;
+  top: calc(16.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="33"] {
-  left: 1683px;
+  left: calc(16.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="34"] {
-  top: 2686px;
+  top: calc(17 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="34"] {
-  left: 1734px;
+  left: calc(17 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="35"] {
-  top: 2765px;
+  top: calc(17.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="35"] {
-  left: 1785px;
+  left: calc(17.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="36"] {
-  top: 2844px;
+  top: calc(18 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="36"] {
-  left: 1836px;
+  left: calc(18 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="37"] {
-  top: 2923px;
+  top: calc(18.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="37"] {
-  left: 1887px;
+  left: calc(18.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="38"] {
-  top: 3002px;
+  top: calc(19 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="38"] {
-  left: 1938px;
+  left: calc(19 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="39"] {
-  top: 3081px;
+  top: calc(19.5 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="39"] {
-  left: 1989px;
+  left: calc(19.5 * var(--winter_board_card_width));
 }
 #winter_map_container .winter_card[data-row="40"] {
-  top: 3160px;
+  top: calc(20 * var(--winter_board_card_height));
 }
 #winter_map_container .winter_card[data-col="40"] {
-  left: 2040px;
+  left: calc(20 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="41"] {
+  top: calc(20.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="41"] {
+  left: calc(20.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="42"] {
+  top: calc(21 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="42"] {
+  left: calc(21 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="43"] {
+  top: calc(21.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="43"] {
+  left: calc(21.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="44"] {
+  top: calc(22 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="44"] {
+  left: calc(22 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="45"] {
+  top: calc(22.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="45"] {
+  left: calc(22.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="46"] {
+  top: calc(23 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="46"] {
+  left: calc(23 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="47"] {
+  top: calc(23.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="47"] {
+  left: calc(23.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="48"] {
+  top: calc(24 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="48"] {
+  left: calc(24 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="49"] {
+  top: calc(24.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="49"] {
+  left: calc(24.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="50"] {
+  top: calc(25 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="50"] {
+  left: calc(25 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="51"] {
+  top: calc(25.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="51"] {
+  left: calc(25.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="52"] {
+  top: calc(26 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="52"] {
+  left: calc(26 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="53"] {
+  top: calc(26.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="53"] {
+  left: calc(26.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="54"] {
+  top: calc(27 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="54"] {
+  left: calc(27 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="55"] {
+  top: calc(27.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="55"] {
+  left: calc(27.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="56"] {
+  top: calc(28 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="56"] {
+  left: calc(28 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="57"] {
+  top: calc(28.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="57"] {
+  left: calc(28.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="58"] {
+  top: calc(29 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="58"] {
+  left: calc(29 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="59"] {
+  top: calc(29.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="59"] {
+  left: calc(29.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="60"] {
+  top: calc(30 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="60"] {
+  left: calc(30 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="61"] {
+  top: calc(30.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="61"] {
+  left: calc(30.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="62"] {
+  top: calc(31 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="62"] {
+  left: calc(31 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="63"] {
+  top: calc(31.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="63"] {
+  left: calc(31.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="64"] {
+  top: calc(32 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="64"] {
+  left: calc(32 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="65"] {
+  top: calc(32.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="65"] {
+  left: calc(32.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="66"] {
+  top: calc(33 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="66"] {
+  left: calc(33 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="67"] {
+  top: calc(33.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="67"] {
+  left: calc(33.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="68"] {
+  top: calc(34 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="68"] {
+  left: calc(34 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="69"] {
+  top: calc(34.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="69"] {
+  left: calc(34.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="70"] {
+  top: calc(35 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="70"] {
+  left: calc(35 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="71"] {
+  top: calc(35.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="71"] {
+  left: calc(35.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="72"] {
+  top: calc(36 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="72"] {
+  left: calc(36 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="73"] {
+  top: calc(36.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="73"] {
+  left: calc(36.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="74"] {
+  top: calc(37 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="74"] {
+  left: calc(37 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="75"] {
+  top: calc(37.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="75"] {
+  left: calc(37.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="76"] {
+  top: calc(38 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="76"] {
+  left: calc(38 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="77"] {
+  top: calc(38.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="77"] {
+  left: calc(38.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="78"] {
+  top: calc(39 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="78"] {
+  left: calc(39 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="79"] {
+  top: calc(39.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="79"] {
+  left: calc(39.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="80"] {
+  top: calc(40 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="80"] {
+  left: calc(40 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="81"] {
+  top: calc(40.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="81"] {
+  left: calc(40.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="82"] {
+  top: calc(41 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="82"] {
+  left: calc(41 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="83"] {
+  top: calc(41.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="83"] {
+  left: calc(41.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="84"] {
+  top: calc(42 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="84"] {
+  left: calc(42 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="85"] {
+  top: calc(42.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="85"] {
+  left: calc(42.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="86"] {
+  top: calc(43 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="86"] {
+  left: calc(43 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="87"] {
+  top: calc(43.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="87"] {
+  left: calc(43.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="88"] {
+  top: calc(44 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="88"] {
+  left: calc(44 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="89"] {
+  top: calc(44.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="89"] {
+  left: calc(44.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="90"] {
+  top: calc(45 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="90"] {
+  left: calc(45 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="91"] {
+  top: calc(45.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="91"] {
+  left: calc(45.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="92"] {
+  top: calc(46 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="92"] {
+  left: calc(46 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="93"] {
+  top: calc(46.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="93"] {
+  left: calc(46.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="94"] {
+  top: calc(47 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="94"] {
+  left: calc(47 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="95"] {
+  top: calc(47.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="95"] {
+  left: calc(47.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="96"] {
+  top: calc(48 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="96"] {
+  left: calc(48 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="97"] {
+  top: calc(48.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="97"] {
+  left: calc(48.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="98"] {
+  top: calc(49 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="98"] {
+  left: calc(49 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="99"] {
+  top: calc(49.5 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="99"] {
+  left: calc(49.5 * var(--winter_board_card_width));
+}
+#winter_map_container .winter_card[data-row="100"] {
+  top: calc(50 * var(--winter_board_card_height));
+}
+#winter_map_container .winter_card[data-col="100"] {
+  left: calc(50 * var(--winter_board_card_width));
 }
 
 .winter_token_counter {
@@ -679,6 +1399,1213 @@
 
 #winter_map_container .winter_token_counter {
   pointer-events: none;
+  position: absolute;
+}
+#winter_map_container .winter_token_counter[data-row="-100"] {
+  top: calc(-50 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-100"] {
+  left: calc(-50 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-99"] {
+  top: calc(-49.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-99"] {
+  left: calc(-49.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-98"] {
+  top: calc(-49 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-98"] {
+  left: calc(-49 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-97"] {
+  top: calc(-48.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-97"] {
+  left: calc(-48.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-96"] {
+  top: calc(-48 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-96"] {
+  left: calc(-48 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-95"] {
+  top: calc(-47.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-95"] {
+  left: calc(-47.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-94"] {
+  top: calc(-47 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-94"] {
+  left: calc(-47 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-93"] {
+  top: calc(-46.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-93"] {
+  left: calc(-46.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-92"] {
+  top: calc(-46 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-92"] {
+  left: calc(-46 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-91"] {
+  top: calc(-45.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-91"] {
+  left: calc(-45.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-90"] {
+  top: calc(-45 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-90"] {
+  left: calc(-45 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-89"] {
+  top: calc(-44.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-89"] {
+  left: calc(-44.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-88"] {
+  top: calc(-44 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-88"] {
+  left: calc(-44 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-87"] {
+  top: calc(-43.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-87"] {
+  left: calc(-43.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-86"] {
+  top: calc(-43 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-86"] {
+  left: calc(-43 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-85"] {
+  top: calc(-42.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-85"] {
+  left: calc(-42.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-84"] {
+  top: calc(-42 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-84"] {
+  left: calc(-42 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-83"] {
+  top: calc(-41.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-83"] {
+  left: calc(-41.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-82"] {
+  top: calc(-41 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-82"] {
+  left: calc(-41 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-81"] {
+  top: calc(-40.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-81"] {
+  left: calc(-40.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-80"] {
+  top: calc(-40 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-80"] {
+  left: calc(-40 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-79"] {
+  top: calc(-39.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-79"] {
+  left: calc(-39.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-78"] {
+  top: calc(-39 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-78"] {
+  left: calc(-39 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-77"] {
+  top: calc(-38.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-77"] {
+  left: calc(-38.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-76"] {
+  top: calc(-38 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-76"] {
+  left: calc(-38 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-75"] {
+  top: calc(-37.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-75"] {
+  left: calc(-37.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-74"] {
+  top: calc(-37 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-74"] {
+  left: calc(-37 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-73"] {
+  top: calc(-36.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-73"] {
+  left: calc(-36.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-72"] {
+  top: calc(-36 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-72"] {
+  left: calc(-36 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-71"] {
+  top: calc(-35.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-71"] {
+  left: calc(-35.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-70"] {
+  top: calc(-35 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-70"] {
+  left: calc(-35 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-69"] {
+  top: calc(-34.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-69"] {
+  left: calc(-34.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-68"] {
+  top: calc(-34 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-68"] {
+  left: calc(-34 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-67"] {
+  top: calc(-33.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-67"] {
+  left: calc(-33.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-66"] {
+  top: calc(-33 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-66"] {
+  left: calc(-33 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-65"] {
+  top: calc(-32.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-65"] {
+  left: calc(-32.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-64"] {
+  top: calc(-32 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-64"] {
+  left: calc(-32 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-63"] {
+  top: calc(-31.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-63"] {
+  left: calc(-31.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-62"] {
+  top: calc(-31 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-62"] {
+  left: calc(-31 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-61"] {
+  top: calc(-30.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-61"] {
+  left: calc(-30.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-60"] {
+  top: calc(-30 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-60"] {
+  left: calc(-30 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-59"] {
+  top: calc(-29.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-59"] {
+  left: calc(-29.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-58"] {
+  top: calc(-29 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-58"] {
+  left: calc(-29 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-57"] {
+  top: calc(-28.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-57"] {
+  left: calc(-28.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-56"] {
+  top: calc(-28 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-56"] {
+  left: calc(-28 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-55"] {
+  top: calc(-27.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-55"] {
+  left: calc(-27.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-54"] {
+  top: calc(-27 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-54"] {
+  left: calc(-27 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-53"] {
+  top: calc(-26.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-53"] {
+  left: calc(-26.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-52"] {
+  top: calc(-26 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-52"] {
+  left: calc(-26 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-51"] {
+  top: calc(-25.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-51"] {
+  left: calc(-25.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-50"] {
+  top: calc(-25 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-50"] {
+  left: calc(-25 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-49"] {
+  top: calc(-24.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-49"] {
+  left: calc(-24.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-48"] {
+  top: calc(-24 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-48"] {
+  left: calc(-24 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-47"] {
+  top: calc(-23.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-47"] {
+  left: calc(-23.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-46"] {
+  top: calc(-23 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-46"] {
+  left: calc(-23 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-45"] {
+  top: calc(-22.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-45"] {
+  left: calc(-22.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-44"] {
+  top: calc(-22 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-44"] {
+  left: calc(-22 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-43"] {
+  top: calc(-21.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-43"] {
+  left: calc(-21.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-42"] {
+  top: calc(-21 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-42"] {
+  left: calc(-21 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-41"] {
+  top: calc(-20.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-41"] {
+  left: calc(-20.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-40"] {
+  top: calc(-20 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-40"] {
+  left: calc(-20 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-39"] {
+  top: calc(-19.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-39"] {
+  left: calc(-19.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-38"] {
+  top: calc(-19 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-38"] {
+  left: calc(-19 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-37"] {
+  top: calc(-18.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-37"] {
+  left: calc(-18.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-36"] {
+  top: calc(-18 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-36"] {
+  left: calc(-18 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-35"] {
+  top: calc(-17.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-35"] {
+  left: calc(-17.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-34"] {
+  top: calc(-17 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-34"] {
+  left: calc(-17 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-33"] {
+  top: calc(-16.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-33"] {
+  left: calc(-16.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-32"] {
+  top: calc(-16 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-32"] {
+  left: calc(-16 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-31"] {
+  top: calc(-15.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-31"] {
+  left: calc(-15.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-30"] {
+  top: calc(-15 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-30"] {
+  left: calc(-15 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-29"] {
+  top: calc(-14.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-29"] {
+  left: calc(-14.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-28"] {
+  top: calc(-14 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-28"] {
+  left: calc(-14 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-27"] {
+  top: calc(-13.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-27"] {
+  left: calc(-13.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-26"] {
+  top: calc(-13 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-26"] {
+  left: calc(-13 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-25"] {
+  top: calc(-12.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-25"] {
+  left: calc(-12.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-24"] {
+  top: calc(-12 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-24"] {
+  left: calc(-12 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-23"] {
+  top: calc(-11.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-23"] {
+  left: calc(-11.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-22"] {
+  top: calc(-11 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-22"] {
+  left: calc(-11 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-21"] {
+  top: calc(-10.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-21"] {
+  left: calc(-10.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-20"] {
+  top: calc(-10 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-20"] {
+  left: calc(-10 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-19"] {
+  top: calc(-9.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-19"] {
+  left: calc(-9.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-18"] {
+  top: calc(-9 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-18"] {
+  left: calc(-9 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-17"] {
+  top: calc(-8.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-17"] {
+  left: calc(-8.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-16"] {
+  top: calc(-8 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-16"] {
+  left: calc(-8 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-15"] {
+  top: calc(-7.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-15"] {
+  left: calc(-7.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-14"] {
+  top: calc(-7 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-14"] {
+  left: calc(-7 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-13"] {
+  top: calc(-6.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-13"] {
+  left: calc(-6.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-12"] {
+  top: calc(-6 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-12"] {
+  left: calc(-6 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-11"] {
+  top: calc(-5.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-11"] {
+  left: calc(-5.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-10"] {
+  top: calc(-5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-10"] {
+  left: calc(-5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-9"] {
+  top: calc(-4.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-9"] {
+  left: calc(-4.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-8"] {
+  top: calc(-4 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-8"] {
+  left: calc(-4 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-7"] {
+  top: calc(-3.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-7"] {
+  left: calc(-3.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-6"] {
+  top: calc(-3 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-6"] {
+  left: calc(-3 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-5"] {
+  top: calc(-2.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-5"] {
+  left: calc(-2.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-4"] {
+  top: calc(-2 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-4"] {
+  left: calc(-2 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-3"] {
+  top: calc(-1.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-3"] {
+  left: calc(-1.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-2"] {
+  top: calc(-1 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-2"] {
+  left: calc(-1 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="-1"] {
+  top: calc(-0.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="-1"] {
+  left: calc(-0.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="0"] {
+  top: calc(0 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="0"] {
+  left: calc(0 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="1"] {
+  top: calc(0.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="1"] {
+  left: calc(0.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="2"] {
+  top: calc(1 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="2"] {
+  left: calc(1 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="3"] {
+  top: calc(1.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="3"] {
+  left: calc(1.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="4"] {
+  top: calc(2 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="4"] {
+  left: calc(2 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="5"] {
+  top: calc(2.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="5"] {
+  left: calc(2.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="6"] {
+  top: calc(3 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="6"] {
+  left: calc(3 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="7"] {
+  top: calc(3.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="7"] {
+  left: calc(3.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="8"] {
+  top: calc(4 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="8"] {
+  left: calc(4 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="9"] {
+  top: calc(4.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="9"] {
+  left: calc(4.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="10"] {
+  top: calc(5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="10"] {
+  left: calc(5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="11"] {
+  top: calc(5.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="11"] {
+  left: calc(5.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="12"] {
+  top: calc(6 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="12"] {
+  left: calc(6 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="13"] {
+  top: calc(6.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="13"] {
+  left: calc(6.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="14"] {
+  top: calc(7 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="14"] {
+  left: calc(7 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="15"] {
+  top: calc(7.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="15"] {
+  left: calc(7.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="16"] {
+  top: calc(8 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="16"] {
+  left: calc(8 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="17"] {
+  top: calc(8.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="17"] {
+  left: calc(8.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="18"] {
+  top: calc(9 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="18"] {
+  left: calc(9 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="19"] {
+  top: calc(9.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="19"] {
+  left: calc(9.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="20"] {
+  top: calc(10 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="20"] {
+  left: calc(10 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="21"] {
+  top: calc(10.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="21"] {
+  left: calc(10.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="22"] {
+  top: calc(11 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="22"] {
+  left: calc(11 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="23"] {
+  top: calc(11.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="23"] {
+  left: calc(11.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="24"] {
+  top: calc(12 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="24"] {
+  left: calc(12 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="25"] {
+  top: calc(12.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="25"] {
+  left: calc(12.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="26"] {
+  top: calc(13 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="26"] {
+  left: calc(13 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="27"] {
+  top: calc(13.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="27"] {
+  left: calc(13.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="28"] {
+  top: calc(14 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="28"] {
+  left: calc(14 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="29"] {
+  top: calc(14.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="29"] {
+  left: calc(14.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="30"] {
+  top: calc(15 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="30"] {
+  left: calc(15 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="31"] {
+  top: calc(15.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="31"] {
+  left: calc(15.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="32"] {
+  top: calc(16 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="32"] {
+  left: calc(16 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="33"] {
+  top: calc(16.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="33"] {
+  left: calc(16.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="34"] {
+  top: calc(17 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="34"] {
+  left: calc(17 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="35"] {
+  top: calc(17.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="35"] {
+  left: calc(17.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="36"] {
+  top: calc(18 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="36"] {
+  left: calc(18 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="37"] {
+  top: calc(18.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="37"] {
+  left: calc(18.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="38"] {
+  top: calc(19 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="38"] {
+  left: calc(19 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="39"] {
+  top: calc(19.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="39"] {
+  left: calc(19.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="40"] {
+  top: calc(20 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="40"] {
+  left: calc(20 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="41"] {
+  top: calc(20.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="41"] {
+  left: calc(20.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="42"] {
+  top: calc(21 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="42"] {
+  left: calc(21 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="43"] {
+  top: calc(21.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="43"] {
+  left: calc(21.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="44"] {
+  top: calc(22 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="44"] {
+  left: calc(22 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="45"] {
+  top: calc(22.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="45"] {
+  left: calc(22.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="46"] {
+  top: calc(23 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="46"] {
+  left: calc(23 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="47"] {
+  top: calc(23.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="47"] {
+  left: calc(23.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="48"] {
+  top: calc(24 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="48"] {
+  left: calc(24 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="49"] {
+  top: calc(24.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="49"] {
+  left: calc(24.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="50"] {
+  top: calc(25 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="50"] {
+  left: calc(25 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="51"] {
+  top: calc(25.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="51"] {
+  left: calc(25.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="52"] {
+  top: calc(26 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="52"] {
+  left: calc(26 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="53"] {
+  top: calc(26.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="53"] {
+  left: calc(26.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="54"] {
+  top: calc(27 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="54"] {
+  left: calc(27 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="55"] {
+  top: calc(27.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="55"] {
+  left: calc(27.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="56"] {
+  top: calc(28 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="56"] {
+  left: calc(28 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="57"] {
+  top: calc(28.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="57"] {
+  left: calc(28.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="58"] {
+  top: calc(29 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="58"] {
+  left: calc(29 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="59"] {
+  top: calc(29.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="59"] {
+  left: calc(29.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="60"] {
+  top: calc(30 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="60"] {
+  left: calc(30 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="61"] {
+  top: calc(30.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="61"] {
+  left: calc(30.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="62"] {
+  top: calc(31 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="62"] {
+  left: calc(31 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="63"] {
+  top: calc(31.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="63"] {
+  left: calc(31.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="64"] {
+  top: calc(32 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="64"] {
+  left: calc(32 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="65"] {
+  top: calc(32.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="65"] {
+  left: calc(32.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="66"] {
+  top: calc(33 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="66"] {
+  left: calc(33 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="67"] {
+  top: calc(33.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="67"] {
+  left: calc(33.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="68"] {
+  top: calc(34 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="68"] {
+  left: calc(34 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="69"] {
+  top: calc(34.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="69"] {
+  left: calc(34.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="70"] {
+  top: calc(35 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="70"] {
+  left: calc(35 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="71"] {
+  top: calc(35.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="71"] {
+  left: calc(35.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="72"] {
+  top: calc(36 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="72"] {
+  left: calc(36 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="73"] {
+  top: calc(36.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="73"] {
+  left: calc(36.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="74"] {
+  top: calc(37 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="74"] {
+  left: calc(37 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="75"] {
+  top: calc(37.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="75"] {
+  left: calc(37.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="76"] {
+  top: calc(38 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="76"] {
+  left: calc(38 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="77"] {
+  top: calc(38.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="77"] {
+  left: calc(38.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="78"] {
+  top: calc(39 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="78"] {
+  left: calc(39 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="79"] {
+  top: calc(39.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="79"] {
+  left: calc(39.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="80"] {
+  top: calc(40 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="80"] {
+  left: calc(40 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="81"] {
+  top: calc(40.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="81"] {
+  left: calc(40.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="82"] {
+  top: calc(41 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="82"] {
+  left: calc(41 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="83"] {
+  top: calc(41.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="83"] {
+  left: calc(41.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="84"] {
+  top: calc(42 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="84"] {
+  left: calc(42 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="85"] {
+  top: calc(42.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="85"] {
+  left: calc(42.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="86"] {
+  top: calc(43 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="86"] {
+  left: calc(43 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="87"] {
+  top: calc(43.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="87"] {
+  left: calc(43.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="88"] {
+  top: calc(44 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="88"] {
+  left: calc(44 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="89"] {
+  top: calc(44.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="89"] {
+  left: calc(44.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="90"] {
+  top: calc(45 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="90"] {
+  left: calc(45 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="91"] {
+  top: calc(45.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="91"] {
+  left: calc(45.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="92"] {
+  top: calc(46 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="92"] {
+  left: calc(46 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="93"] {
+  top: calc(46.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="93"] {
+  left: calc(46.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="94"] {
+  top: calc(47 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="94"] {
+  left: calc(47 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="95"] {
+  top: calc(47.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="95"] {
+  left: calc(47.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="96"] {
+  top: calc(48 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="96"] {
+  left: calc(48 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="97"] {
+  top: calc(48.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="97"] {
+  left: calc(48.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="98"] {
+  top: calc(49 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="98"] {
+  left: calc(49 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="99"] {
+  top: calc(49.5 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="99"] {
+  left: calc(49.5 * var(--winter_board_card_width) - 20px);
+}
+#winter_map_container .winter_token_counter[data-row="100"] {
+  top: calc(50 * var(--winter_board_card_height) - 20px);
+}
+#winter_map_container .winter_token_counter[data-col="100"] {
+  left: calc(50 * var(--winter_board_card_width) - 20px);
 }
 
 /** Scrollable area **/

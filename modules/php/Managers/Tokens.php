@@ -14,7 +14,7 @@ class Tokens extends \Bga\Games\winter\Helpers\Pieces
   protected static $prefix = 'token_';
   protected static $autoIncrement = true;
   protected static $autoremovePrefix = false;
-  protected static $customFields = ['player_id', 'type'];
+  protected static $customFields = ['player_id', 'type', 'x', 'y'];
   protected static $autoreshuffle = false;
 
   protected static function cast($row)
@@ -79,7 +79,7 @@ class Tokens extends \Bga\Games\winter\Helpers\Pieces
 
     foreach (self::getTokensTypes() as $type => $token) {
       $tokens[] = [
-        'location' => TOKEN_LOCATION_BOARD,
+        'location' => TOKEN_LOCATION_DECK,
         'type' => $type,
         'nbr' => $token['nbr'],
       ];

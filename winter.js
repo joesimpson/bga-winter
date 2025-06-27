@@ -524,7 +524,7 @@ function (dojo, declare) {
         tplToken(token, prefix ='') {
             if(token.type == TOKEN_COUNTER_BLUE_LIGHT 
             || token.type == TOKEN_COUNTER_BLUE_DARK) 
-                return `<div class="winter_token winter_token_counter" id="winter_token${prefix}-${token.id}" data-type="${token.type}"></div>`;
+                return `<div class="winter_token winter_token_counter" id="winter_token${prefix}-${token.id}" data-type="${token.type}" data-row="${token.row}" data-col="${token.col}"></div>`;
             return '';
         },
    });             

@@ -16,6 +16,8 @@ class Token extends \Bga\Games\winter\Helpers\DB_Model
     'location' => 'token_location',
     'pId' => ['player_id', 'int'],
     'type' => ['type', 'int'],
+    'row' => ['y', 'int'],
+    'col' => ['x', 'int'],
   ];
    
   public function __construct($row, $datas)

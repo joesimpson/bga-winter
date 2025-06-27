@@ -1,4 +1,6 @@
 
+$token_counter_width : 40px;
+
 .winter_token_counter{
     border-radius: 10px;
     border-radius: 100%;
@@ -7,7 +9,7 @@
     $icons_img_height: 152px;
     $icon_img_width: 76px;
     $icon_img_height: 76px;
-    $icon_img_ratio: math.div(40px, $icon_img_width );
+    $icon_img_ratio: math.div($token_counter_width, $icon_img_width );
 
     background-size: 
         math.percentage(math.div($icons_img_width, $icon_img_width )) 
@@ -31,6 +33,16 @@
 #winter_map_container{
     .winter_token_counter{
         pointer-events: none;
-        //position: absolute;
+        position: absolute;
+        
+        @for $i from -100 through 100 {//18 cards MAX, where each offset is a half card
+            //Base offset from winter_card, but the token will be placed on top left corner of card, thus we add -token_counter_width/2
+            &[data-row="#{$i}"] {
+                top: calc(($i) /2 * var(--winter_board_card_height) - $token_counter_width/2);
+            }
+            &[data-col="#{$i}"] {
+                left: calc(($i) /2 * var(--winter_board_card_width) - $token_counter_width/2);
+            }
+        }
     }
 }
