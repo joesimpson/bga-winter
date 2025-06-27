@@ -33,7 +33,6 @@ class Tokens extends \Bga\Games\winter\Helpers\Pieces
 
     return 
       self::getInLocation(TOKEN_LOCATION_BOARD)
-      ->merge(self::getInLocation(TOKEN_LOCATION_TILE.'%'))
       ->merge(self::getInLocation(TOKEN_LOCATION_HAND))
       ->map(function ($token) {
         return $token->getUiData();
@@ -100,8 +99,8 @@ class Tokens extends \Bga\Games\winter\Helpers\Pieces
       ];
     };
     return [
-      TOKEN_TYPE_COUNTER => $f([ NB_COUNTER_COPIES, ]), 
-      //TODO JSA TOKEN MODEL
+      TOKEN_COUNTER_BLUE_LIGHT => $f([ NB_COUNTER_COPIES, ]), 
+      TOKEN_COUNTER_BLUE_DARK => $f([ NB_COUNTER_COPIES, ]), 
     ];
   }
 }

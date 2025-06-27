@@ -23,10 +23,10 @@ const CARD_COLOR_BLUE_DARK = 2;
 //          MEEPLES
 /////////////////////////////////////////////////////////
 const TOKEN_LOCATION_BOARD = 'board';
-const TOKEN_LOCATION_TILE = 'tile-';//TO BE FOLLOWED by TILE ID !
 const TOKEN_LOCATION_HAND = 'hand';
 
-const TOKEN_TYPE_COUNTER = 1;
+const TOKEN_COUNTER_BLUE_LIGHT = 1;
+const TOKEN_COUNTER_BLUE_DARK = 2;
 
 //9 per color
 const NB_COUNTER_COPIES = 9;

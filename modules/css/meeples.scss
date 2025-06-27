@@ -1,4 +1,36 @@
 
 .winter_token_counter{
+    border-radius: 10px;
+    border-radius: 100%;
+    background-image: url("img/icons.png");
+    $icons_img_width: 228px;
+    $icons_img_height: 152px;
+    $icon_img_width: 76px;
+    $icon_img_height: 76px;
+    $icon_img_ratio: math.div(40px, $icon_img_width );
+
+    background-size: 
+        math.percentage(math.div($icons_img_width, $icon_img_width )) 
+        math.percentage(math.div($icons_img_height,$icon_img_height )) 
+        !important;
+    background-repeat: repeat !important;
+    width: calc( $icon_img_ratio * $icon_img_width);
+    height: calc( $icon_img_ratio * $icon_img_height);
     
+    &[data-type="2"] {//TOKEN_COUNTER_BLUE_DARK
+        background-position-y: calc( $icon_img_ratio * -1 * 0 * $icon_img_height);
+        background-position-x: calc( $icon_img_ratio * -1 * 0 * $icon_img_width);
+    } 
+    &[data-type="1"]{//TOKEN_COUNTER_BLUE_LIGHT
+        background-position-y: calc( $icon_img_ratio * -1 * 0 * $icon_img_height);
+        background-position-x: calc( $icon_img_ratio * -1 * 1 * $icon_img_width);
+    }
+}
+
+
+#winter_map_container{
+    .winter_token_counter{
+        pointer-events: none;
+        //position: absolute;
+    }
 }

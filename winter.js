@@ -29,11 +29,13 @@ define([
 function (dojo, declare) {
     //COnstants copied from PHP file
     const CARD_LOCATION_BOARD = 'board';
+    const TOKEN_LOCATION_BOARD = 'board';
 
     const PREF_UNDO_STYLE = 101;
     const PREF_CONFIRM = 102;
     
-    const TOKEN_TYPE_COUNTER = 1;
+    const TOKEN_COUNTER_BLUE_LIGHT = 1;
+    const TOKEN_COUNTER_BLUE_DARK = 2;
 
     return declare("bgagame.winter", [customgame.game], {
         constructor: function(){
@@ -84,7 +86,10 @@ function (dojo, declare) {
                         <div id="winter_map_container">
                             <div id="winter_map_scrollable"></div>
                             <div id="winter_map_surface"></div>
-                            <div id="winter_map_scrollable_oversurface"></div>
+                            <div id="winter_map_scrollable_oversurface">
+                                <div id="winter_map_cards"></div> 
+                                <div id="winter_map_tokens"></div> 
+                            </div>
                         
                             <div class="movetop"></div> 
                             <div class="movedown"></div> 
@@ -471,7 +476,7 @@ function (dojo, declare) {
     
         getCardContainer(card) { 
             if( CARD_LOCATION_BOARD == card.location) {
-                return $("winter_map_scrollable_oversurface");
+                return $("winter_map_cards");//winter_map_scrollable_oversurface 
             }
 
             console.error('Trying to get container of a card', card);
@@ -498,7 +503,10 @@ function (dojo, declare) {
                 return token.id;
             });
         },
-        getTokenContainer(token) {  
+        getTokenContainer(token) { 
+            if( TOKEN_LOCATION_BOARD == token.location) {
+                return $("winter_map_tokens");
+            } 
             
             console.error('Trying to get container of a token', token);
             return 'winter_game_container';
@@ -514,8 +522,9 @@ function (dojo, declare) {
         },
     
         tplToken(token, prefix ='') {
-            if(token.type == TOKEN_TYPE_COUNTER) 
-                return `<div class="winter_token winter_token_counter" id="winter_token${prefix}-${token.id}"></div>`;
+            if(token.type == TOKEN_COUNTER_BLUE_LIGHT 
+            || token.type == TOKEN_COUNTER_BLUE_DARK) 
+                return `<div class="winter_token winter_token_counter" id="winter_token${prefix}-${token.id}" data-type="${token.type}"></div>`;
             return '';
         },
    });             

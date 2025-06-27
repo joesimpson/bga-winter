@@ -659,6 +659,28 @@
   left: 2040px;
 }
 
+.winter_token_counter {
+  border-radius: 10px;
+  border-radius: 100%;
+  background-image: url("img/icons.png");
+  background-size: 300% 200% !important;
+  background-repeat: repeat !important;
+  width: 40px;
+  height: 40px;
+}
+.winter_token_counter[data-type="2"] {
+  background-position-y: 0px;
+  background-position-x: 0px;
+}
+.winter_token_counter[data-type="1"] {
+  background-position-y: 0px;
+  background-position-x: -40px;
+}
+
+#winter_map_container .winter_token_counter {
+  pointer-events: none;
+}
+
 /** Scrollable area **/
 #winter_map_container {
   position: relative;
@@ -725,6 +747,15 @@
   bottom: 0px;
   left: 50%;
   background-position: 32px 32px;
+}
+
+#winter_map_container #winter_map_cards {
+  position: absolute;
+  z-index: 2;
+}
+#winter_map_container #winter_map_tokens {
+  position: absolute;
+  z-index: 10;
 }
 
 /**
