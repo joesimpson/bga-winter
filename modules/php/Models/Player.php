@@ -34,6 +34,8 @@ class Player extends \Bga\Games\winter\Helpers\DB_Model
   public function getUiData($currentPlayerId = null)
   {
     $data = parent::getUiData();
+
+    $data["nbtokens"] = $this->getNbTokensOnBoard();
  
     return $data;
   }
@@ -84,6 +86,15 @@ class Player extends \Bga\Games\winter\Helpers\DB_Model
   
   public function giveExtraTime(){
     Game::get()->giveExtraTime($this->getId());
+  }
+
+    /**
+   * @return int number of player tokens on board
+   */
+  public function getNbTokensOnBoard()
+  {
+    $n = Tokens::countPlayerTokens($this->getId(),TOKEN_LOCATION_BOARD);
+    return $n;
   }
   
 }

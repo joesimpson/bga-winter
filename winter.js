@@ -75,7 +75,11 @@ function (dojo, declare) {
                 <div id="winter_game_container">
                     <div id="winter_overall_background"></div>
                     <div id="winter_main_zone">
-
+                        <div id="winter_cards_deck_container">
+                            <div class="winter_card_back">
+                                <div class="winter_deck_size" id="winter_deck_size">${gamedatas.deckSize}</div>
+                            </div>
+                        </div>
                         <!-- BGA SCROLLMAP Component -->
                         <div id="winter_map_container">
                             <div id="winter_map_scrollable"></div>
@@ -115,6 +119,9 @@ function (dojo, declare) {
             this.setupInfoPanel();
             this.setupCards();
             this.setupTokens();
+
+            this._counters['deckSize'] = this.createCounter('winter_deck_size',this.gamedatas.deckSize);
+            this.addCustomTooltip(`winter_deck_size`, _('Cards in deck'));
  
             debug( "Ending specific game setup" );
 
@@ -306,7 +313,7 @@ function (dojo, declare) {
                 if (isCurrent) currentPlayerNo = player.no;
  
                 this._counters[pId] = {
-                    tokens: this.createCounter(`winter_counter_${pId}_tokens`, player.nbtokens),
+                    nbtokens: this.createCounter(`winter_counter_${pId}_tokens`, player.nbtokens),
                 };
             });
     

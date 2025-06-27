@@ -123,8 +123,20 @@
 }
 .winter_card_back.winter_card_back,
 .winter_card.winter_card_back {
-  background-position-x: 100%;
-  background-position-y: 66.66%;
+  background-position-x: 0%;
+  background-position-y: 100%;
+}
+.winter_card_back.winter_card_back .winter_deck_size,
+.winter_card.winter_card_back .winter_deck_size {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  position: absolute;
+  bottom: 15%;
+  text-align: center;
+  width: 100%;
+  color: black;
+  font-size: 25px;
 }
 .winter_card_back.selectable,
 .winter_card.selectable {
@@ -396,11 +408,20 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: 400px;
+  height: 600px;
+  outline: 2px dotted black;
 }
 
 #winter_map_scrollable, #winter_map_scrollable_oversurface {
   position: absolute;
+}
+
+#winter_map_scrollable_oversurface {
+  pointer-events: none;
+}
+
+#winter_map_scrollable_oversurface > * {
+  pointer-events: initial;
 }
 
 #winter_map_surface {

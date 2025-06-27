@@ -23,8 +23,18 @@ $card_height: 158px;
     }
 
     &.winter_card_back{
-        background-position-x: 100%;
-        background-position-y: 66.66%;
+        background-position-x: 0%;
+        background-position-y: 100%;
+                
+        .winter_deck_size{
+            user-select: none;
+            position: absolute;
+            bottom: 15%;
+            text-align: center;
+            width: 100%;
+            color: black;
+            font-size: 25px;
+        }
     }
 
     position: relative; 
@@ -47,6 +57,7 @@ $card_height: 158px;
 
 #winter_map_container{
     .winter_card{
+        //pointer-events: none;// Don't do it if we want tooltips
         position: absolute;
 
         @for $i from -20 through 20 {//18 cards MAX

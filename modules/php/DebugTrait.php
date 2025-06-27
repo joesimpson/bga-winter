@@ -80,10 +80,10 @@ trait DebugTrait
     $this->gamestate->jumpToState(ST_PLAYER_TURN);
   }
   
-  function debug_GridCards(){
+  function debug_GridCards(int $nbCards){
     Cards::moveAllInLocation(CARD_LOCATION_BOARD,CARD_LOCATION_DECK);
-    //Cards::pickForLocation(5,CARD_LOCATION_DECK,CARD_LOCATION_BOARD);
-    Cards::moveAllInLocation(CARD_LOCATION_DECK,CARD_LOCATION_BOARD);
+    Cards::pickForLocation($nbCards,CARD_LOCATION_DECK,CARD_LOCATION_BOARD);
+    //Cards::moveAllInLocation(CARD_LOCATION_DECK,CARD_LOCATION_BOARD);
     $cards = Cards::getInLocation(CARD_LOCATION_BOARD);
 
     $k =0;

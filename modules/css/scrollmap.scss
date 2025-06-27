@@ -5,11 +5,21 @@
     overflow: hidden;
 
     width: 100%;
-    height: 400px;
+    height: 600px;
+    //box-shadow: 1px 1px 5px black;
+    outline: 2px dotted black;
 }
 #winter_map_scrollable, #winter_map_scrollable_oversurface {
     position: absolute;
 }
+
+#winter_map_scrollable_oversurface {
+	pointer-events: none;
+}
+#winter_map_scrollable_oversurface > *{
+	pointer-events: initial;
+}
+
 #winter_map_surface {
     position: absolute;
     top: 0px;
