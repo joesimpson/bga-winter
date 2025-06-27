@@ -88,14 +88,24 @@ trait DebugTrait
 
     $k =0;
     foreach($cards as $card){
-      //Test with 2 rows of cards :
-      if(($k % 2) == 0){
+      $card->setCol( $k /4 ); //% (count($cards)/2)
+      $card->setCol( $k );
+      //Test with 2 rows of cards + row between them
+      if(($k % 5) == 0){
         $card->setRow(1);
-        $card->setCol( $k /2 ); //% (count($cards)/2)
+      }
+      else if(($k % 4) == 0){
+        $card->setRow(-2);
+      }
+      else if(($k % 3) == 0){
+        $card->setRow(1);
+        $card->setCol( -$k );
+      }
+      else if(($k % 2) == 0){
+        $card->setRow(0);
       }
       else {
         $card->setRow(2);
-        $card->setCol( $k /2 ); //% (count($cards)/2)
       }
       $k++;
     } 

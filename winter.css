@@ -153,128 +153,264 @@
   box-shadow: 0px 0px 6px 6px #d3ff00, 0px 0px 6px 6px #dfff00, 0px 0px 6px 6px #fffb00;
 }
 
+.winter_card_tooltip {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.winter_card_tooltip hr {
+  width: 100%;
+}
+.winter_card_tooltip .winter_card {
+  width: 204px;
+  height: 316px;
+}
+
 #winter_map_container .winter_card {
   position: absolute;
 }
-#winter_map_container .winter_card[data-row="-20"] {
+#winter_map_container .winter_card[data-row="-40"] {
   top: -3160px;
 }
-#winter_map_container .winter_card[data-col="-20"] {
+#winter_map_container .winter_card[data-col="-40"] {
   left: -2040px;
 }
-#winter_map_container .winter_card[data-row="-19"] {
+#winter_map_container .winter_card[data-row="-39"] {
+  top: -3081px;
+}
+#winter_map_container .winter_card[data-col="-39"] {
+  left: -1989px;
+}
+#winter_map_container .winter_card[data-row="-38"] {
   top: -3002px;
 }
-#winter_map_container .winter_card[data-col="-19"] {
+#winter_map_container .winter_card[data-col="-38"] {
   left: -1938px;
 }
-#winter_map_container .winter_card[data-row="-18"] {
+#winter_map_container .winter_card[data-row="-37"] {
+  top: -2923px;
+}
+#winter_map_container .winter_card[data-col="-37"] {
+  left: -1887px;
+}
+#winter_map_container .winter_card[data-row="-36"] {
   top: -2844px;
 }
-#winter_map_container .winter_card[data-col="-18"] {
+#winter_map_container .winter_card[data-col="-36"] {
   left: -1836px;
 }
-#winter_map_container .winter_card[data-row="-17"] {
+#winter_map_container .winter_card[data-row="-35"] {
+  top: -2765px;
+}
+#winter_map_container .winter_card[data-col="-35"] {
+  left: -1785px;
+}
+#winter_map_container .winter_card[data-row="-34"] {
   top: -2686px;
 }
-#winter_map_container .winter_card[data-col="-17"] {
+#winter_map_container .winter_card[data-col="-34"] {
   left: -1734px;
 }
-#winter_map_container .winter_card[data-row="-16"] {
+#winter_map_container .winter_card[data-row="-33"] {
+  top: -2607px;
+}
+#winter_map_container .winter_card[data-col="-33"] {
+  left: -1683px;
+}
+#winter_map_container .winter_card[data-row="-32"] {
   top: -2528px;
 }
-#winter_map_container .winter_card[data-col="-16"] {
+#winter_map_container .winter_card[data-col="-32"] {
   left: -1632px;
 }
-#winter_map_container .winter_card[data-row="-15"] {
+#winter_map_container .winter_card[data-row="-31"] {
+  top: -2449px;
+}
+#winter_map_container .winter_card[data-col="-31"] {
+  left: -1581px;
+}
+#winter_map_container .winter_card[data-row="-30"] {
   top: -2370px;
 }
-#winter_map_container .winter_card[data-col="-15"] {
+#winter_map_container .winter_card[data-col="-30"] {
   left: -1530px;
 }
-#winter_map_container .winter_card[data-row="-14"] {
+#winter_map_container .winter_card[data-row="-29"] {
+  top: -2291px;
+}
+#winter_map_container .winter_card[data-col="-29"] {
+  left: -1479px;
+}
+#winter_map_container .winter_card[data-row="-28"] {
   top: -2212px;
 }
-#winter_map_container .winter_card[data-col="-14"] {
+#winter_map_container .winter_card[data-col="-28"] {
   left: -1428px;
 }
-#winter_map_container .winter_card[data-row="-13"] {
+#winter_map_container .winter_card[data-row="-27"] {
+  top: -2133px;
+}
+#winter_map_container .winter_card[data-col="-27"] {
+  left: -1377px;
+}
+#winter_map_container .winter_card[data-row="-26"] {
   top: -2054px;
 }
-#winter_map_container .winter_card[data-col="-13"] {
+#winter_map_container .winter_card[data-col="-26"] {
   left: -1326px;
 }
-#winter_map_container .winter_card[data-row="-12"] {
+#winter_map_container .winter_card[data-row="-25"] {
+  top: -1975px;
+}
+#winter_map_container .winter_card[data-col="-25"] {
+  left: -1275px;
+}
+#winter_map_container .winter_card[data-row="-24"] {
   top: -1896px;
 }
-#winter_map_container .winter_card[data-col="-12"] {
+#winter_map_container .winter_card[data-col="-24"] {
   left: -1224px;
 }
-#winter_map_container .winter_card[data-row="-11"] {
+#winter_map_container .winter_card[data-row="-23"] {
+  top: -1817px;
+}
+#winter_map_container .winter_card[data-col="-23"] {
+  left: -1173px;
+}
+#winter_map_container .winter_card[data-row="-22"] {
   top: -1738px;
 }
-#winter_map_container .winter_card[data-col="-11"] {
+#winter_map_container .winter_card[data-col="-22"] {
   left: -1122px;
 }
-#winter_map_container .winter_card[data-row="-10"] {
+#winter_map_container .winter_card[data-row="-21"] {
+  top: -1659px;
+}
+#winter_map_container .winter_card[data-col="-21"] {
+  left: -1071px;
+}
+#winter_map_container .winter_card[data-row="-20"] {
   top: -1580px;
 }
-#winter_map_container .winter_card[data-col="-10"] {
+#winter_map_container .winter_card[data-col="-20"] {
   left: -1020px;
 }
-#winter_map_container .winter_card[data-row="-9"] {
+#winter_map_container .winter_card[data-row="-19"] {
+  top: -1501px;
+}
+#winter_map_container .winter_card[data-col="-19"] {
+  left: -969px;
+}
+#winter_map_container .winter_card[data-row="-18"] {
   top: -1422px;
 }
-#winter_map_container .winter_card[data-col="-9"] {
+#winter_map_container .winter_card[data-col="-18"] {
   left: -918px;
 }
-#winter_map_container .winter_card[data-row="-8"] {
+#winter_map_container .winter_card[data-row="-17"] {
+  top: -1343px;
+}
+#winter_map_container .winter_card[data-col="-17"] {
+  left: -867px;
+}
+#winter_map_container .winter_card[data-row="-16"] {
   top: -1264px;
 }
-#winter_map_container .winter_card[data-col="-8"] {
+#winter_map_container .winter_card[data-col="-16"] {
   left: -816px;
 }
-#winter_map_container .winter_card[data-row="-7"] {
+#winter_map_container .winter_card[data-row="-15"] {
+  top: -1185px;
+}
+#winter_map_container .winter_card[data-col="-15"] {
+  left: -765px;
+}
+#winter_map_container .winter_card[data-row="-14"] {
   top: -1106px;
 }
-#winter_map_container .winter_card[data-col="-7"] {
+#winter_map_container .winter_card[data-col="-14"] {
   left: -714px;
 }
-#winter_map_container .winter_card[data-row="-6"] {
+#winter_map_container .winter_card[data-row="-13"] {
+  top: -1027px;
+}
+#winter_map_container .winter_card[data-col="-13"] {
+  left: -663px;
+}
+#winter_map_container .winter_card[data-row="-12"] {
   top: -948px;
 }
-#winter_map_container .winter_card[data-col="-6"] {
+#winter_map_container .winter_card[data-col="-12"] {
   left: -612px;
 }
-#winter_map_container .winter_card[data-row="-5"] {
+#winter_map_container .winter_card[data-row="-11"] {
+  top: -869px;
+}
+#winter_map_container .winter_card[data-col="-11"] {
+  left: -561px;
+}
+#winter_map_container .winter_card[data-row="-10"] {
   top: -790px;
 }
-#winter_map_container .winter_card[data-col="-5"] {
+#winter_map_container .winter_card[data-col="-10"] {
   left: -510px;
 }
-#winter_map_container .winter_card[data-row="-4"] {
+#winter_map_container .winter_card[data-row="-9"] {
+  top: -711px;
+}
+#winter_map_container .winter_card[data-col="-9"] {
+  left: -459px;
+}
+#winter_map_container .winter_card[data-row="-8"] {
   top: -632px;
 }
-#winter_map_container .winter_card[data-col="-4"] {
+#winter_map_container .winter_card[data-col="-8"] {
   left: -408px;
 }
-#winter_map_container .winter_card[data-row="-3"] {
+#winter_map_container .winter_card[data-row="-7"] {
+  top: -553px;
+}
+#winter_map_container .winter_card[data-col="-7"] {
+  left: -357px;
+}
+#winter_map_container .winter_card[data-row="-6"] {
   top: -474px;
 }
-#winter_map_container .winter_card[data-col="-3"] {
+#winter_map_container .winter_card[data-col="-6"] {
   left: -306px;
 }
-#winter_map_container .winter_card[data-row="-2"] {
+#winter_map_container .winter_card[data-row="-5"] {
+  top: -395px;
+}
+#winter_map_container .winter_card[data-col="-5"] {
+  left: -255px;
+}
+#winter_map_container .winter_card[data-row="-4"] {
   top: -316px;
 }
-#winter_map_container .winter_card[data-col="-2"] {
+#winter_map_container .winter_card[data-col="-4"] {
   left: -204px;
 }
-#winter_map_container .winter_card[data-row="-1"] {
+#winter_map_container .winter_card[data-row="-3"] {
+  top: -237px;
+}
+#winter_map_container .winter_card[data-col="-3"] {
+  left: -153px;
+}
+#winter_map_container .winter_card[data-row="-2"] {
   top: -158px;
 }
-#winter_map_container .winter_card[data-col="-1"] {
+#winter_map_container .winter_card[data-col="-2"] {
   left: -102px;
+}
+#winter_map_container .winter_card[data-row="-1"] {
+  top: -79px;
+}
+#winter_map_container .winter_card[data-col="-1"] {
+  left: -51px;
 }
 #winter_map_container .winter_card[data-row="0"] {
   top: 0px;
@@ -283,123 +419,243 @@
   left: 0px;
 }
 #winter_map_container .winter_card[data-row="1"] {
-  top: 158px;
+  top: 79px;
 }
 #winter_map_container .winter_card[data-col="1"] {
-  left: 102px;
+  left: 51px;
 }
 #winter_map_container .winter_card[data-row="2"] {
-  top: 316px;
+  top: 158px;
 }
 #winter_map_container .winter_card[data-col="2"] {
-  left: 204px;
+  left: 102px;
 }
 #winter_map_container .winter_card[data-row="3"] {
-  top: 474px;
+  top: 237px;
 }
 #winter_map_container .winter_card[data-col="3"] {
-  left: 306px;
+  left: 153px;
 }
 #winter_map_container .winter_card[data-row="4"] {
-  top: 632px;
+  top: 316px;
 }
 #winter_map_container .winter_card[data-col="4"] {
-  left: 408px;
+  left: 204px;
 }
 #winter_map_container .winter_card[data-row="5"] {
-  top: 790px;
+  top: 395px;
 }
 #winter_map_container .winter_card[data-col="5"] {
-  left: 510px;
+  left: 255px;
 }
 #winter_map_container .winter_card[data-row="6"] {
-  top: 948px;
+  top: 474px;
 }
 #winter_map_container .winter_card[data-col="6"] {
-  left: 612px;
+  left: 306px;
 }
 #winter_map_container .winter_card[data-row="7"] {
-  top: 1106px;
+  top: 553px;
 }
 #winter_map_container .winter_card[data-col="7"] {
-  left: 714px;
+  left: 357px;
 }
 #winter_map_container .winter_card[data-row="8"] {
-  top: 1264px;
+  top: 632px;
 }
 #winter_map_container .winter_card[data-col="8"] {
-  left: 816px;
+  left: 408px;
 }
 #winter_map_container .winter_card[data-row="9"] {
-  top: 1422px;
+  top: 711px;
 }
 #winter_map_container .winter_card[data-col="9"] {
-  left: 918px;
+  left: 459px;
 }
 #winter_map_container .winter_card[data-row="10"] {
-  top: 1580px;
+  top: 790px;
 }
 #winter_map_container .winter_card[data-col="10"] {
-  left: 1020px;
+  left: 510px;
 }
 #winter_map_container .winter_card[data-row="11"] {
-  top: 1738px;
+  top: 869px;
 }
 #winter_map_container .winter_card[data-col="11"] {
-  left: 1122px;
+  left: 561px;
 }
 #winter_map_container .winter_card[data-row="12"] {
-  top: 1896px;
+  top: 948px;
 }
 #winter_map_container .winter_card[data-col="12"] {
-  left: 1224px;
+  left: 612px;
 }
 #winter_map_container .winter_card[data-row="13"] {
-  top: 2054px;
+  top: 1027px;
 }
 #winter_map_container .winter_card[data-col="13"] {
-  left: 1326px;
+  left: 663px;
 }
 #winter_map_container .winter_card[data-row="14"] {
-  top: 2212px;
+  top: 1106px;
 }
 #winter_map_container .winter_card[data-col="14"] {
-  left: 1428px;
+  left: 714px;
 }
 #winter_map_container .winter_card[data-row="15"] {
-  top: 2370px;
+  top: 1185px;
 }
 #winter_map_container .winter_card[data-col="15"] {
-  left: 1530px;
+  left: 765px;
 }
 #winter_map_container .winter_card[data-row="16"] {
-  top: 2528px;
+  top: 1264px;
 }
 #winter_map_container .winter_card[data-col="16"] {
-  left: 1632px;
+  left: 816px;
 }
 #winter_map_container .winter_card[data-row="17"] {
-  top: 2686px;
+  top: 1343px;
 }
 #winter_map_container .winter_card[data-col="17"] {
-  left: 1734px;
+  left: 867px;
 }
 #winter_map_container .winter_card[data-row="18"] {
-  top: 2844px;
+  top: 1422px;
 }
 #winter_map_container .winter_card[data-col="18"] {
-  left: 1836px;
+  left: 918px;
 }
 #winter_map_container .winter_card[data-row="19"] {
-  top: 3002px;
+  top: 1501px;
 }
 #winter_map_container .winter_card[data-col="19"] {
-  left: 1938px;
+  left: 969px;
 }
 #winter_map_container .winter_card[data-row="20"] {
-  top: 3160px;
+  top: 1580px;
 }
 #winter_map_container .winter_card[data-col="20"] {
+  left: 1020px;
+}
+#winter_map_container .winter_card[data-row="21"] {
+  top: 1659px;
+}
+#winter_map_container .winter_card[data-col="21"] {
+  left: 1071px;
+}
+#winter_map_container .winter_card[data-row="22"] {
+  top: 1738px;
+}
+#winter_map_container .winter_card[data-col="22"] {
+  left: 1122px;
+}
+#winter_map_container .winter_card[data-row="23"] {
+  top: 1817px;
+}
+#winter_map_container .winter_card[data-col="23"] {
+  left: 1173px;
+}
+#winter_map_container .winter_card[data-row="24"] {
+  top: 1896px;
+}
+#winter_map_container .winter_card[data-col="24"] {
+  left: 1224px;
+}
+#winter_map_container .winter_card[data-row="25"] {
+  top: 1975px;
+}
+#winter_map_container .winter_card[data-col="25"] {
+  left: 1275px;
+}
+#winter_map_container .winter_card[data-row="26"] {
+  top: 2054px;
+}
+#winter_map_container .winter_card[data-col="26"] {
+  left: 1326px;
+}
+#winter_map_container .winter_card[data-row="27"] {
+  top: 2133px;
+}
+#winter_map_container .winter_card[data-col="27"] {
+  left: 1377px;
+}
+#winter_map_container .winter_card[data-row="28"] {
+  top: 2212px;
+}
+#winter_map_container .winter_card[data-col="28"] {
+  left: 1428px;
+}
+#winter_map_container .winter_card[data-row="29"] {
+  top: 2291px;
+}
+#winter_map_container .winter_card[data-col="29"] {
+  left: 1479px;
+}
+#winter_map_container .winter_card[data-row="30"] {
+  top: 2370px;
+}
+#winter_map_container .winter_card[data-col="30"] {
+  left: 1530px;
+}
+#winter_map_container .winter_card[data-row="31"] {
+  top: 2449px;
+}
+#winter_map_container .winter_card[data-col="31"] {
+  left: 1581px;
+}
+#winter_map_container .winter_card[data-row="32"] {
+  top: 2528px;
+}
+#winter_map_container .winter_card[data-col="32"] {
+  left: 1632px;
+}
+#winter_map_container .winter_card[data-row="33"] {
+  top: 2607px;
+}
+#winter_map_container .winter_card[data-col="33"] {
+  left: 1683px;
+}
+#winter_map_container .winter_card[data-row="34"] {
+  top: 2686px;
+}
+#winter_map_container .winter_card[data-col="34"] {
+  left: 1734px;
+}
+#winter_map_container .winter_card[data-row="35"] {
+  top: 2765px;
+}
+#winter_map_container .winter_card[data-col="35"] {
+  left: 1785px;
+}
+#winter_map_container .winter_card[data-row="36"] {
+  top: 2844px;
+}
+#winter_map_container .winter_card[data-col="36"] {
+  left: 1836px;
+}
+#winter_map_container .winter_card[data-row="37"] {
+  top: 2923px;
+}
+#winter_map_container .winter_card[data-col="37"] {
+  left: 1887px;
+}
+#winter_map_container .winter_card[data-row="38"] {
+  top: 3002px;
+}
+#winter_map_container .winter_card[data-col="38"] {
+  left: 1938px;
+}
+#winter_map_container .winter_card[data-row="39"] {
+  top: 3081px;
+}
+#winter_map_container .winter_card[data-col="39"] {
+  left: 1989px;
+}
+#winter_map_container .winter_card[data-row="40"] {
+  top: 3160px;
+}
+#winter_map_container .winter_card[data-col="40"] {
   left: 2040px;
 }
 

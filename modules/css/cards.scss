@@ -53,19 +53,33 @@ $card_height: 158px;
  
 }
  
-
+.winter_card_tooltip{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    hr{
+        width: 100%;
+    }
+    .winter_card{
+        width: calc($card_width * 2);
+        height: calc($card_height * 2);
+    }
+}
 
 #winter_map_container{
     .winter_card{
         //pointer-events: none;// Don't do it if we want tooltips
         position: absolute;
 
-        @for $i from -20 through 20 {//18 cards MAX
+        @for $i from -40 through 40 {//18 cards MAX, where each offset is a half card
             &[data-row="#{$i}"] {
-                top: ($i) * $card_height;
+                top: calc(($i) /2 * $card_height);
             }
             &[data-col="#{$i}"] {
-                left: ($i) * $card_width;
+                left: calc(($i) /2 * $card_width);
             }
         }
     }

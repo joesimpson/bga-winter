@@ -453,11 +453,11 @@ function (dojo, declare) {
             return [`<div class='winter_card_tooltip'>
                     <div class="winter_h1">${title}</div>
                     <hr/>
-                    ${div}
                     <div class="winter_h3">${
                         (card.row == null || card.col == null ) ? "" :
                         this.fsr(_("Coordinates : ${row}, ${col}"), {row: card.row, col: card.col})
                     }</div>
+                    ${div}
                     <div class="winter_h5">${this.fsr(_("type : #${value}"), {value: card.type})}</div>
                 </div>`];
         }, 
