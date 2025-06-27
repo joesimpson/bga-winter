@@ -43,3 +43,19 @@ $card_height: 158px;
  
 }
  
+
+
+#winter_map_container{
+    .winter_card{
+        position: absolute;
+
+        @for $i from -20 through 20 {//18 cards MAX
+            &[data-row="#{$i}"] {
+                top: ($i) * $card_height;
+            }
+            &[data-col="#{$i}"] {
+                left: ($i) * $card_width;
+            }
+        }
+    }
+}

@@ -18,7 +18,7 @@ class Cards extends \Bga\Games\winter\Helpers\Pieces
   protected static $prefix = 'card_';
   protected static $autoIncrement = true;
   protected static $autoremovePrefix = false;
-  protected static $customFields = [ 'type'];
+  protected static $customFields = [ 'type', 'x', 'y'];
   protected static $autoreshuffle = true;
   protected static $autoreshuffleCustom = [CARD_LOCATION_DECK => CARD_LOCATION_DISCARD];
 

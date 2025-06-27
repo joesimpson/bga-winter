@@ -141,6 +141,256 @@
   box-shadow: 0px 0px 6px 6px #d3ff00, 0px 0px 6px 6px #dfff00, 0px 0px 6px 6px #fffb00;
 }
 
+#winter_map_container .winter_card {
+  position: absolute;
+}
+#winter_map_container .winter_card[data-row="-20"] {
+  top: -3160px;
+}
+#winter_map_container .winter_card[data-col="-20"] {
+  left: -2040px;
+}
+#winter_map_container .winter_card[data-row="-19"] {
+  top: -3002px;
+}
+#winter_map_container .winter_card[data-col="-19"] {
+  left: -1938px;
+}
+#winter_map_container .winter_card[data-row="-18"] {
+  top: -2844px;
+}
+#winter_map_container .winter_card[data-col="-18"] {
+  left: -1836px;
+}
+#winter_map_container .winter_card[data-row="-17"] {
+  top: -2686px;
+}
+#winter_map_container .winter_card[data-col="-17"] {
+  left: -1734px;
+}
+#winter_map_container .winter_card[data-row="-16"] {
+  top: -2528px;
+}
+#winter_map_container .winter_card[data-col="-16"] {
+  left: -1632px;
+}
+#winter_map_container .winter_card[data-row="-15"] {
+  top: -2370px;
+}
+#winter_map_container .winter_card[data-col="-15"] {
+  left: -1530px;
+}
+#winter_map_container .winter_card[data-row="-14"] {
+  top: -2212px;
+}
+#winter_map_container .winter_card[data-col="-14"] {
+  left: -1428px;
+}
+#winter_map_container .winter_card[data-row="-13"] {
+  top: -2054px;
+}
+#winter_map_container .winter_card[data-col="-13"] {
+  left: -1326px;
+}
+#winter_map_container .winter_card[data-row="-12"] {
+  top: -1896px;
+}
+#winter_map_container .winter_card[data-col="-12"] {
+  left: -1224px;
+}
+#winter_map_container .winter_card[data-row="-11"] {
+  top: -1738px;
+}
+#winter_map_container .winter_card[data-col="-11"] {
+  left: -1122px;
+}
+#winter_map_container .winter_card[data-row="-10"] {
+  top: -1580px;
+}
+#winter_map_container .winter_card[data-col="-10"] {
+  left: -1020px;
+}
+#winter_map_container .winter_card[data-row="-9"] {
+  top: -1422px;
+}
+#winter_map_container .winter_card[data-col="-9"] {
+  left: -918px;
+}
+#winter_map_container .winter_card[data-row="-8"] {
+  top: -1264px;
+}
+#winter_map_container .winter_card[data-col="-8"] {
+  left: -816px;
+}
+#winter_map_container .winter_card[data-row="-7"] {
+  top: -1106px;
+}
+#winter_map_container .winter_card[data-col="-7"] {
+  left: -714px;
+}
+#winter_map_container .winter_card[data-row="-6"] {
+  top: -948px;
+}
+#winter_map_container .winter_card[data-col="-6"] {
+  left: -612px;
+}
+#winter_map_container .winter_card[data-row="-5"] {
+  top: -790px;
+}
+#winter_map_container .winter_card[data-col="-5"] {
+  left: -510px;
+}
+#winter_map_container .winter_card[data-row="-4"] {
+  top: -632px;
+}
+#winter_map_container .winter_card[data-col="-4"] {
+  left: -408px;
+}
+#winter_map_container .winter_card[data-row="-3"] {
+  top: -474px;
+}
+#winter_map_container .winter_card[data-col="-3"] {
+  left: -306px;
+}
+#winter_map_container .winter_card[data-row="-2"] {
+  top: -316px;
+}
+#winter_map_container .winter_card[data-col="-2"] {
+  left: -204px;
+}
+#winter_map_container .winter_card[data-row="-1"] {
+  top: -158px;
+}
+#winter_map_container .winter_card[data-col="-1"] {
+  left: -102px;
+}
+#winter_map_container .winter_card[data-row="0"] {
+  top: 0px;
+}
+#winter_map_container .winter_card[data-col="0"] {
+  left: 0px;
+}
+#winter_map_container .winter_card[data-row="1"] {
+  top: 158px;
+}
+#winter_map_container .winter_card[data-col="1"] {
+  left: 102px;
+}
+#winter_map_container .winter_card[data-row="2"] {
+  top: 316px;
+}
+#winter_map_container .winter_card[data-col="2"] {
+  left: 204px;
+}
+#winter_map_container .winter_card[data-row="3"] {
+  top: 474px;
+}
+#winter_map_container .winter_card[data-col="3"] {
+  left: 306px;
+}
+#winter_map_container .winter_card[data-row="4"] {
+  top: 632px;
+}
+#winter_map_container .winter_card[data-col="4"] {
+  left: 408px;
+}
+#winter_map_container .winter_card[data-row="5"] {
+  top: 790px;
+}
+#winter_map_container .winter_card[data-col="5"] {
+  left: 510px;
+}
+#winter_map_container .winter_card[data-row="6"] {
+  top: 948px;
+}
+#winter_map_container .winter_card[data-col="6"] {
+  left: 612px;
+}
+#winter_map_container .winter_card[data-row="7"] {
+  top: 1106px;
+}
+#winter_map_container .winter_card[data-col="7"] {
+  left: 714px;
+}
+#winter_map_container .winter_card[data-row="8"] {
+  top: 1264px;
+}
+#winter_map_container .winter_card[data-col="8"] {
+  left: 816px;
+}
+#winter_map_container .winter_card[data-row="9"] {
+  top: 1422px;
+}
+#winter_map_container .winter_card[data-col="9"] {
+  left: 918px;
+}
+#winter_map_container .winter_card[data-row="10"] {
+  top: 1580px;
+}
+#winter_map_container .winter_card[data-col="10"] {
+  left: 1020px;
+}
+#winter_map_container .winter_card[data-row="11"] {
+  top: 1738px;
+}
+#winter_map_container .winter_card[data-col="11"] {
+  left: 1122px;
+}
+#winter_map_container .winter_card[data-row="12"] {
+  top: 1896px;
+}
+#winter_map_container .winter_card[data-col="12"] {
+  left: 1224px;
+}
+#winter_map_container .winter_card[data-row="13"] {
+  top: 2054px;
+}
+#winter_map_container .winter_card[data-col="13"] {
+  left: 1326px;
+}
+#winter_map_container .winter_card[data-row="14"] {
+  top: 2212px;
+}
+#winter_map_container .winter_card[data-col="14"] {
+  left: 1428px;
+}
+#winter_map_container .winter_card[data-row="15"] {
+  top: 2370px;
+}
+#winter_map_container .winter_card[data-col="15"] {
+  left: 1530px;
+}
+#winter_map_container .winter_card[data-row="16"] {
+  top: 2528px;
+}
+#winter_map_container .winter_card[data-col="16"] {
+  left: 1632px;
+}
+#winter_map_container .winter_card[data-row="17"] {
+  top: 2686px;
+}
+#winter_map_container .winter_card[data-col="17"] {
+  left: 1734px;
+}
+#winter_map_container .winter_card[data-row="18"] {
+  top: 2844px;
+}
+#winter_map_container .winter_card[data-col="18"] {
+  left: 1836px;
+}
+#winter_map_container .winter_card[data-row="19"] {
+  top: 3002px;
+}
+#winter_map_container .winter_card[data-col="19"] {
+  left: 1938px;
+}
+#winter_map_container .winter_card[data-row="20"] {
+  top: 3160px;
+}
+#winter_map_container .winter_card[data-col="20"] {
+  left: 2040px;
+}
+
 /** Scrollable area **/
 #winter_map_container {
   position: relative;

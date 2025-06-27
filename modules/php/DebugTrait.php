@@ -80,9 +80,26 @@ trait DebugTrait
     $this->gamestate->jumpToState(ST_PLAYER_TURN);
   }
   
-  function debug_DrawCards(){
+  function debug_GridCards(){
+    Cards::moveAllInLocation(CARD_LOCATION_BOARD,CARD_LOCATION_DECK);
     //Cards::pickForLocation(5,CARD_LOCATION_DECK,CARD_LOCATION_BOARD);
     Cards::moveAllInLocation(CARD_LOCATION_DECK,CARD_LOCATION_BOARD);
+    $cards = Cards::getInLocation(CARD_LOCATION_BOARD);
+
+    $k =0;
+    foreach($cards as $card){
+      //Test with 2 rows of cards :
+      if(($k % 2) == 0){
+        $card->setRow(1);
+        $card->setCol( $k /2 ); //% (count($cards)/2)
+      }
+      else {
+        $card->setRow(2);
+        $card->setCol( $k /2 ); //% (count($cards)/2)
+      }
+      $k++;
+    } 
+
     Notifications::refreshUI($this->getAllDatas());
   }
 

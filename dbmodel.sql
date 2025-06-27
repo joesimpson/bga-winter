@@ -34,6 +34,8 @@ CREATE TABLE IF NOT EXISTS `cards` (
   `card_state` int(10) DEFAULT 0,
   `card_location` varchar(32) NOT NULL,
   `type` int(10) NOT NULL,
+  `x` int(10) NULL COMMENT 'Row on board map',
+  `y` int(10) NULL COMMENT 'Column on board map',
   PRIMARY KEY (`card_id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 

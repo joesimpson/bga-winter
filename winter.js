@@ -28,9 +28,10 @@ define([
 ],
 function (dojo, declare) {
     //COnstants copied from PHP file
+    const CARD_LOCATION_BOARD = 'board';
+
     const PREF_UNDO_STYLE = 101;
     const PREF_CONFIRM = 102;
-
     
     const TOKEN_TYPE_COUNTER = 1;
 
@@ -108,7 +109,7 @@ function (dojo, declare) {
             this.scrollmap.setupOnScreenArrows( 150 ); // this will hook buttons to onclick functions with 150px scroll step
             //dojo.connect( $('enlargedisplay'), 'onclick', this, 'onIncreaseDisplayHeight' );
 
-            dojo.create("div",{innerHTML: "TODO Fill Scrollmap" },"winter_map_scrollable_oversurface");
+            this.scrollmap.scrollto(-2*102,-2*158);  //2*card_width,2*card_height
 
             this.setupPlayers();
             this.setupInfoPanel();
@@ -242,13 +243,14 @@ function (dojo, declare) {
             //SPECIFIC GAME elements to clear : 
         },
  
-        onIncreaseDisplayHeight: function(evt) {
-            debug('Event: onIncreaseDisplayHeight');
-            evt.preventDefault();
+        // onIncreaseDisplayHeight: function(evt) {
+        //     debug('Event: onIncreaseDisplayHeight');
+        //     evt.preventDefault();
         	
-            let cur_h = toint(dojo.style( $('winter_map_container'), 'height'));
-            dojo.style($('winter_map_container'), 'height', (cur_h + 300) + 'px');
-        },
+        //     let cur_h = toint(dojo.style( $('winter_map_container'), 'height'));
+        //     dojo.style($('winter_map_container'), 'height', (cur_h + 300) + 'px');
+        // },
+
         ////////////////////////////////////////////////////////////
         // _____                          _   _   _
         // |  ___|__  _ __ _ __ ___   __ _| |_| |_(_)_ __   __ _
@@ -445,19 +447,25 @@ function (dojo, declare) {
                     <div class="winter_h1">${title}</div>
                     <hr/>
                     ${div}
+                    <div class="winter_h3">${
+                        (card.row == null || card.col == null ) ? "" :
+                        this.fsr(_("Coordinates : ${row}, ${col}"), {row: card.row, col: card.col})
+                    }</div>
                     <div class="winter_h5">${this.fsr(_("type : #${value}"), {value: card.type})}</div>
                 </div>`];
         }, 
 
         tplCard(card, prefix ='') {
-            return `<div class="winter_card" id="winter_card${prefix}-${card.id}" data-id="${card.id}" data-type="${card.type}" >
+            return `<div class="winter_card" id="winter_card${prefix}-${card.id}" data-id="${card.id}" data-type="${card.type}" data-row="${card.row}" data-col="${card.col}">
                     <div class="winter_card_wrapper">
                     </div>
                 </div>`;
         },
     
         getCardContainer(card) { 
-            //TODO JSA cards VIEW
+            if( CARD_LOCATION_BOARD == card.location) {
+                return $("winter_map_scrollable_oversurface");
+            }
 
             console.error('Trying to get container of a card', card);
             return 'winter_game_container';
