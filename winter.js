@@ -221,7 +221,6 @@ function (dojo, declare) {
             this.forEachPlayer((player) => {
                 let pId = player.id;
                 this.scoreCtrl[pId].toValue(player.score);
-                this._counters[pId].cards.toValue(player.nbcards);
                 this._counters[pId].nbtokens.toValue(player.nbtokens);
             });
             this._counters['deckSize'].toValue(args.datas.deckSize);
@@ -446,6 +445,7 @@ function (dojo, declare) {
                     <div class="winter_h1">${title}</div>
                     <hr/>
                     ${div}
+                    <div class="winter_h5">${this.fsr(_("type : #${value}"), {value: card.type})}</div>
                 </div>`];
         }, 
 

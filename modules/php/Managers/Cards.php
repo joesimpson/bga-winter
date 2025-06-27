@@ -86,8 +86,14 @@ class Cards extends \Bga\Games\winter\Helpers\Pieces
       ];
     };
     return [
-      1 => $f([ 1, ]), 
-      //TODO JSA CARDS DECK
+      1 => $f([ 2, ]), 
+      2 => $f([ 2, ]), 
+      3 => $f([ 2, ]), 
+      4 => $f([ 2, ]), 
+      5 => $f([ 2, ]), 
+      6 => $f([ 2, ]), 
+      7 => $f([ 2, ]), 
+      8 => $f([ 2, ]), 
       
     
     ];

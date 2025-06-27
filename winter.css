@@ -71,13 +71,13 @@
 
 .winter_card_back,
 .winter_card {
-  width: 100px;
-  height: 200px;
+  width: 102px;
+  height: 158px;
   border: 1px solid black;
   box-shadow: 1px 1px 5px black;
   border-radius: 5px;
   border-radius: 5%;
-  background-size: 700% 400%;
+  background-size: 400% 300%;
   background-image: url("img/cards.jpg");
   position: relative;
 }
@@ -88,138 +88,43 @@
 }
 .winter_card_back[data-type="2"],
 .winter_card[data-type="2"] {
-  background-position-x: 16.6666666667%;
+  background-position-x: 33.3333333333%;
   background-position-y: 0%;
 }
 .winter_card_back[data-type="3"],
 .winter_card[data-type="3"] {
-  background-position-x: 33.3333333333%;
+  background-position-x: 66.6666666667%;
   background-position-y: 0%;
 }
 .winter_card_back[data-type="4"],
 .winter_card[data-type="4"] {
-  background-position-x: 50%;
+  background-position-x: 100%;
   background-position-y: 0%;
 }
 .winter_card_back[data-type="5"],
 .winter_card[data-type="5"] {
-  background-position-x: 66.6666666667%;
-  background-position-y: 0%;
+  background-position-x: 0%;
+  background-position-y: 50%;
 }
 .winter_card_back[data-type="6"],
 .winter_card[data-type="6"] {
-  background-position-x: 83.3333333333%;
-  background-position-y: 0%;
+  background-position-x: 33.3333333333%;
+  background-position-y: 50%;
 }
 .winter_card_back[data-type="7"],
 .winter_card[data-type="7"] {
-  background-position-x: 100%;
-  background-position-y: 0%;
+  background-position-x: 66.6666666667%;
+  background-position-y: 50%;
 }
 .winter_card_back[data-type="8"],
 .winter_card[data-type="8"] {
-  background-position-x: 0%;
-  background-position-y: 33.3333333333%;
-}
-.winter_card_back[data-type="9"],
-.winter_card[data-type="9"] {
-  background-position-x: 16.6666666667%;
-  background-position-y: 33.3333333333%;
-}
-.winter_card_back[data-type="10"],
-.winter_card[data-type="10"] {
-  background-position-x: 33.3333333333%;
-  background-position-y: 33.3333333333%;
-}
-.winter_card_back[data-type="11"],
-.winter_card[data-type="11"] {
-  background-position-x: 50%;
-  background-position-y: 33.3333333333%;
-}
-.winter_card_back[data-type="12"],
-.winter_card[data-type="12"] {
-  background-position-x: 66.6666666667%;
-  background-position-y: 33.3333333333%;
-}
-.winter_card_back[data-type="13"],
-.winter_card[data-type="13"] {
-  background-position-x: 83.3333333333%;
-  background-position-y: 33.3333333333%;
-}
-.winter_card_back[data-type="14"],
-.winter_card[data-type="14"] {
   background-position-x: 100%;
-  background-position-y: 33.3333333333%;
-}
-.winter_card_back[data-type="15"],
-.winter_card[data-type="15"] {
-  background-position-x: 0%;
-  background-position-y: 66.6666666667%;
-}
-.winter_card_back[data-type="16"],
-.winter_card[data-type="16"] {
-  background-position-x: 16.6666666667%;
-  background-position-y: 66.6666666667%;
-}
-.winter_card_back[data-type="17"],
-.winter_card[data-type="17"] {
-  background-position-x: 33.3333333333%;
-  background-position-y: 66.6666666667%;
-}
-.winter_card_back[data-type="18"],
-.winter_card[data-type="18"] {
-  background-position-x: 50%;
-  background-position-y: 66.6666666667%;
-}
-.winter_card_back[data-type="19"],
-.winter_card[data-type="19"] {
-  background-position-x: 66.6666666667%;
-  background-position-y: 66.6666666667%;
-}
-.winter_card_back[data-type="20"],
-.winter_card[data-type="20"] {
-  background-position-x: 83.3333333333%;
-  background-position-y: 66.6666666667%;
-}
-.winter_card_back[data-type="21"],
-.winter_card[data-type="21"] {
-  background-position-x: 100%;
-  background-position-y: 66.6666666667%;
-}
-.winter_card_back[data-type="22"],
-.winter_card[data-type="22"] {
-  background-position-x: 0%;
-  background-position-y: 100%;
-}
-.winter_card_back[data-type="23"],
-.winter_card[data-type="23"] {
-  background-position-x: 16.6666666667%;
-  background-position-y: 100%;
-}
-.winter_card_back[data-type="24"],
-.winter_card[data-type="24"] {
-  background-position-x: 33.3333333333%;
-  background-position-y: 100%;
-}
-.winter_card_back[data-type="25"],
-.winter_card[data-type="25"] {
-  background-position-x: 50%;
-  background-position-y: 100%;
-}
-.winter_card_back[data-type="26"],
-.winter_card[data-type="26"] {
-  background-position-x: 66.6666666667%;
-  background-position-y: 100%;
-}
-.winter_card_back[data-type="27"],
-.winter_card[data-type="27"] {
-  background-position-x: 83.3333333333%;
-  background-position-y: 100%;
+  background-position-y: 50%;
 }
 .winter_card_back.winter_card_back,
 .winter_card.winter_card_back {
   background-position-x: 100%;
-  background-position-y: 33.33%;
+  background-position-y: 66.66%;
 }
 .winter_card_back.selectable,
 .winter_card.selectable {

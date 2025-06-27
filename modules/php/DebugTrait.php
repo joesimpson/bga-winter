@@ -79,6 +79,12 @@ trait DebugTrait
   function debug_GoToPlayerTurn(){
     $this->gamestate->jumpToState(ST_PLAYER_TURN);
   }
+  
+  function debug_DrawCards(){
+    //Cards::pickForLocation(5,CARD_LOCATION_DECK,CARD_LOCATION_BOARD);
+    Cards::moveAllInLocation(CARD_LOCATION_DECK,CARD_LOCATION_BOARD);
+    Notifications::refreshUI($this->getAllDatas());
+  }
 
   function debug_Scoring(){
     $players = Players::getAll();
