@@ -67,12 +67,16 @@ class Card extends \Bga\Games\winter\Helpers\DB_Model
     if( !isset($row)) return [];
     if( !isset($col)) return [];
     $neighbours = [
+      [$row -2, $col - 1],
       [$row -2, $col],
+      [$row -2, $col + 1],
+      [$row +2, $col - 1],
       [$row +2, $col],
+      [$row +2, $col + 1],
       [$row -1 , $col -2],
       [$row -1 , $col +2],
-      [$row , $col +2],
       [$row , $col -2],
+      [$row , $col +2],
       [$row +1 , $col -2],
       [$row +1 , $col +2],
     ];
