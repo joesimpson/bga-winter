@@ -88,6 +88,7 @@ function (dojo, declare) {
                             <div id="winter_map_surface"></div>
                             <div id="winter_map_scrollable_oversurface">
                                 <div id="winter_map_cards"></div> 
+                                <div id="winter_map_card_places"></div> 
                                 <div id="winter_map_tokens"></div> 
                             </div>
                         
@@ -164,6 +165,11 @@ function (dojo, declare) {
         ///////////////////////////////////////////////////
         //// Game & client states
 
+        onLeavingState(stateName) {
+            this.inherited(arguments);
+            this.empty('winter_map_card_places');
+        },
+
         onEnteringStateStartingCard(args){
             debug('onEnteringStateStartingCard', args);
 
@@ -182,7 +188,11 @@ function (dojo, declare) {
                     this.performAction('actPlayStartingCard', { dir: chosenDir, row: row,  col: col});
                 });
 
-                //TODO JSA display tmp card at this location
+                let spot = this.addSelectableCardSpot(card, row, col);
+                let callbackSpotSelection = (evt) => {
+                    this.performAction('actPlayStartingCard', { dir: chosenDir, row: row,  col: col});
+                };
+                this.onClick(`${spot.id}`, callbackSpotSelection);
             });
 
         },
@@ -501,6 +511,21 @@ function (dojo, declare) {
             return `<div class="winter_card" id="winter_card${prefix}-${card.id}" data-id="${card.id}" data-type="${card.type}" data-dir="${card.dir}" data-row="${card.row}" data-col="${card.col}">
                     <div class="winter_card_wrapper">
                     </div>
+                </div>`;
+        },
+
+        addSelectableCardSpot(card,row, column) {
+            debug("addSelectableCardSpot", row, column);
+            let spotDivId = `winter_card_spot_${row}_${column}`;
+            if ( $(spotDivId) ) return $(spotDivId);
+            
+            let spot = this.place('tplCardSpot', {'card':card, 'row':row, 'column':column}, $("winter_map_card_places"));
+    
+            debug("addSelectableCardSpot() result=> ",spot);
+            return spot;
+        },
+        tplCardSpot(datas) {
+            return `<div class="winter_card_spot" id="winter_card_spot_${datas.row}_${datas.column}" data-type="${datas.card.type}" data-dir="1" data-row="${datas.row}" data-col="${datas.column}">
                 </div>`;
         },
     
