@@ -157,13 +157,18 @@
 .winter_card_back.selectable,
 .winter_card_spot.selectable,
 .winter_card.selectable {
-  box-shadow: 0px 0px 6px 6px #00ffff;
+  box-shadow: 0px 0px 2px 2px #0ff;
   cursor: pointer;
 }
 .winter_card_back.selectable:hover,
 .winter_card_spot.selectable:hover,
 .winter_card.selectable:hover {
   transform: scale(1.1);
+}
+.winter_card_back.selectable:hover[data-dir="2"],
+.winter_card_spot.selectable:hover[data-dir="2"],
+.winter_card.selectable:hover[data-dir="2"] {
+  transform: rotateZ(180deg) scale(1.1);
 }
 .winter_card_back.selected, .winter_card_back.selected:hover,
 .winter_card_spot.selected,
@@ -196,7 +201,6 @@
   cursor: pointer;
 }
 .winter_card_spot.selectable:hover {
-  transform: scale(1.1);
   z-index: 3;
   opacity: 1;
 }
@@ -3724,6 +3728,15 @@ body.notouch-device #help-mode-switch:hover {
 #pagemaintitletext .winter_card,
 #gameaction_status .winter_card {
   position: absolute;
+}
+
+#btnRotateDir {
+  background: #89a538;
+  border: 1px solid #697f2b;
+  color: white;
+}
+#btnRotateDir .winter_icon_rotate {
+  margin-right: 5px;
 }
 
 body[data-winter_undo_style="1"] #btnIconUndoLastStep,

@@ -70,6 +70,14 @@
     }
 }
 //Buttons :
+#btnRotateDir{
+    background: #89a538;
+    border: 1px solid #697f2b;
+    color: white;
+    .winter_icon_rotate{
+        margin-right: 5px;
+    }
+}
 
 body[data-winter_undo_style='1']{//PREF_UNDO_STYLE_TEXT
     #btnIconUndoLastStep, 

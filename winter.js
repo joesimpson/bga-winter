@@ -177,20 +177,26 @@ function (dojo, declare) {
             const playableDirs = args.playableDir;
             const playableCoords = args.playableCoords;
  
-            let chosenDir = playableDirs[0];
-            //TODO JSA select dir with rotate icon ?
+            this.chosenDir = playableDirs[0];
+            this.addPrimaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + _(`Rotate card`), () => {
+                this.chosenDir = playableDirs [ (playableDirs.indexOf(this.chosenDir) + 1) % playableDirs.length ];
+                document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
+                    oCard.dataset.dir = this.chosenDir;
+                });
+            });
 
             Object.values(playableCoords).forEach( (playableCoord) => {
                 let row = playableCoord[0];
                 let col = playableCoord[1];
 
-                this.addPrimaryActionButton(`btnCoord_${row}_${col}`, (`${row},${col}`), () => {
-                    this.performAction('actPlayStartingCard', { dir: chosenDir, row: row,  col: col});
-                });
+                //Coord buttons For debug only ?
+                //this.addPrimaryActionButton(`btnCoord_${row}_${col}`, (`${row},${col}`), () => {
+                //    this.performAction('actPlayStartingCard', { dir: this.chosenDir, row: row,  col: col});
+                //});
 
                 let spot = this.addSelectableCardSpot(card, row, col);
                 let callbackSpotSelection = (evt) => {
-                    this.performAction('actPlayStartingCard', { dir: chosenDir, row: row,  col: col});
+                    this.performAction('actPlayStartingCard', { dir: this.chosenDir, row: row,  col: col});
                 };
                 this.onClick(`${spot.id}`, callbackSpotSelection);
             });
