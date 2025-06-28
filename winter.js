@@ -164,6 +164,29 @@ function (dojo, declare) {
         ///////////////////////////////////////////////////
         //// Game & client states
 
+        onEnteringStateStartingCard(args){
+            debug('onEnteringStateStartingCard', args);
+
+            const card = args.card;
+            const playableDirs = args.playableDir;
+            const playableCoords = args.playableCoords;
+ 
+            let chosenDir = playableDirs[0];
+            //TODO JSA select dir with rotate icon ?
+
+            Object.values(playableCoords).forEach( (playableCoord) => {
+                let row = playableCoord[0];
+                let col = playableCoord[1];
+
+                this.addPrimaryActionButton(`btnCoord_${row}_${col}`, (`${row},${col}`), () => {
+                    this.performAction('actPlayStartingCard', { dir: chosenDir, row: row,  col: col});
+                });
+
+                //TODO JSA display tmp card at this location
+            });
+
+        },
+
         onEnteringStatePlayerTurn(args){
             debug('onEnteringStatePlayerTurn', args);
 
