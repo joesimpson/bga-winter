@@ -52,11 +52,46 @@
 use Bga\GameFramework\GameStateBuilder;
 use Bga\GameFramework\StateType;
 
+/*
+    "Visual" States Diagram :
+
+                SETUP
+                |
+                |
+                v
+ /<----------- nextPlayer   <-------------------\
+ |              |                               ^
+ |              v                               |
+ |             playerTurn  --\                  |
+ |                           |                  |
+ |                           v                  |
+ |                    confirm --> endTurn ----->/
+ v  
+ \-> scoring
+        | 
+        v
+        preEndOfGame
+        | 
+        v
+        END
+*/
+
 $machinestates = [
  
     // only keep this line if your initial state is not 2. In that case, uncomment and replace '2' by your first state id.
     // 1 => GameStateBuilder::gameSetup(2)->build(),
     // Note: ID=2 => your first state
+
+    ST_NEXT_TURN => GameStateBuilder::create()
+        ->name('nextPlayer')
+        ->type(StateType::GAME)
+        ->action("stNextPlayer")
+        ->transitions([
+            'endGame' => ST_END_GAME, 
+            'nextPlayer' => ST_PLAYER_TURN,
+        ])
+        ->updateGameProgression(true)
+        ->build(),
 
     ST_PLAYER_TURN => GameStateBuilder::create()
         ->name('playerTurn')
@@ -70,22 +105,77 @@ $machinestates = [
             'actPass',
         ])
         ->transitions([
-            'playCard' => ST_NEXT_TURN, 
-            'pass' => ST_NEXT_TURN,
+            'playCard' => ST_CONFIRM_TURN, 
+            'pass' => ST_CONFIRM_TURN,
+        ])
+        ->build(),
+        
+    ST_CONFIRM_TURN => GameStateBuilder::create()
+        ->name('confirmTurn')
+        ->description(clienttranslate('${actplayer} must confirm or restart'))
+        ->descriptionmyturn(clienttranslate('${you} must confirm or restart'))
+        ->type(StateType::ACTIVE_PLAYER)
+        ->args('argsConfirmTurn')
+        ->action("stConfirmTurn")
+        ->possibleactions([
+            'actConfirmTurn', 
+            'actUndoToStep', 'actRestart',
+        ])
+        ->transitions([
+            'confirm' => ST_END_TURN, 
+            'zombiePass'=> ST_END_TURN,
         ])
         ->build(),
 
-    ST_NEXT_TURN => GameStateBuilder::create()
-        ->name('nextPlayer')
+    ST_END_TURN => GameStateBuilder::create()
+        ->name('endTurn')
+        ->description(clienttranslate('End turn'))
         ->type(StateType::GAME)
-        ->action("stNextPlayer")
+        ->action("stEndTurn")
         ->transitions([
-            'endGame' => ST_END_GAME, 
-            'nextPlayer' => ST_PLAYER_TURN,
+            'next' => ST_NEXT_TURN, 
+        ])
+        ->updateGameProgression(true)
+        ->build(),
+        
+    ST_END_SCORING => GameStateBuilder::create()
+        ->name('scoring')
+        //->description(clienttranslate('Scoring'))
+        ->type(StateType::GAME)
+        ->action("stScoring")
+        ->transitions([
+            'next' => ST_PRE_END_OF_GAME, 
         ])
         ->updateGameProgression(true)
         ->build(),
 
+    ST_PRE_END_OF_GAME => GameStateBuilder::create()
+        ->name('preEndOfGame')
+        ->type(StateType::GAME)
+        ->action("stPreEndOfGame")
+        ->transitions([
+            'next' => ST_END_GAME, 
+            //'next' => 96, 
+        ])
+        ->updateGameProgression(true)
+        ->build(),
+
+    //END GAME TESTING STATE for DEBUG ONLY
+    /*
+    96 => [
+        "name" => "playerGameEnd",
+        "description" => ('${actplayer} Game Over'),
+        "descriptionmyturn" => ('${you} Game Over'),
+        'type' => 'activeplayer',
+        "args" => "argPlayerTurn",
+        "args" => "argCardCollect",
+        "possibleactions" => ["endGame"],
+        "transitions" => [
+            "next" => ST_END_GAME,
+            "loopback" => 96 
+        ] 
+    ],
+    */
 ];
 
 

@@ -19,6 +19,7 @@ declare(strict_types=1);
 namespace Bga\Games\winter;
 
 use Bga\Games\winter\Core\Preferences;
+use Bga\Games\winter\Exceptions\UserException;
 use Bga\Games\winter\Managers\Cards;
 use Bga\Games\winter\Managers\Players;
 use Bga\Games\winter\Managers\Tokens;
@@ -29,9 +30,11 @@ class Game extends \Bga\GameFramework\Table
 {
     use DebugTrait;
     use States\ConfirmUndoTrait;
+    use States\EndTurnTrait;
     use States\NextTurnTrait;
     use States\PlayerTurnTrait;
     use States\SetupTrait;
+    use States\ScoringTrait;
 
     public static $instance = null;
     //TODO JSA CLEAN TEMPLATE
@@ -203,6 +206,16 @@ class Game extends \Bga\GameFramework\Table
         throw new \feException("Zombie mode not supported at this game state: \"{$state_name}\".");
     }
 
+    /**
+    * Check Server version to compare with client version : throw an error in case it 's not the same
+    * From https://en.doc.boardgamearena.com/BGA_Studio_Cookbook#Force_players_to_refresh_after_new_deploy
+    */
+    public function checkVersion(int $clientVersion)
+    {
+        if ($clientVersion != intval($this->gamestate->table_globals[BGA_GAMESTATE_GAMEVERSION])) {
+            throw new UserException(555,'!!!checkVersion');
+        }
+    }
     /////////////////////////////////////////////////////////////
     // Exposing protected methods, please use at your own risk //
     /////////////////////////////////////////////////////////////
