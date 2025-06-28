@@ -29,12 +29,14 @@ require_once 'constants.inc.php';
 class Game extends \Bga\GameFramework\Table
 {
     use DebugTrait;
+    use States\ColorChoiceTrait;
     use States\ConfirmUndoTrait;
     use States\EndTurnTrait;
     use States\NextTurnTrait;
     use States\PlayerTurnTrait;
-    use States\SetupTrait;
     use States\ScoringTrait;
+    use States\SetupTrait;
+    use States\StartingCardTrait;
 
     public static $instance = null;
     //TODO JSA CLEAN TEMPLATE

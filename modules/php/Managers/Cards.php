@@ -53,6 +53,14 @@ class Cards extends \Bga\Games\winter\Helpers\Pieces
       ->where('type', $cardType)
       ->get();
   }
+  
+  /**
+   * @return Card $card
+   */
+  public static function getDrawnCard(Player $player)
+  {
+    return self::getTopOf(CARD_LOCATION_HAND);
+  }
    
   ///////////////////////////////////////////////////////////////////////////////////////
    
@@ -78,6 +86,9 @@ class Cards extends \Bga\Games\winter\Helpers\Pieces
     $card = Cards::pickOneForLocation(CARD_LOCATION_DECK, CARD_LOCATION_BOARD);
     $card->setRow(0);
     $card->setCol(0);
+    
+    //Prepare next step : 
+    $card = Cards::pickOneForLocation(CARD_LOCATION_DECK, CARD_LOCATION_HAND);
 
   }
   

@@ -18,6 +18,8 @@ const CARD_LOCATION_HAND = 'hand';
 const CARD_COLOR_BLUE_LIGHT = 1;
 const CARD_COLOR_BLUE_DARK = 2;
 
+const CARD_DIRECTION_UP = 1;
+const CARD_DIRECTION_DOWN = 2;
 
 /////////////////////////////////////////////////////////
 //          MEEPLES
@@ -57,8 +59,10 @@ const ALL_PREFERENCES = [
 /////////////////////////////////////////////////////////
 //          GAME STATES
 /////////////////////////////////////////////////////////  
-const ST_NEXT_TURN = 2;
+const ST_START_CARD = 2;
+const ST_COLOR_CHOICE = 3;
 
+const ST_NEXT_TURN = 10;
 const ST_PLAYER_TURN = 20;
 
 const ST_CONFIRM_CHOICES = 70;

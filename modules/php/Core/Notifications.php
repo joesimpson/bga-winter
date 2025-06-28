@@ -12,7 +12,19 @@ use Bga\Games\winter\Models\Token;
 class Notifications
 { 
   
-  
+  /**
+   * @param Player $player
+   * @param Card $card
+   */
+  public static function startingCardPlayed(Player $player, Card $card)
+  {
+    $msg = clienttranslate('${player_name} place the starting card at ${coord}');
+    self::notifyAll('startingCardPlayed', $msg, [
+      'player' => $player,
+      'card' => $card->getUiData(),
+      'coord' => $card->coordName(),
+    ]);
+  }
 
   /**
    */  

@@ -64,8 +64,8 @@ trait DebugTrait
     $players = self::loadPlayersBasicInfos();
     Notifications::refreshUI($this->getAllDatas());
     
-    $this->addCheckpoint(ST_PLAYER_TURN);
-    $this->gamestate->jumpToState(ST_PLAYER_TURN);
+    $this->addCheckpoint(ST_START_CARD);
+    $this->gamestate->jumpToState(ST_START_CARD);
   }
 
   //Clear logs

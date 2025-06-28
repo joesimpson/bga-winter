@@ -57,6 +57,10 @@ use Bga\GameFramework\StateType;
 
                 SETUP
                 |
+                startingCard
+                |
+                v
+                colorChoice
                 |
                 v
  /<----------- nextPlayer   <-------------------\
@@ -82,6 +86,36 @@ $machinestates = [
     // 1 => GameStateBuilder::gameSetup(2)->build(),
     // Note: ID=2 => your first state
 
+    ST_START_CARD => GameStateBuilder::create()
+        ->name('startingCard')
+        ->description(clienttranslate('${actplayer} must place the starting card'))
+        ->descriptionmyturn(clienttranslate('${you} must place the starting card'))
+        ->type(StateType::ACTIVE_PLAYER)
+        ->args('argStartingCard')
+        ->possibleactions([
+            'actPlayStartingCard', 
+        ])
+        ->transitions([
+            'next' => ST_COLOR_CHOICE, 
+            'zombiePass' => ST_COLOR_CHOICE,
+        ])
+        ->build(),
+
+    ST_COLOR_CHOICE => GameStateBuilder::create()
+        ->name('colorChoice')
+        ->description(clienttranslate('${actplayer} must choose a color of snowflakes'))
+        ->descriptionmyturn(clienttranslate('${you} must choose a color of snowflakes'))
+        ->type(StateType::ACTIVE_PLAYER)
+        ->args('argColorChoice')
+        ->possibleactions([
+            'actChooseColor', 
+        ])
+        ->transitions([
+            'next' => ST_NEXT_TURN, 
+            'zombiePass' => ST_NEXT_TURN,
+        ])
+        ->build(),
+
     ST_NEXT_TURN => GameStateBuilder::create()
         ->name('nextPlayer')
         ->type(StateType::GAME)
@@ -93,6 +127,7 @@ $machinestates = [
         ->updateGameProgression(true)
         ->build(),
 
+    //PLAYER turn for Phase 1 & phase 2, see Globals to know in which phase we are
     ST_PLAYER_TURN => GameStateBuilder::create()
         ->name('playerTurn')
         ->description(clienttranslate('${actplayer} must play a card or pass'))

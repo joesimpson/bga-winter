@@ -32,4 +32,39 @@ class Card extends \Bga\Games\winter\Helpers\DB_Model
     $data = parent::getUiData();
     return $data;
   } 
+  
+  /**
+   * @return string
+   */
+  public function coordName()
+  {
+    $row = $this->getRow();
+    $col = $this->getCol();
+    if( !isset($row)) return "";
+    if( !isset($col)) return "";
+    return "[".$row.",".$col."]";
+  } 
+
+  /**
+   * @return array of neighbouring coordinates (with played card or not)
+   */
+  public function getNeighbouringSpots()
+  {
+    $row = $this->getRow();
+    $col = $this->getCol();
+    if( !isset($row)) return [];
+    if( !isset($col)) return [];
+    $neighbours = [
+      [$row -2, $col],
+      [$row +2, $col],
+      [$row -1 , $col -2],
+      [$row -1 , $col +2],
+      [$row , $col +2],
+      [$row , $col -2],
+      [$row +1 , $col -2],
+      [$row +1 , $col +2],
+    ];
+    return $neighbours;
+  } 
+
 }
