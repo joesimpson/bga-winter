@@ -16,6 +16,7 @@
 :root {
   --winter_board_card_width: 102px;
   --winter_board_card_height: 158px;
+  --winter_board_card_border: 1px;
 }
 
 .player_board_inner > .player-name {
@@ -73,7 +74,7 @@
 .winter_card {
   width: var(--winter_board_card_width);
   height: var(--winter_board_card_height);
-  border: 1px solid black;
+  border: var(--winter_board_card_border) solid #959595;
   border-radius: 5px;
   border-radius: 5%;
   background-size: 400% 300%;

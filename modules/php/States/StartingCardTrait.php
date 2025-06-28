@@ -66,7 +66,7 @@ trait StartingCardTrait
     $card->setDirection($dir);
 
     // Notify all players about the card played.
-    Notifications::startingCardPlayed($player,$card);
+    Notifications::cardPlayed($player,$card);
 
     // at the end of the action, move to the next state
     $this->addCheckpoint(ST_COLOR_CHOICE);

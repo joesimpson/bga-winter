@@ -16,10 +16,10 @@ class Notifications
    * @param Player $player
    * @param Card $card
    */
-  public static function startingCardPlayed(Player $player, Card $card)
+  public static function cardPlayed(Player $player, Card $card)
   {
-    $msg = clienttranslate('${player_name} place the starting card at ${coord}');
-    self::notifyAll('startingCardPlayed', $msg, [
+    $msg = clienttranslate('${player_name} places a card at ${coord}');
+    self::notifyAll('cardPlayed', $msg, [
       'player' => $player,
       'card' => $card->getUiData(),
       'coord' => $card->coordName(),

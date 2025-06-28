@@ -7,7 +7,7 @@ $card_height: var(--winter_board_card_height);
 .winter_card {
     width: $card_width;
     height: $card_height;
-    border: 1px solid black;
+    border: var(--winter_board_card_border) solid #959595;
     //box-shadow: 1px 1px 5px black;
     border-radius: 5px;
     border-radius: 5%;//% to avoid a different radius whent card is resized 
