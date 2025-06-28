@@ -6,7 +6,6 @@ use Bga\Games\winter\Core\Globals;
 use Bga\Games\winter\Core\Stats;
 use Bga\Games\winter\Managers\Cards;
 use Bga\Games\winter\Managers\Players;
-use Bga\Games\winter\Managers\Tiles;
 use Bga\Games\winter\Managers\Tokens;
 
 trait SetupTrait

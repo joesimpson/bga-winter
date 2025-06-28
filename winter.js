@@ -118,7 +118,7 @@ function (dojo, declare) {
             this.scrollmap.setupOnScreenArrows( 150 ); // this will hook buttons to onclick functions with 150px scroll step
             //dojo.connect( $('enlargedisplay'), 'onclick', this, 'onIncreaseDisplayHeight' );
 
-            this.scrollmap.scrollto(-2*102,-2*158);  //2*card_width,2*card_height
+            this.scrollmap.scrollto(-1*102,-1*158);  //1*card_width,1*card_height
 
             this.setupPlayers();
             this.setupInfoPanel();

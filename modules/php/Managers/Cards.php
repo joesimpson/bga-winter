@@ -73,6 +73,12 @@ class Cards extends \Bga\Games\winter\Helpers\Pieces
 
     self::create($cards);
     self::shuffle(CARD_LOCATION_DECK);
+
+    //Pick 1 card TO BEGIN, 
+    $card = Cards::pickOneForLocation(CARD_LOCATION_DECK, CARD_LOCATION_BOARD);
+    $card->setRow(0);
+    $card->setCol(0);
+
   }
   
   /**
