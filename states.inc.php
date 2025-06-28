@@ -60,6 +60,9 @@ use Bga\GameFramework\StateType;
                 startingCard
                 |
                 v
+                secondPlayer
+                |
+                v
                 colorChoice
                 |
                 v
@@ -96,7 +99,17 @@ $machinestates = [
             'actPlayStartingCard', 
         ])
         ->transitions([
-            'next' => ST_COLOR_CHOICE, 
+            'next' => ST_SECOND_PLAYER, 
+            'zombiePass' => ST_SECOND_PLAYER,
+        ])
+        ->build(),
+
+    ST_SECOND_PLAYER => GameStateBuilder::create()
+        ->name('secondPlayer')
+        ->type(StateType::GAME)
+        ->action("stSecondPlayer")
+        ->transitions([
+            'next' => ST_COLOR_CHOICE,
             'zombiePass' => ST_COLOR_CHOICE,
         ])
         ->build(),

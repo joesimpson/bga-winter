@@ -60,7 +60,8 @@ const ALL_PREFERENCES = [
 //          GAME STATES
 /////////////////////////////////////////////////////////  
 const ST_START_CARD = 2;
-const ST_COLOR_CHOICE = 3;
+const ST_SECOND_PLAYER = 3;
+const ST_COLOR_CHOICE = 5;
 
 const ST_NEXT_TURN = 10;
 const ST_PLAYER_TURN = 20;
