@@ -202,6 +202,22 @@ function (dojo, declare) {
             });
 
         },
+        
+        onEnteringStateColorChoice(args){
+            debug('onEnteringStateColorChoice', args);
+
+            let colors = args.playableColors;
+            Object.values(colors).forEach( (color) => {
+                let buttonId = `btnChooseColor_${color}`;
+                let iconColor = this.formatIcon('flake_color-'+color);
+                let buttonText = this.fsr(  ("${color}") , { color: iconColor } );
+                let callbackColorSelection = (evt) => {
+                    this.selectedColor = color;
+                    this.performAction('actChooseColor', { color: this.selectedColor});
+                };
+                this.addImageActionButton(buttonId, `<div class='btnChooseColor' data-color='${color}'>${buttonText}</div>`, callbackColorSelection);
+            });
+        },
 
         onEnteringStatePlayerTurn(args){
             debug('onEnteringStatePlayerTurn', args);
@@ -318,7 +334,26 @@ function (dojo, declare) {
         //                                                 |___/
         ////////////////////////////////////////////////////////////
         
-        //TODO JSA format_string_recursive or the new bgaFormatText
+        //use bgaFormatText instead of format_string_recursive to inject images in logs
+        bgaFormatText : function(log, args) {
+            try {
+                if (log && args && !args.processed) {
+                    args.processed = true;
+
+                    ///
+                    let token_color = 'token_color';
+                    let token_color_type = 'token_color_type';
+                    if(token_color in args && token_color_type in args) {
+                        args.token_color = this.formatIcon("flake_color-"+args.token_color_type);
+                        args.token_color_type = "";
+                    }
+
+                }
+            } catch (e) {
+                console.error(log,args,"Exception thrown", e.stack);
+            }
+            return { log, args };
+        },
 
         formatIcon(name, n = null) {
             let type = name;

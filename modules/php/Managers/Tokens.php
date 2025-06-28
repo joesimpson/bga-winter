@@ -70,6 +70,18 @@ class Tokens extends \Bga\Games\winter\Helpers\Pieces
     return self::getFilteredQuery($pId, TOKEN_LOCATION_HAND)->get();
   }
 
+  public static function getColorName(int $color)
+  { 
+    switch($color){
+      case TOKEN_COUNTER_BLUE_DARK:
+        return clienttranslate("dark blue");
+      case TOKEN_COUNTER_BLUE_LIGHT:
+        return clienttranslate("light blue"); 
+      default: 
+        return "";
+    }
+  }
+
   ///////////////////////////////////////////////////////////////////////////////
   
   /** Creation of the tokens */

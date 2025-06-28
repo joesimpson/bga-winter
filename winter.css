@@ -19,6 +19,32 @@
   --winter_board_card_border: 1px;
 }
 
+.winter_icon_container {
+  display: inline-block;
+  vertical-align: middle;
+}
+.winter_icon_container .winter_icon {
+  width: 2em;
+  height: 2em;
+}
+.winter_icon_container .winter_icon.winter_icon_flake_color-1, .winter_icon_container .winter_icon.winter_icon_flake_color-2 {
+  border-radius: 10px;
+  border-radius: 100%;
+  background-image: url("img/icons.png");
+  background-size: 300% 200% !important;
+  background-repeat: repeat !important;
+  width: 40px;
+  height: 40px;
+}
+.winter_icon_container .winter_icon.winter_icon_flake_color-1.winter_icon_flake_color-2, .winter_icon_container .winter_icon.winter_icon_flake_color-2.winter_icon_flake_color-2 {
+  background-position-y: 0px;
+  background-position-x: 0px;
+}
+.winter_icon_container .winter_icon.winter_icon_flake_color-1.winter_icon_flake_color-1, .winter_icon_container .winter_icon.winter_icon_flake_color-2.winter_icon_flake_color-1 {
+  background-position-y: 0px;
+  background-position-x: -40px;
+}
+
 .player_board_inner > .player-name {
   /** Add a BLACK shadow behind player name in case of bright colors like white/orange/green-sad*/
 }

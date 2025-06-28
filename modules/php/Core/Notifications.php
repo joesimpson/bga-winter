@@ -5,6 +5,7 @@ namespace Bga\Games\winter\Core;
 use Bga\Games\winter\Game;
 use Bga\Games\winter\Helpers\Collection;
 use Bga\Games\winter\Helpers\Utils;
+use Bga\Games\winter\Managers\Tokens;
 use Bga\Games\winter\Models\Card;
 use Bga\Games\winter\Models\Player;
 use Bga\Games\winter\Models\Token;
@@ -26,6 +27,22 @@ class Notifications
     ]);
   }
 
+  /**
+   * @param Player $player
+   * @param int $color
+   */
+  public static function colorChosen(Player $player, int $color)
+  {
+    $msg = clienttranslate('${player_name} chooses to take ${token_color} counters');
+    self::notifyAll('colorChosen', $msg, [
+      'player' => $player,
+      'token_color' => Tokens::getColorName($color),
+
+      'i18n' => ['token_color'],  
+      'preserve' => [ 'token_color_type' ],
+      'token_color_type' => $color,
+    ]);
+  }
   /**
    */  
   /*************************

@@ -41,17 +41,17 @@ trait ColorChoiceTrait
     $this->addStep();
 
     // check input values
-    $args = $this->argStartingCard();
+    $args = $this->argColorChoice();
     $playableColors = $args['playableColors'];
-    if (!in_array([$color], $playableColors)) {
+    if (!in_array($color, $playableColors)) {
       throw new UnexpectedException(110,"Invalid color $color");
     }
 
-    //TODO JSA ACTION EFFECT
+    //TODO JSA ACTION EFFECT : change players colors and refresh ui
 
 
     // Notify all players 
-    //Notifications::colorChosen($player,$color);
+    Notifications::colorChosen($player,$color);
 
     // at the end of the action, move to the next state
     $this->addCheckpoint(ST_NEXT_TURN);
