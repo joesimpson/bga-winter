@@ -468,7 +468,7 @@ function (dojo, declare) {
         }, 
 
         tplCard(card, prefix ='') {
-            return `<div class="winter_card" id="winter_card${prefix}-${card.id}" data-id="${card.id}" data-type="${card.type}" data-row="${card.row}" data-col="${card.col}">
+            return `<div class="winter_card" id="winter_card${prefix}-${card.id}" data-id="${card.id}" data-type="${card.type}" data-dir="${card.dir}" data-row="${card.row}" data-col="${card.col}">
                     <div class="winter_card_wrapper">
                     </div>
                 </div>`;

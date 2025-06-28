@@ -8,7 +8,7 @@ $card_height: var(--winter_board_card_height);
     width: $card_width;
     height: $card_height;
     border: 1px solid black;
-    box-shadow: 1px 1px 5px black;
+    //box-shadow: 1px 1px 5px black;
     border-radius: 5px;
     border-radius: 5%;//% to avoid a different radius whent card is resized 
 
@@ -20,6 +20,9 @@ $card_height: var(--winter_board_card_height);
             background-position-x: math.div(($i % 4) * 100%, 3);//4 columns
             background-position-y: math.div(math.div($i - ($i % 4), 4) * 100%, 2);//4 columns , 3 rows
         }
+    }
+    &[data-dir="2"]{//CARD_DIRECTION_DOWN -> card is rotated on the table
+        transform: rotateZ(180deg);
     }
 
     &.winter_card_back{

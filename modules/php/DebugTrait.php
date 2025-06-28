@@ -108,6 +108,8 @@ trait DebugTrait
         $card->setRow(2);
       }
       $k++;
+      
+      $card->setDirection(CARD_DIRECTION_UP);
     } 
 
     Notifications::refreshUI($this->getAllDatas());

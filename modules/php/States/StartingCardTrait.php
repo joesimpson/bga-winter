@@ -63,6 +63,7 @@ trait StartingCardTrait
     $card->setRow($row);
     $card->setCol($col);
     $card->setLocation(CARD_LOCATION_BOARD);
+    $card->setDirection($dir);
 
     // Notify all players about the card played.
     Notifications::startingCardPlayed($player,$card);

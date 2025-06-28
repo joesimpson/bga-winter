@@ -30,9 +30,21 @@ class Card extends \Bga\Games\winter\Helpers\DB_Model
   public function getUiData()
   {
     $data = parent::getUiData();
+    $data["dir"] = $this->getDirection();
     return $data;
   } 
   
+
+  public function setDirection(int $value){
+    $this->setState($value);
+  }
+  /**
+   * @return int
+   */
+  public function getDirection(){
+    return $this->getState();
+  }
+
   /**
    * @return string
    */

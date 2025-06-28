@@ -86,6 +86,7 @@ class Cards extends \Bga\Games\winter\Helpers\Pieces
     $card = Cards::pickOneForLocation(CARD_LOCATION_DECK, CARD_LOCATION_BOARD);
     $card->setRow(0);
     $card->setCol(0);
+    $card->setDirection(CARD_DIRECTION_UP);
     
     //Prepare next step : 
     $card = Cards::pickOneForLocation(CARD_LOCATION_DECK, CARD_LOCATION_HAND);

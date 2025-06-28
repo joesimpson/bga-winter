@@ -74,7 +74,6 @@
   width: var(--winter_board_card_width);
   height: var(--winter_board_card_height);
   border: 1px solid black;
-  box-shadow: 1px 1px 5px black;
   border-radius: 5px;
   border-radius: 5%;
   background-size: 400% 300%;
@@ -120,6 +119,10 @@
 .winter_card[data-type="8"] {
   background-position-x: 100%;
   background-position-y: 50%;
+}
+.winter_card_back[data-dir="2"],
+.winter_card[data-dir="2"] {
+  transform: rotateZ(180deg);
 }
 .winter_card_back.winter_card_back,
 .winter_card.winter_card_back {
