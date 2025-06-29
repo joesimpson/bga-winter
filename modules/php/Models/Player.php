@@ -35,7 +35,10 @@ class Player extends \Bga\Games\winter\Helpers\DB_Model
   {
     $data = parent::getUiData();
 
-    $data["nbtokens"] = $this->getNbTokensOnBoard();
+    $data["nbtokens"] = [
+      "hand" => $this->getNbTokensInHand(),
+      "board" => $this->getNbTokensOnBoard(),
+    ];
     $data["t_color"] = $this->getTokensColor();
  
     return $data;
@@ -95,6 +98,14 @@ class Player extends \Bga\Games\winter\Helpers\DB_Model
   public function getNbTokensOnBoard()
   {
     $n = Tokens::countPlayerTokens($this->getId(),TOKEN_LOCATION_BOARD);
+    return $n;
+  }
+    /**
+   * @return int number of player tokens on board
+   */
+  public function getNbTokensInHand()
+  {
+    $n = Tokens::countPlayerTokens($this->getId(),TOKEN_LOCATION_HAND);
     return $n;
   }
   

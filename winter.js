@@ -289,7 +289,7 @@ function (dojo, declare) {
             this.forEachPlayer((player) => {
                 let pId = player.id;
                 this.scoreCtrl[pId].toValue(player.score);
-                this._counters[pId].nbtokens.toValue(player.nbtokens);
+                this._counters[pId].nbtokens.toValue(player.nbtokens.hand);
             });
             this._counters['deckSize'].toValue(args.datas.deckSize);
         },
@@ -411,7 +411,7 @@ function (dojo, declare) {
                 if (isCurrent) currentPlayerNo = player.no;
  
                 this._counters[pId] = {
-                    nbtokens: this.createCounter(`winter_counter_${pId}_tokens`, player.nbtokens),
+                    nbtokens: this.createCounter(`winter_counter_${pId}_tokens`, player.nbtokens.hand),
                 };
             });
     

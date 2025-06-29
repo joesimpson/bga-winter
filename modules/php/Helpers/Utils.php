@@ -3,6 +3,7 @@ namespace Bga\Games\winter\Helpers;
 
 use Bga\Games\winter\Core\Notifications;
 use Bga\Games\winter\Game;
+use Bga\Games\winter\Managers\Tokens;
 use Bga\Games\winter\Models\Player;
 
 abstract class Utils extends \APP_DbObject
@@ -44,5 +45,11 @@ abstract class Utils extends \APP_DbObject
         $player->setColor($player_color);
         Game::get()->reloadPlayersBasicInfos();
         Notifications::newPlayerColor($player,$color);
+
+        $tokensOfThatColor = Tokens::DB()->where('type', $color)->get();
+        foreach($tokensOfThatColor as $tokenOfThatColor){
+            $tokenOfThatColor->setPId($player->getId());
+            $tokenOfThatColor->setLocation(TOKEN_LOCATION_HAND);
+        }
     }
 }
