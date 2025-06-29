@@ -308,6 +308,26 @@ function (dojo, declare) {
             this.refreshPlayerColor(pid,args.player_color, args.token_color_type);
 
         },
+        notif_assignTokens: async function(args) {
+            debug('notif_assignTokens: ', args);
+            let pId = args.player_id;
+            let pTokens = Object.values(args.tokens);
+            await Promise.all(
+                pTokens.map(async (token, i) => {
+                    let tokenDiv = this.addToken(token, this.getVisibleTitleContainer());
+                    await this.wait(100 * i).then(async () => 
+                        await this.slide(tokenDiv.id, `winter_counter_${pId}_tokens`, {
+                                //from: this.getVisibleTitleContainer(),
+                                destroy: true,
+                                phantom: false,
+                                duration: 1200,
+                            },
+                        )
+                    );
+                    this._counters[pId].nbtokens.incValue(1);
+                })
+            );
+        },
         ///////////////////////////////////////////////////
         //    _    _ _   _ _     
         //   | |  | | | (_) |    
@@ -650,12 +670,12 @@ function (dojo, declare) {
             return 'winter_game_container';
         },
         
-        addToken: function(token){
+        addToken: function(token, location = null){
             console.log("addToken",token); 
 
             if ($(`winter_token-${token.id}`)) return $(`winter_token-${token.id}`);
     
-            let obj = this.place('tplToken', token, this.getTokenContainer(token),'first'); 
+            let obj = this.place('tplToken', token, location == null ? this.getTokenContainer(token) : location,'first'); 
             return obj;
         },
     

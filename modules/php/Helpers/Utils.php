@@ -51,5 +51,6 @@ abstract class Utils extends \APP_DbObject
             $tokenOfThatColor->setPId($player->getId());
             $tokenOfThatColor->setLocation(TOKEN_LOCATION_HAND);
         }
+        Notifications::assignTokens($player,$tokensOfThatColor);
     }
 }

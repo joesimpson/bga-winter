@@ -127,6 +127,7 @@ trait DebugTrait
   }
   
   function debug_GridTokens(int $nbTokens){
+    Tokens::moveAllInLocation(TOKEN_LOCATION_HAND,TOKEN_LOCATION_DECK);
     Tokens::moveAllInLocation(TOKEN_LOCATION_BOARD,TOKEN_LOCATION_DECK);
     Tokens::pickForLocation($nbTokens,TOKEN_LOCATION_DECK,TOKEN_LOCATION_BOARD);
     $tokens = Tokens::getInLocation(TOKEN_LOCATION_BOARD);

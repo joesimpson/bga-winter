@@ -3759,7 +3759,9 @@ body.notouch-device #help-mode-switch:hover {
   visibility: hidden;
 }
 
+#pagemaintitletext .winter_token,
 #pagemaintitletext .winter_card,
+#gameaction_status .winter_token,
 #gameaction_status .winter_card {
   position: absolute;
 }

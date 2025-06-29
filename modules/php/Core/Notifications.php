@@ -58,6 +58,18 @@ class Notifications
       'token_color_type' => $color,
     ]);
   }
+  
+  /**
+   * @param Player $player
+   * @param Collection $tokens
+   */
+  public static function assignTokens(Player $player,Collection $tokens)
+  {
+    self::notifyAll('assignTokens', '', [
+      'player' => $player,
+      'tokens' => $tokens->ui(),
+    ]);
+  }
   /**
    */  
   /*************************
