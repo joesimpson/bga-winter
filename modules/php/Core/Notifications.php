@@ -30,17 +30,32 @@ class Notifications
   /**
    * @param Player $player
    * @param int $color
+   * @param bool $choice choice by player or not
    */
-  public static function colorChosen(Player $player, int $color)
+  public static function colorTaken(Player $player, int $color, bool $choice)
   {
     $msg = clienttranslate('${player_name} chooses to take ${token_color} counters');
-    self::notifyAll('colorChosen', $msg, [
+    if( !$choice) $msg = clienttranslate('${player_name} takes ${token_color} counters');
+    self::notifyAll('colorTaken', $msg, [
       'player' => $player,
       'token_color' => Tokens::getColorName($color),
 
       'i18n' => ['token_color'],  
       'preserve' => [ 'token_color_type' ],
       'token_color_type' => $color,
+    ]);
+  }
+  
+  /**
+   * @param Player $player
+   * @param int $color
+   */
+  public static function newPlayerColor(Player $player,int $color)
+  {
+    self::notifyAll('newPlayerColor', '', [
+      'player' => $player,
+      'player_color' => $player->getColor(),
+      //'token_color_type' => $color,
     ]);
   }
   /**

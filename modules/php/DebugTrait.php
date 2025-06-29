@@ -4,6 +4,7 @@ namespace Bga\Games\winter;
 use Bga\Games\winter\Core\Globals;
 use Bga\Games\winter\Core\Notifications;
 use Bga\Games\winter\Core\Stats;
+use Bga\Games\winter\Helpers\Log;
 use Bga\Games\winter\Helpers\QueryBuilder;
 use Bga\Games\winter\Managers\Cards;
 use Bga\Games\winter\Managers\Players;
@@ -40,7 +41,9 @@ trait DebugTrait
   ////////////////////////////////////////////////////
 
   function debug_Setup(){
+    Game::get()->trace("debug_Setup - START ////////////////////////////////////////////////////");
     $this->debug_ClearLogs();
+    Log::disable();
     $options = [];
     $players = self::loadPlayersBasicInfos();
     $playersDatas = Players::getAll();
@@ -50,22 +53,30 @@ trait DebugTrait
     Tokens::DB()->delete()->run();
     Globals::DB()->delete()->run();
     Notifications::refreshUI($this->getAllDatas());
-    /* V1
+    //* V1
     Players::DB()->delete()->run();
     Game::get()->setupNewGame($players,$options);
-    */
 
-    //V2
+    /* V2
     Globals::setupNewGame($players, $options);
     Stats::setupNewGame($playersDatas);
     Cards::setupNewGame($playersDatas,$options);
     Tokens::setupNewGame($players,$options);
+    */
+
+    Log::enable();
 
     $players = self::loadPlayersBasicInfos();
+    $playersDatas = Players::getAll();
     Notifications::refreshUI($this->getAllDatas());
+    foreach($playersDatas as $playerData){
+      $expectedColor = !array_key_exists($playerData->getColor(), PLAYER_COLORS) ? 0 : PLAYER_COLORS[$playerData->getColor()];
+      Notifications::newPlayerColor($playerData,$expectedColor);
+    }
     
     $this->addCheckpoint(ST_START_CARD);
     $this->gamestate->jumpToState(ST_START_CARD);
+    Game::get()->trace("debug_Setup - END ////////////////////////////////////////////////////");
   }
 
   //Clear logs

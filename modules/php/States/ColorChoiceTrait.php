@@ -6,6 +6,7 @@ use Bga\GameFramework\Actions\Types\IntParam;
 use Bga\Games\winter\Core\Notifications;
 use Bga\Games\winter\Exceptions\UnexpectedException;
 use Bga\Games\winter\Game;
+use Bga\Games\winter\Helpers\Utils;
 use Bga\Games\winter\Managers\Players;
 
 trait ColorChoiceTrait
@@ -47,15 +48,21 @@ trait ColorChoiceTrait
       throw new UnexpectedException(110,"Invalid color $color");
     }
 
-    //TODO JSA ACTION EFFECT : change players colors and refresh ui
-
+    //ACTION EFFECT : change players colors and refresh ui 
+    Utils::assignPlayerColor($player,$color);
+    $opponent_color = $playableColors  [ (array_search($color,$playableColors) + 1) % count($playableColors) ];
+    $opponent_player = Players::get(Players::getNextId($player));
+    Utils::assignPlayerColor($opponent_player,$opponent_color);
 
     // Notify all players 
-    Notifications::colorChosen($player,$color);
+    Notifications::colorTaken($player,$color, true);
+    Notifications::colorTaken($opponent_player,$opponent_color, false);
 
     // at the end of the action, move to the next state
     $this->addCheckpoint(ST_NEXT_TURN);
     $this->gamestate->nextState("next");
   }
+
+  
  
 }

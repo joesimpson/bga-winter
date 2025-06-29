@@ -54,6 +54,14 @@
 .player_board_inner > .player-name > a[style*="color: #bdd002"] {
   text-shadow: 2px 0px 2px black, 0px 2px 2px black, -2px 0px 2px black, 0px -2px 2px black;
 }
+.player_board_inner > .player-name > a[style*="color: #86cada"] {
+  color: #86cada !important;
+  text-shadow: 1px 0px 1px white, 0px 1px 1px white, -1px 0px 1px white, 0px -1px 1px white;
+}
+.player_board_inner > .player-name > a[style*="color: #5396c9"] {
+  color: #5396c9 !important;
+  text-shadow: 1px 0px 1px black, 0px 1px 1px black, -1px 0px 1px black, 0px -1px 1px black;
+}
 
 .winter_panel .winter_player_infos {
   display: flex;
@@ -3830,6 +3838,26 @@ body.lockedInterface #restartAction {
 /* Mobile logs */
 .log.cancel.roundedbox {
   background-color: #ef9a9a;
+}
+
+.winter_playername_86cada {
+  color: #86cada !important;
+  text-shadow: 1px 0px 1px white, 0px 1px 1px white, -1px 0px 1px white, 0px -1px 1px white;
+}
+
+.winter_playername_5396c9 {
+  color: #5396c9 !important;
+  text-shadow: 1px 0px 1px black, 0px 1px 1px black, -1px 0px 1px black, 0px -1px 1px black;
+}
+
+.playername_wrapper_86cada .playername, .playername_wrapper_86cada.playername {
+  color: #86cada !important;
+  text-shadow: 1px 0px 1px white, 0px 1px 1px white, -1px 0px 1px white, 0px -1px 1px white;
+}
+
+.playername_wrapper_5396c9 .playername, .playername_wrapper_5396c9.playername {
+  color: #5396c9 !important;
+  text-shadow: 1px 0px 1px black, 0px 1px 1px black, -1px 0px 1px black, 0px -1px 1px black;
 }
 
 .playername_wrapper_ffa500 .playername, .playername_wrapper_ffa500.playername,

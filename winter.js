@@ -302,6 +302,12 @@ function (dojo, declare) {
             await this.slide(`winter_card-${pcard.id}`, this.getCardContainer(pcard), { duration: 650,})
         },
 
+        notif_newPlayerColor: async function(args) {
+            debug('notif_newPlayerColor: receiving a new color', args);
+            let pid = args.player_id;
+            this.refreshPlayerColor(pid,args.player_color);
+
+        },
         ///////////////////////////////////////////////////
         //    _    _ _   _ _     
         //   | |  | | | (_) |    
@@ -482,6 +488,27 @@ function (dojo, declare) {
                 <div class='winter_reserve' id='winter_reserve_${player.id}_${res}'></div>
             </div>
             `;
+        },
+        
+        refreshPlayerColor(pid,color) {
+            debug("refreshPlayerColor",pid,color);
+            //update player color :
+            this.gamedatas.players[pid].color = color;
+            this.gamedatas.players[pid].color_back = (color == "ffffff") ? "bbbbbb" : null;
+            let divSidePanel = $(`overall_player_board_${pid}`);
+            divSidePanel.dataset.color = color;
+            let divName = divSidePanel.querySelector(`#player_name_${pid}`).querySelector(`a:first-child` );
+            divName.style.color = ` #${color}`;
+            divName.dataset.color = color;
+            //Remove previous (useful for debug UI):
+            let old = Array.from(divName.classList).filter(element => element.startsWith("winter_playername_"));
+            old.forEach(function(oldClass) {
+                divName.classList.remove(oldClass);
+            });
+            //Add new
+            divName.classList.add(`winter_playername_${color}`);
+            
+            //TODO JSA Update player panel icon
         },
 
         ////////////////////////////////////////////////////////

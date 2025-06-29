@@ -1,7 +1,9 @@
 <?php
 namespace Bga\Games\winter\Helpers;
 
+use Bga\Games\winter\Core\Notifications;
 use Bga\Games\winter\Game;
+use Bga\Games\winter\Models\Player;
 
 abstract class Utils extends \APP_DbObject
 {
@@ -32,5 +34,15 @@ abstract class Utils extends \APP_DbObject
     ////////////////////////////////////////////////////////////////
     //////// GAME SPECIFIC
     ////////////////////////////////////////////////////////////////
- 
+    /**
+     * @param Player $player
+     * @param int $color
+     */
+    public static function assignPlayerColor(Player $player,int $color)
+    {
+        $player_color = array_search($color,PLAYER_COLORS);
+        $player->setColor($player_color);
+        Game::get()->reloadPlayersBasicInfos();
+        Notifications::newPlayerColor($player,$color);
+    }
 }

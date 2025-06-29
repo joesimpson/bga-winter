@@ -160,7 +160,33 @@ body.lockedInterface{
     background-color: #ef9a9a;
 }
 // ------------------------------------------------------------------------------
+.winter_playername_86cada
+{
+    color: #86cada !important;
+    text-shadow: 1px 0px 1px white, 0px 1px 1px white, -1px 0px 1px white, 0px -1px 1px white;
+}
+.winter_playername_5396c9
+{
+    color: #5396c9 !important;
+    text-shadow: 1px 0px 1px black, 0px 1px 1px black,-1px 0px 1px black,0px -1px 1px black;
+}
 // Override BGA style for log player_name
+.playername_wrapper_86cada
+{
+    .playername, // Different in replay ?
+    &.playername {
+        color: #86cada !important;
+        text-shadow: 1px 0px 1px white, 0px 1px 1px white, -1px 0px 1px white, 0px -1px 1px white;
+    }
+}
+.playername_wrapper_5396c9
+{
+    .playername, // Different in replay ?
+    &.playername {
+        color: #5396c9 !important;
+        text-shadow: 1px 0px 1px black, 0px 1px 1px black,-1px 0px 1px black,0px -1px 1px black;
+    }
+}
 .playername_wrapper_ffa500,
 .playername_wrapper_bdd002,
 .playername_wrapper_72c3b1,
@@ -173,6 +199,7 @@ body.lockedInterface{
                     0px -2px 2px black; 
     }
 }
+
 
 // ------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------

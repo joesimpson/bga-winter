@@ -12,6 +12,23 @@
                         -2px 0px 2px black,
                         0px -2px 2px black; 
         }
+        
+        >a[style*='color: #86cada']
+        {
+            color: #86cada !important;
+            text-shadow: 1px 0px 1px white, 
+                         0px 1px 1px white, 
+                        -1px 0px 1px white, 
+                        0px -1px 1px white;
+        }
+        >a[style*='color: #5396c9']
+        {
+            color: #5396c9 !important;
+            text-shadow: 1px 0px 1px black, 
+                         0px 1px 1px black, 
+                        -1px 0px 1px black, 
+                        0px -1px 1px black;
+        }
     }
 }
 

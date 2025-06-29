@@ -31,6 +31,13 @@ const TOKEN_LOCATION_HAND = 'hand';
 const TOKEN_COUNTER_BLUE_LIGHT = 1;
 const TOKEN_COUNTER_BLUE_DARK = 2;
 
+const PLAYER_COLORS = [
+   //dark blue
+   '5396c9' => TOKEN_COUNTER_BLUE_DARK,
+   //light blue
+   '86cada' => TOKEN_COUNTER_BLUE_LIGHT,
+];
+
 //9 per color
 const NB_COUNTER_COPIES = 9;
 
