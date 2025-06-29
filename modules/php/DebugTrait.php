@@ -70,7 +70,7 @@ trait DebugTrait
     $playersDatas = Players::getAll();
     Notifications::refreshUI($this->getAllDatas());
     foreach($playersDatas as $playerData){
-      $expectedColor = !array_key_exists($playerData->getColor(), PLAYER_COLORS) ? 0 : PLAYER_COLORS[$playerData->getColor()];
+      $expectedColor = $playerData->getTokensColor();
       Notifications::newPlayerColor($playerData,$expectedColor);
     }
     

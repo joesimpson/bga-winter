@@ -36,6 +36,7 @@ class Player extends \Bga\Games\winter\Helpers\DB_Model
     $data = parent::getUiData();
 
     $data["nbtokens"] = $this->getNbTokensOnBoard();
+    $data["t_color"] = $this->getTokensColor();
  
     return $data;
   }
@@ -97,4 +98,14 @@ class Player extends \Bga\Games\winter\Helpers\DB_Model
     return $n;
   }
   
+    /**
+   * @return int color of player tokens, 0 if unknown
+   */
+  public function getTokensColor()
+  {
+    if(array_key_exists($this->getColor(), PLAYER_COLORS)){
+      return PLAYER_COLORS[$this->getColor()];
+    }
+    else return 0;
+  }
 }

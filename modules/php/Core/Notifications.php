@@ -55,7 +55,7 @@ class Notifications
     self::notifyAll('newPlayerColor', '', [
       'player' => $player,
       'player_color' => $player->getColor(),
-      //'token_color_type' => $color,
+      'token_color_type' => $color,
     ]);
   }
   /**

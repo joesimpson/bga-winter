@@ -305,7 +305,7 @@ function (dojo, declare) {
         notif_newPlayerColor: async function(args) {
             debug('notif_newPlayerColor: receiving a new color', args);
             let pid = args.player_id;
-            this.refreshPlayerColor(pid,args.player_color);
+            this.refreshPlayerColor(pid,args.player_color, args.token_color_type);
 
         },
         ///////////////////////////////////////////////////
@@ -398,8 +398,14 @@ function (dojo, declare) {
                 let isCurrent = player.id == this.player_id;
                 //let divPanel = `player_panel_content_${player.color}`;
                 //this.place('tplPlayerPanel', player, divPanel, 'after');
-                this.getPlayerPanelElement(player.id).insertAdjacentHTML('beforeend', this.tplPlayerPanel(player) );
+                let panel = this.getPlayerPanelElement(player.id); 
+                panel.insertAdjacentHTML('beforeend', this.tplPlayerPanel(player) );
+                panel.querySelectorAll(".winter_icon_tokens").forEach((icon) => {
+                    icon.dataset.type = player.t_color;
+                    icon.classList.add("winter_icon_flake_color-"+player.t_color)
+                });
                 
+
                 let pId = player.id;
                 nPlayers++;
                 if (isCurrent) currentPlayerNo = player.no;
@@ -467,7 +473,7 @@ function (dojo, declare) {
             `;
         },
         tplPlayerPanel(player) {
-            return `<div class='winter_panel'>
+            return `<div class='winter_panel' id="winter_panel-${player.id}">
             <div class="winter_first_player_holder"></div>
             <div class='winter_player_infos'>
                 <div class='winter_player_resource_line'>
@@ -490,8 +496,8 @@ function (dojo, declare) {
             `;
         },
         
-        refreshPlayerColor(pid,color) {
-            debug("refreshPlayerColor",pid,color);
+        refreshPlayerColor(pid,color,color_type) {
+            debug("refreshPlayerColor",pid,color,color_type);
             //update player color :
             this.gamedatas.players[pid].color = color;
             this.gamedatas.players[pid].color_back = (color == "ffffff") ? "bbbbbb" : null;
@@ -508,7 +514,16 @@ function (dojo, declare) {
             //Add new
             divName.classList.add(`winter_playername_${color}`);
             
-            //TODO JSA Update player panel icon
+            //Update player panel icon
+            this.gamedatas.players[pid].t_color = color_type;
+            divSidePanel.querySelectorAll(".winter_icon_tokens").forEach((icon) => {
+                icon.dataset.type = color_type;
+                Array.from(icon.classList).filter(element => element.startsWith("winter_icon_flake_color")).forEach(function(oldClass) {
+                    icon.classList.remove(oldClass);
+                });
+                icon.classList.add("winter_icon_flake_color-"+color_type);
+            });
+
         },
 
         ////////////////////////////////////////////////////////
