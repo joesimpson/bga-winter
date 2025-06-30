@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Bga\Games\winter;
 
+use Bga\Games\winter\Core\Globals;
 use Bga\Games\winter\Core\Preferences;
 use Bga\Games\winter\Exceptions\UserException;
 use Bga\Games\winter\Managers\Cards;
@@ -161,6 +162,7 @@ class Game extends \Bga\GameFramework\Table
         $result["players"] = Players::getUiData($current_player_id);
         $result["cards"] = Cards::getUiData($current_player_id);
         $result["deckSize"] = Cards::countInLocation(CARD_LOCATION_DECK);
+        $result["phase"] = Globals::getPhase();
         $result["tokens"] = Tokens::getUiData($current_player_id);
         $result["prefs"] = Preferences::getUiData($current_player_id);
         $result["version"] = intval($this->gamestate->table_globals[BGA_GAMESTATE_GAMEVERSION]);

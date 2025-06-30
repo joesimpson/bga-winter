@@ -60,6 +60,7 @@ trait ColorChoiceTrait
     Notifications::colorTaken($opponent_player,$opponent_color, false);
 
     Globals::setPhase(PHASE_FREEZING);
+    Notifications::newPhase(Globals::getPhase());
 
     //RULE don't change player after this step
     $player->giveExtraTime();

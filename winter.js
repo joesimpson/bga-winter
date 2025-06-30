@@ -28,6 +28,10 @@ define([
 ],
 function (dojo, declare) {
     //COnstants copied from PHP file
+    const PHASE_BEGINNING = 0;
+    const PHASE_FREEZING = 1;
+    const PHASE_THAWING = 2;
+
     const CARD_LOCATION_BOARD = 'board';
     const TOKEN_LOCATION_BOARD = 'board';
 
@@ -280,9 +284,11 @@ function (dojo, declare) {
             debug('notif_refreshUI: refreshing UI', args);
             this.clearPossible();
             this.refreshPlayersDatas(args.datas['players']);
-            ['cards', 'tokens', 'deckSize',].forEach((value) => {
+            ['cards', 'tokens', 'deckSize', 'phase'].forEach((value) => {
                 this.gamedatas[value] = args.datas[value];
             });
+            $("winter_counter_phase").innerHTML = this.formatPhaseName(this.gamedatas.phase);
+
             this.setupCards();
             this.setupTokens();
     
@@ -327,6 +333,11 @@ function (dojo, declare) {
                     this._counters[pId].nbtokens.incValue(1);
                 })
             );
+        },
+        notif_newPhase: async function(args) {
+            debug('notif_newPhase: ', args);
+            this.gamedatas.phase = args.phase;
+            $("winter_counter_phase").innerHTML = this.formatPhaseName(this.gamedatas.phase);
         },
         ///////////////////////////////////////////////////
         //    _    _ _   _ _     
@@ -402,6 +413,16 @@ function (dojo, declare) {
                 <div class="winter_icon winter_icon_${type}">${text}${tplSubIcons}</div>
                 </div>`;
         },
+        
+        formatPhaseName() {
+            let phase = this.gamedatas.phase;
+            let phasesMap = new Map([
+                [PHASE_BEGINNING,       this.fsr(_('Beginning'),{})],
+                [PHASE_FREEZING,        this.fsr(_('Freezing'),{})],
+                [PHASE_THAWING,         this.fsr(_('Thawing'),{})],
+            ]);
+            return this.fsr(  ("Phase ${number} : ${name}") , { number: phase, name: phasesMap.get(phase) } );
+        },
         ////////////////////////////////////////
         //  ____  _
         // |  _ \| | __ _ _   _  ___ _ __ ___
@@ -465,12 +486,14 @@ function (dojo, declare) {
                 </div>`,
             });
         },
-        
+
         tplConfigPlayerBoard() {
+            let phase = this.gamedatas.phase;
             return `
             <div class='player-board' id="player_board_config">
                 <div id="player_config" class="player_board_content">
                 <div class="player_config_row" id="turn_counter_wrapper">
+                    <span id='winter_counter_phase'>${this.formatPhaseName(phase)}</span>
                 </div>
                 <div class="player_config_row">
                     <div id="help-mode-switch">

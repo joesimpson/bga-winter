@@ -70,6 +70,18 @@ class Notifications
       'tokens' => $tokens->ui(),
     ]);
   }
+  
+  /**
+   * @param int $phase
+   */
+  public static function newPhase(int $phase)
+  {
+    $msg = clienttranslate('Phase ${phase} starts');
+    
+    self::notifyAll('newPhase', $msg, [
+      'phase' => $phase,
+    ]);
+  }
   /**
    */  
   /*************************
@@ -163,6 +175,7 @@ class Notifications
       'players' => $datas['players'],
       'cards' => $datas['cards'],
       'deckSize' => $datas['deckSize'],
+      'phase' => $datas['phase'],
       'tokens' => $datas['tokens'],
     ];
 
