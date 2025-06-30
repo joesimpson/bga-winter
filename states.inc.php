@@ -63,16 +63,16 @@ use Bga\GameFramework\StateType;
                 secondPlayer
                 |
                 v
-                colorChoice
-                |
-                v
- /<----------- nextPlayer   <-------------------\
- |              |                               ^
- |              v                               |
- |             playerTurn  --\                  |
- |                           |                  |
- |                           v                  |
- |                    confirm --> endTurn ----->/
+            colorChoice
+              |  
+              |  
+ /<-----------|nextPlayer  <-------------------\
+ |            | |                              ^
+ |            v v                              |
+ |            playerTurn  --\                  |
+ |                          |                  |
+ |                          v                  |
+ |                   confirm --> endTurn ----->/
  v  
  \-> scoring
         | 
@@ -124,8 +124,8 @@ $machinestates = [
             'actChooseColor', 
         ])
         ->transitions([
-            'next' => ST_NEXT_TURN, 
-            'zombiePass' => ST_NEXT_TURN,
+            'next' => ST_PLAYER_TURN, 
+            'zombiePass' => ST_PLAYER_TURN,
         ])
         ->build(),
 

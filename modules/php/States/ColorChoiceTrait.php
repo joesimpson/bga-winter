@@ -3,6 +3,7 @@
 namespace Bga\Games\winter\States;
 
 use Bga\GameFramework\Actions\Types\IntParam;
+use Bga\Games\winter\Core\Globals;
 use Bga\Games\winter\Core\Notifications;
 use Bga\Games\winter\Exceptions\UnexpectedException;
 use Bga\Games\winter\Game;
@@ -58,8 +59,12 @@ trait ColorChoiceTrait
     Notifications::colorTaken($player,$color, true);
     Notifications::colorTaken($opponent_player,$opponent_color, false);
 
-    // at the end of the action, move to the next state
-    $this->addCheckpoint(ST_NEXT_TURN);
+    Globals::setPhase(PHASE_FREEZING);
+
+    //RULE don't change player after this step
+    $player->giveExtraTime();
+
+    $this->addCheckpoint(ST_PLAYER_TURN);
     $this->gamestate->nextState("next");
   }
 

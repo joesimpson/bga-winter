@@ -2,6 +2,9 @@
  
 const BGA_GAMESTATE_GAMEVERSION = 300;
 
+const PHASE_BEGINNING = 0;
+const PHASE_FREEZING = 1;
+const PHASE_THAWING = 2;
 /*
  * Game Constants
  */

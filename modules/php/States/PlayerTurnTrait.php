@@ -55,7 +55,7 @@ trait PlayerTurnTrait
       $card_name = Game::$CARD_TYPES[$card_id]['card_name'];
 
       // Notify all players about the card played.
-      $this->notify->all("cardPlayed", clienttranslate('${player_name} plays ${card_name}'), [
+      $this->notify->all("cardPlayedEXAMPLE", clienttranslate('${player_name} plays ${card_name}'), [
           "player_id" => $player_id,
           "player_name" => $this->getActivePlayerName(), // remove this line if you uncomment notification decorator
           "card_name" => $card_name, // remove this line if you uncomment notification decorator

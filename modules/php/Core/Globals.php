@@ -21,6 +21,7 @@ class Globals extends \Bga\Games\winter\Helpers\DB_Manager
   protected static $variables = [
     'turn' => 'int',
     'firstPlayer' => 'int',
+    'phase' => 'int',
 
     //For Undo log module
     'choices' => 'int',
@@ -33,6 +34,7 @@ class Globals extends \Bga\Games\winter\Helpers\DB_Manager
   {
 
     self::setTurn(0);
+    self::setPhase(PHASE_BEGINNING);
 
     foreach($players as $pId => $player){
 
