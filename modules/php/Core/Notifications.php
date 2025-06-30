@@ -26,6 +26,18 @@ class Notifications
       'coord' => $card->coordName(),
     ]);
   }
+  /**
+   * @param Player $player
+   * @param Card $card
+   */
+  public static function cardDrawn(Player $player, Card $card)
+  {
+    $msg = clienttranslate('${player_name} draws a card');
+    self::notifyAll('cardDrawn', $msg, [
+      'player' => $player,
+      'card' => $card->getUiData(),
+    ]);
+  }
 
   /**
    * @param Player $player

@@ -221,19 +221,23 @@ function (dojo, declare) {
                 };
                 this.addImageActionButton(buttonId, `<div class='btnChooseColor' data-color='${color}'>${buttonText}</div>`, callbackColorSelection);
             });
+
         },
 
         onEnteringStatePlayerTurn(args){
             debug('onEnteringStatePlayerTurn', args);
 
+            this.addPrimaryActionButton("btnDrawCard", _("Draw"), (evt) => {
+                this.performAction('actDraw', { });
+            });
+
+            //TODO JSA CLEAN TEMPLATE
             const playableCardsIds = args.playableCardsIds; // returned by the argPlayerTurn
 
             // Add test action buttons in the action status bar, simulating a card click:
             playableCardsIds.forEach(
                 cardId => this.statusBar.addActionButton(_('Play card with id ${card_id}').replace('${card_id}', cardId), () => this.onCardClick(cardId))
             ); 
-
-            this.statusBar.addActionButton(_('Pass'), () => this.bgaPerformAction("actPass"), { color: 'secondary' }); 
 
         },         
  

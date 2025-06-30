@@ -65,7 +65,6 @@ trait ColorChoiceTrait
     //RULE don't change player after this step
     $player->giveExtraTime();
 
-    $this->addCheckpoint(ST_PLAYER_TURN);
     $this->gamestate->nextState("next");
   }
 

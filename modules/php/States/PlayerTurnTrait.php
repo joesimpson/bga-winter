@@ -15,7 +15,7 @@ use Bga\Games\winter\Managers\Players;
 trait PlayerTurnTrait
 {
   /**
-   * Game state arguments, example content.
+   * Game state arguments 
    *
    * This method returns some additional information that is very specific to the `playerTurn` game state.
    *
@@ -31,6 +31,28 @@ trait PlayerTurnTrait
     $this->addArgsForUndo($args);
     return $args;
   }
+
+  /**
+   * Player action of drawing a card in phase 1
+   *
+   * @throws BgaUserException
+   */
+  public function actDraw(#[IntParam(name: 'v')] int $version,): void
+  {
+    $player = Players::getCurrent();
+    $pId = $player->getId();
+    $this->addStep();
+
+    //Deck should not be empty in phase 1
+    $card = Cards::pickOneForLocation(CARD_LOCATION_DECK, CARD_LOCATION_HAND);
+
+    Notifications::cardDrawn($player,$card);
+    $player->giveExtraTime();
+
+    $this->addCheckpoint(ST_PLAYER_TURN_PLACE_CARD);
+    $this->gamestate->nextState("draw");
+  }
+
   /**
    * Player action, example content.
    *
@@ -65,21 +87,6 @@ trait PlayerTurnTrait
 
       // at the end of the action, move to the next state
       $this->gamestate->nextState("playCard");
-  }
-
-  public function actPass(): void
-  {
-      // Retrieve the active player ID.
-      $player_id = (int)$this->getActivePlayerId();
-
-      // Notify all players about the choice to pass.
-      $this->notify->all("pass", clienttranslate('${player_name} passes'), [
-          "player_id" => $player_id,
-          "player_name" => $this->getActivePlayerName(), // remove this line if you uncomment notification decorator
-      ]);
-
-      // at the end of the action, move to the next state
-      $this->gamestate->nextState("pass");
   }
    
 }

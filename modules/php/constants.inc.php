@@ -76,6 +76,8 @@ const ST_COLOR_CHOICE = 5;
 const ST_NEXT_TURN = 10;
 const ST_PLAYER_TURN = 20;
 
+const ST_PLAYER_TURN_PLACE_CARD = 30;
+
 const ST_CONFIRM_CHOICES = 70;
 const ST_CONFIRM_TURN = 71;
 const ST_END_TURN = 80;

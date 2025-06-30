@@ -143,14 +143,30 @@ $machinestates = [
     //PLAYER turn for Phase 1 & phase 2, see Globals to know in which phase we are
     ST_PLAYER_TURN => GameStateBuilder::create()
         ->name('playerTurn')
-        ->description(clienttranslate('${actplayer} must play a card or pass'))
-        ->descriptionmyturn(clienttranslate('${you} must play a card or pass'))
+        ->description(clienttranslate('${actplayer} must draw and play a card or place 1 counter'))
+        ->descriptionmyturn(clienttranslate('${you} must draw and play a card or place 1 counter'))
         ->type(StateType::ACTIVE_PLAYER)
         ->args('argPlayerTurn')
         ->possibleactions([
-            // these actions are called from the front with bgaPerformAction, and matched to the function on the game.php file
-            'actPlayCard', 
-            'actPass',
+            'actDraw', 
+            'actPlaceToken', 
+            'actUndoToStep', 'actRestart',
+        ])
+        ->transitions([
+            'draw' => ST_PLAYER_TURN_PLACE_CARD, 
+            'pass' => ST_CONFIRM_TURN,
+        ])
+        ->build(),
+
+    ST_PLAYER_TURN_PLACE_CARD => GameStateBuilder::create()
+        ->name('placeCard')
+        ->description(clienttranslate('${actplayer} must play a card'))
+        ->descriptionmyturn(clienttranslate('${you} must play a card'))
+        ->type(StateType::ACTIVE_PLAYER)
+        ->args('argPlaceCard')
+        ->possibleactions([
+            'actPlaceCard', 
+            'actUndoToStep', 'actRestart',
         ])
         ->transitions([
             'playCard' => ST_CONFIRM_TURN, 

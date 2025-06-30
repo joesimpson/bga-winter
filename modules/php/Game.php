@@ -35,6 +35,7 @@ class Game extends \Bga\GameFramework\Table
     use States\EndTurnTrait;
     use States\NextTurnTrait;
     use States\PlayerTurnTrait;
+    use States\PlayerTurnPlaceCardTrait;
     use States\ScoringTrait;
     use States\SecondPlayerTrait;
     use States\SetupTrait;
@@ -151,7 +152,7 @@ class Game extends \Bga\GameFramework\Table
      * - when the game starts
      * - when a player refreshes the game page (F5)
      */
-    protected function getAllDatas(): array
+    public function getAllDatas(): array
     {
         $result = [];
 
