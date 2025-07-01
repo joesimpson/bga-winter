@@ -10,6 +10,7 @@ use Bga\Games\winter\Core\Stats;
 use Bga\Games\winter\Exceptions\UnexpectedException;
 use Bga\Games\winter\Game;
 use Bga\Games\winter\Helpers\Collection;
+use Bga\Games\winter\Helpers\Utils;
 use Bga\Games\winter\Managers\Cards;
 use Bga\Games\winter\Managers\Players;
 
@@ -31,13 +32,7 @@ trait PlayerTurnPlaceCardTrait
     $player = Players::getActive();
     $card = Cards::getDrawnCard($player);
 
-    //TODO JSA COmpute playable spots on board
-    $playableCoords = [
-      [ 1,2 ],
-      [ 0,3 ],
-      [ 0,4 ],
-      [ -2,-1 ],
-    ];
+    $playableCoords = Utils::listPlayableSpotsForNewCard();
 
     $args = [
       "card" => $card,
@@ -55,8 +50,11 @@ trait PlayerTurnPlaceCardTrait
    *
    * @throws BgaUserException
    */
-  public function actPlaceCard(int $row, int $col, int $dir, #[IntParam(name: 'v')] int $version,): void
+  public function actPlaceCard(int $dir,int $row, int $col, #[IntParam(name: 'v')] int $version,): void
   {
+    Game::get()->checkVersion($version);
+    self::trace("actPlaceCard($dir,$row, $col,)");
+
     $player = Players::getCurrent();
     $pId = $player->getId();
     $this->addStep();

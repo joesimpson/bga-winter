@@ -174,6 +174,15 @@ function (dojo, declare) {
             this.empty('winter_map_card_places');
         },
 
+        onEnteringStateConfirmTurn(args) {
+            debug('onEnteringStateConfirmTurn', args);
+
+            let confirmText = _('Confirm');
+            this.addPrimaryActionButton('btnConfirmTurn', confirmText, () => {
+                    this.performAction('actConfirmTurn');
+                }, 'restartAction');
+        },
+
         onEnteringStateStartingCard(args){
             debug('onEnteringStateStartingCard', args);
  
@@ -364,6 +373,7 @@ function (dojo, declare) {
                 //    this.performAction(serverAction, { dir: this.chosenDir, row: row,  col: col});
                 //});
 
+                //TODO JSA we need an ordered array from TOP LEFT to BOTTOM right in order to be able to click on every spot corner
                 let spot = this.addSelectableCardSpot(card, row, col);
                 let callbackSpotSelection = (evt) => {
                     this.performAction(serverAction, { dir: this.chosenDir, row: row,  col: col});
