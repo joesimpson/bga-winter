@@ -298,6 +298,7 @@ function (dojo, declare) {
             let pcard = args.card;
             if (!$(`winter_card-${pcard.id}`)) this.addCard(pcard, this.getVisibleTitleContainer());
             await this.slide(`winter_card-${pcard.id}`, this.getCardContainer(pcard), { duration: 650,})
+            //TODO JSA decrease deck size
         },
 
         notif_newPlayerColor: async function(args) {
@@ -373,7 +374,7 @@ function (dojo, declare) {
                 //    this.performAction(serverAction, { dir: this.chosenDir, row: row,  col: col});
                 //});
 
-                //TODO JSA we need an ordered array from TOP LEFT to BOTTOM right in order to be able to click on every spot corner
+                //we need good CSS or an ordered array from TOP LEFT to BOTTOM right in order to be able to click on every spot corner
                 let spot = this.addSelectableCardSpot(card, row, col);
                 let callbackSpotSelection = (evt) => {
                     this.performAction(serverAction, { dir: this.chosenDir, row: row,  col: col});
