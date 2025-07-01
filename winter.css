@@ -1851,6 +1851,9 @@
 #winter_map_container .winter_card[data-col="100"] {
   left: calc(50 * var(--winter_board_card_width));
 }
+#winter_map_container .winter_card_spot {
+  z-index: 3;
+}
 
 .winter_token_counter {
   border-radius: 10px;

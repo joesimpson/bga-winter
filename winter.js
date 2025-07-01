@@ -49,7 +49,7 @@ function (dojo, declare) {
             this._counters = {};
             
             //Filter states where we don't want other players to display state actions
-            this._activeStates = ['startingCard','colorChoice','playerTurn','confirmTurn'];
+            this._activeStates = ['startingCard','colorChoice','playerTurn','placeCard','confirmTurn'];
             this._inactiveStates = ['scoring','gameEnd'];
         },
         
@@ -176,35 +176,14 @@ function (dojo, declare) {
 
         onEnteringStateStartingCard(args){
             debug('onEnteringStateStartingCard', args);
-
-            const card = args.card;
-            const playableDirs = args.playableDir;
-            const playableCoords = args.playableCoords;
  
-            this.chosenDir = playableDirs[0];
-            this.addPrimaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + _(`Rotate card`), () => {
-                this.chosenDir = playableDirs [ (playableDirs.indexOf(this.chosenDir) + 1) % playableDirs.length ];
-                document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
-                    oCard.dataset.dir = this.chosenDir;
-                });
-            });
+            this.displayCardSpotsSelection("actPlayStartingCard", args.card, args.playableDir, args.playableCoords, );
 
-            Object.values(playableCoords).forEach( (playableCoord) => {
-                let row = playableCoord[0];
-                let col = playableCoord[1];
+        },
+        onEnteringStatePlaceCard(args){
+            debug('onEnteringStatePlaceCard', args);
 
-                //Coord buttons For debug only ?
-                //this.addPrimaryActionButton(`btnCoord_${row}_${col}`, (`${row},${col}`), () => {
-                //    this.performAction('actPlayStartingCard', { dir: this.chosenDir, row: row,  col: col});
-                //});
-
-                let spot = this.addSelectableCardSpot(card, row, col);
-                let callbackSpotSelection = (evt) => {
-                    this.performAction('actPlayStartingCard', { dir: this.chosenDir, row: row,  col: col});
-                };
-                this.onClick(`${spot.id}`, callbackSpotSelection);
-            });
-
+            this.displayCardSpotsSelection("actPlaceCard", args.card, args.playableDir, args.playableCoords, );
         },
         
         onEnteringStateColorChoice(args){
@@ -365,6 +344,33 @@ function (dojo, declare) {
         //     let cur_h = toint(dojo.style( $('winter_map_container'), 'height'));
         //     dojo.style($('winter_map_container'), 'height', (cur_h + 300) + 'px');
         // },
+
+        displayCardSpotsSelection: function(serverAction, card, playableDirs, playableCoords, ) {
+            
+            this.chosenDir = playableDirs[0];
+            this.addPrimaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + _(`Rotate card`), () => {
+                this.chosenDir = playableDirs [ (playableDirs.indexOf(this.chosenDir) + 1) % playableDirs.length ];
+                document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
+                    oCard.dataset.dir = this.chosenDir;
+                });
+            });
+
+            Object.values(playableCoords).forEach( (playableCoord) => {
+                let row = playableCoord[0];
+                let col = playableCoord[1];
+
+                //Coord buttons For debug only ?
+                //this.addPrimaryActionButton(`btnCoord_${row}_${col}`, (`${row},${col}`), () => {
+                //    this.performAction(serverAction, { dir: this.chosenDir, row: row,  col: col});
+                //});
+
+                let spot = this.addSelectableCardSpot(card, row, col);
+                let callbackSpotSelection = (evt) => {
+                    this.performAction(serverAction, { dir: this.chosenDir, row: row,  col: col});
+                };
+                this.onClick(`${spot.id}`, callbackSpotSelection);
+            });
+        },
 
         ////////////////////////////////////////////////////////////
         // _____                          _   _   _

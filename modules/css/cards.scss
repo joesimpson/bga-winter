@@ -103,4 +103,7 @@ $card_height: var(--winter_board_card_height);
             }
         }
     }
+    .winter_card_spot {
+        z-index: 3;
+    }
 }
