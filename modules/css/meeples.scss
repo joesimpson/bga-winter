@@ -1,6 +1,7 @@
 
 $token_counter_width : 40px;
 
+.winter_token_spot,
 .winter_token_counter{
     border-radius: 10px;
     border-radius: 100%;
@@ -27,12 +28,33 @@ $token_counter_width : 40px;
         background-position-y: calc( $icon_img_ratio * -1 * 0 * $icon_img_height);
         background-position-x: calc( $icon_img_ratio * -1 * 1 * $icon_img_width);
     }
+
+    
+    &.selectable {
+        cursor: pointer;
+        &:hover {
+            transform: scale(1.1);
+        }
+    }
 }
 
+.winter_token_spot{
+    opacity: 0.5;
+    &.selectable {
+        //border: 5px solid green;
+        box-shadow: 0px 0px 10px 10px green;
+        border-radius: 50%;
+        cursor: pointer;
+        &:hover {
+            opacity: 1;
+        }
+    }
+}
 
 #winter_map_container{
+    .winter_token_spot,
     .winter_token_counter{
-        pointer-events: none;
+        //pointer-events: none;
         position: absolute;
         
         @for $i from -100 through 100 {//18 cards MAX, where each offset is a half card

@@ -9,6 +9,7 @@ use Bga\Games\winter\Core\Stats;
 use Bga\Games\winter\Exceptions\UnexpectedException;
 use Bga\Games\winter\Game;
 use Bga\Games\winter\Helpers\Collection;
+use Bga\Games\winter\Helpers\Utils;
 use Bga\Games\winter\Managers\Cards;
 use Bga\Games\winter\Managers\Players;
 
@@ -24,8 +25,11 @@ trait PlayerTurnTrait
    */
   public function argPlayerTurn(): array
   {
+    $player = Players::getActive();
+    $token_color = $player->getTokensColor();
     $args = [
-        "playableCardsIds" => [1, 2],
+      "t_color" => $player->getTokensColor(),
+      "spots_for_tokens" => Utils::listPlayableSpotsForNewToken($token_color),
     ];
       
     $this->addArgsForUndo($args);
@@ -51,42 +55,6 @@ trait PlayerTurnTrait
 
     $this->addCheckpoint(ST_PLAYER_TURN_PLACE_CARD);
     $this->gamestate->nextState("draw");
-  }
-
-  /**
-   * Player action, example content.
-   *
-   * In this scenario, each time a player plays a card, this method will be called. This method is called directly
-   * by the action trigger on the front side with `bgaPerformAction`.
-   *
-   * @throws BgaUserException
-   */
-  public function actPlayCard(int $card_id): void
-  {
-      // Retrieve the active player ID.
-      $player_id = (int)$this->getActivePlayerId();
-
-      // check input values
-      $args = $this->argPlayerTurn();
-      $playableCardsIds = $args['playableCardsIds'];
-      if (!in_array($card_id, $playableCardsIds)) {
-          throw new \BgaUserException('Invalid card choice');
-      }
-
-      // Add your game logic to play a card here.
-      $card_name = Game::$CARD_TYPES[$card_id]['card_name'];
-
-      // Notify all players about the card played.
-      $this->notify->all("cardPlayedEXAMPLE", clienttranslate('${player_name} plays ${card_name}'), [
-          "player_id" => $player_id,
-          "player_name" => $this->getActivePlayerName(), // remove this line if you uncomment notification decorator
-          "card_name" => $card_name, // remove this line if you uncomment notification decorator
-          "card_id" => $card_id,
-          "i18n" => ['card_name'], // remove this line if you uncomment notification decorator
-      ]);
-
-      // at the end of the action, move to the next state
-      $this->gamestate->nextState("playCard");
   }
    
 }

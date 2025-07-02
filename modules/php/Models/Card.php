@@ -2,6 +2,8 @@
 
 namespace Bga\Games\winter\Models;
 
+use Bga\Games\winter\Helpers\Collection;
+
 /*
  * Card: all utility functions concerning a card
  */
@@ -18,6 +20,19 @@ class Card extends \Bga\Games\winter\Helpers\DB_Model
     'row' => ['y', 'int'],
     'col' => ['x', 'int'],
   ];
+
+  /**
+   * Snowflakes distribution on the card
+   */
+  //protected $snowflakes;
+  
+  protected $staticAttributes = [
+    /**
+     * array of Snowflake : distribution printed on the card (not the tokens we put on cards)
+     */
+    'snowflakes',
+  ];
+
    
   public function __construct($row, $datas)
   {
@@ -25,6 +40,7 @@ class Card extends \Bga\Games\winter\Helpers\DB_Model
     foreach ($datas as $attribute => $value) {
       $this->$attribute = $value;
     }
+    //$this->$snowflakes = new Collection($datas['snowflakes']);
   }
 
   public function getUiData()

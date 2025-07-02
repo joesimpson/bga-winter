@@ -9,6 +9,7 @@ use Bga\Games\winter\Helpers\Collection;
 use Bga\Games\winter\Helpers\Utils;
 use Bga\Games\winter\Models\Card;
 use Bga\Games\winter\Models\Player;
+use Bga\Games\winter\Models\Snowflake;
 
 /* Class to manage all the cards */
 
@@ -101,17 +102,58 @@ class Cards extends \Bga\Games\winter\Helpers\Pieces
     $f = function ($t) {
       return [
         'nbr' => $t[0],
+        'snowflakes' => $t[1],
       ];
     };
     return [
-      1 => $f([ 1, ]), 
-      2 => $f([ 4, ]), 
-      3 => $f([ 2, ]), 
-      4 => $f([ 2, ]), 
-      5 => $f([ 1, ]), 
-      6 => $f([ 4, ]), 
-      7 => $f([ 2, ]), 
-      8 => $f([ 2, ]), 
+      1 => $f([ 1, [
+          new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,  1, 1),
+          new Snowflake(TOKEN_COUNTER_BLUE_DARK,   1, 2),
+          new Snowflake(TOKEN_COUNTER_BLUE_DARK,   2, 1),
+          new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,  2, 2),
+        ] ]), 
+      2 => $f([ 4, [
+          new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,  1, 1),
+          new Snowflake(TOKEN_COUNTER_BLUE_DARK,   1, 2),
+          new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,   2, 1),
+          new Snowflake(TOKEN_COUNTER_BLUE_DARK,  2, 2),
+        ] ]), 
+      3 => $f([ 2, [
+          new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,  1, 1),
+          new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,   1, 2),
+          new Snowflake(TOKEN_COUNTER_BLUE_DARK,   2, 1),
+          new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,  2, 2),
+        ] ]), 
+      4 => $f([ 2, [
+          new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,  1, 1),
+          new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,   1, 2),
+          new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,   2, 1),
+          new Snowflake(TOKEN_COUNTER_BLUE_DARK,  2, 2),
+        ] ]), 
+      5 => $f([ 1, [
+          new Snowflake(TOKEN_COUNTER_BLUE_DARK,  1, 1),
+          new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,   1, 2),
+          new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,   2, 1),
+          new Snowflake(TOKEN_COUNTER_BLUE_DARK,  2, 2),
+        ] ]), 
+      6 => $f([ 4, [
+          new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,  1, 1),
+          new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,   1, 2),
+          new Snowflake(TOKEN_COUNTER_BLUE_DARK,   2, 1),
+          new Snowflake(TOKEN_COUNTER_BLUE_DARK,  2, 2),
+        ] ]), 
+      7 => $f([ 2,  [
+          new Snowflake(TOKEN_COUNTER_BLUE_DARK,  1, 1),
+          new Snowflake(TOKEN_COUNTER_BLUE_DARK,   1, 2),
+          new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,   2, 1),
+          new Snowflake(TOKEN_COUNTER_BLUE_DARK,  2, 2),
+        ] ]),  
+      8 => $f([ 2, [
+          new Snowflake(TOKEN_COUNTER_BLUE_DARK,  1, 1),
+          new Snowflake(TOKEN_COUNTER_BLUE_DARK,   1, 2),
+          new Snowflake(TOKEN_COUNTER_BLUE_DARK,   2, 1),
+          new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,  2, 2),
+        ] ]), 
       
     
     ];

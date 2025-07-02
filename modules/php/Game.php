@@ -42,8 +42,6 @@ class Game extends \Bga\GameFramework\Table
     use States\StartingCardTrait;
 
     public static $instance = null;
-    //TODO JSA CLEAN TEMPLATE
-    public static array $CARD_TYPES;
 
     /**
      * Your global variables labels:
@@ -63,16 +61,6 @@ class Game extends \Bga\GameFramework\Table
         $this->initGameStateLabels([
             'logging' => 10,
         ]);        
-
-        self::$CARD_TYPES = [
-            1 => [
-                "card_name" => clienttranslate('Troll'), // ...
-            ],
-            2 => [
-                "card_name" => clienttranslate('Goblin'), // ...
-            ],
-            // ...
-        ];
 
         /* example of notification decorator.
         // automatically complete notification args when needed

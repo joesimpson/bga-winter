@@ -94,6 +94,7 @@ function (dojo, declare) {
                                 <div id="winter_map_cards"></div> 
                                 <div id="winter_map_card_places"></div> 
                                 <div id="winter_map_tokens"></div> 
+                                <div id="winter_map_token_places"></div> 
                             </div>
                         
                             <div class="movetop"></div> 
@@ -218,45 +219,22 @@ function (dojo, declare) {
             this.addPrimaryActionButton("btnDrawCard", _("Draw"), (evt) => {
                 this.performAction('actDraw', { });
             });
+ 
+            let spots_for_tokens = args.spots_for_tokens;
+            let color = args.t_color;
+            let futureToken = { type : color};
+            Object.values(spots_for_tokens).forEach( (spot) => {
+                let row = spot[0];
+                let col = spot[1];
+                let spotDiv = this.addSelectableTokenSpot( futureToken, row, col);
 
-            //TODO JSA CLEAN TEMPLATE
-            const playableCardsIds = args.playableCardsIds; // returned by the argPlayerTurn
-
-            // Add test action buttons in the action status bar, simulating a card click:
-            playableCardsIds.forEach(
-                cardId => this.statusBar.addActionButton(_('Play card with id ${card_id}').replace('${card_id}', cardId), () => this.onCardClick(cardId))
-            ); 
+                let callbackSpotSelection = (evt) => {
+                    this.performAction('actPlaceToken', { 'row': row, 'col': col });
+                };
+                this.onClick(`${spotDiv.id}`, callbackSpotSelection);
+            });
 
         },         
- 
-        ///////////////////////////////////////////////////
-        //// Player's action
-        
-        /*
-        
-            Here, you are defining methods to handle player's action (ex: results of mouse click on 
-            game objects).
-            
-            Most of the time, these methods:
-            _ check the action is possible at this game state.
-            _ make a call to the game server
-        
-        */
-        
-        // Example:
-        
-        onCardClick: function( card_id )
-        {
-            debug( 'onCardClick', card_id );
-
-            this.bgaPerformAction("actPlayCard", { 
-                card_id,
-            }).then(() =>  {                
-                // What to do after the server call if it succeeded
-                // (most of the time, nothing, as the game will react to notifs / change of state instead)
-            });        
-        },    
-
         
         //////////////////////////////////////////////////////////////
         //    _   _       _   _  __ _           _   _                 
@@ -298,7 +276,8 @@ function (dojo, declare) {
             let pcard = args.card;
             if (!$(`winter_card-${pcard.id}`)) this.addCard(pcard, this.getVisibleTitleContainer());
             await this.slide(`winter_card-${pcard.id}`, this.getCardContainer(pcard), { duration: 650,})
-            //TODO JSA decrease deck size
+            //TODO JSA decrease deck size or the card is already drawn
+            
         },
 
         notif_newPlayerColor: async function(args) {
@@ -728,6 +707,21 @@ function (dojo, declare) {
             || token.type == TOKEN_COUNTER_BLUE_DARK) 
                 return `<div class="winter_token winter_token_counter" id="winter_token${prefix}-${token.id}" data-type="${token.type}" data-row="${token.row}" data-col="${token.col}"></div>`;
             return '';
+        },
+        
+        addSelectableTokenSpot(token,row, column) {
+            debug("addSelectableTokenSpot", row, column);
+            let spotDivId = `winter_token_spot_${row}_${column}`;
+            if ( $(spotDivId) ) return $(spotDivId);
+            
+            let spot = this.place('tplTokenSpot', {'token':token, 'row':row, 'column':column}, $("winter_map_token_places"));
+    
+            debug("addSelectableTokenSpot() result=> ",spot);
+            return spot;
+        },
+        tplTokenSpot(datas) {
+            return `<div class="winter_token_spot" id="winter_token_spot_${datas.row}_${datas.column}" data-type="${datas.token.type}" data-dir="1" data-row="${datas.row}" data-col="${datas.column}">
+                </div>`;
         },
    });             
 });

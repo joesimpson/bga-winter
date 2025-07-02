@@ -73,8 +73,17 @@
         position: absolute;
         z-index: 2; 
     }
+    #winter_map_card_places{
+        position: absolute;
+        z-index: 3; 
+    }
     #winter_map_tokens{
         position: absolute;
         z-index: 10; //over cards
+    }
+
+    #winter_map_token_places{
+        position: absolute;
+        z-index: 11; //Spots over tokens
     }
 }

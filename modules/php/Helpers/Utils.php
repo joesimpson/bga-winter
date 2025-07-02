@@ -67,7 +67,7 @@ abstract class Utils extends \APP_DbObject
      *      [ -2,-1 ],
      *  ]
      */
-    public static function listPlayableSpotsForNewCard()
+    public static function listPlayableSpotsForNewCard(): array
     {
         Game::get()->trace("listPlayableSpotsForNewCard()");
         $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
@@ -75,9 +75,6 @@ abstract class Utils extends \APP_DbObject
         $usedCoordinates = $boardCards->map(function ($card) {
             return $card->coordArray();
         })->toArray();
-        //$intersectUnavailable = $boardCards->map(function ($card) {
-        //    return Utils::gridIntersectionListFrom($card->getRow(), $card->getCol());
-        //})->toArray();
         $intersectUnavailable = [];
         foreach($boardCards as $card){
             $intersectUnavailable = array_merge($intersectUnavailable,Utils::gridIntersectionListFrom($card->getRow(), $card->getCol()));
@@ -105,7 +102,7 @@ abstract class Utils extends \APP_DbObject
      * @param int $col
     * @return array of coordinates of card overlaping position [row, col] (because card size is 2 cols/2rows )
     */
-    public static function gridIntersectionListFrom(int $row, int $col)
+    public static function gridIntersectionListFrom(int $row, int $col): array
     {
         return [
             [$row -1 , $col -1],
@@ -120,5 +117,40 @@ abstract class Utils extends \APP_DbObject
             [$row +1 , $col ],
             [$row +1 , $col +1],
         ];
+    }
+
+    
+    /**
+     * 
+     * RULE : Counters are always PLACED on top of a square made up of 4 snowflake sections of the same color.
+     * 
+     * @return array of available coordinates to place a token on the board
+     * 
+     * Example : 
+     * 
+     *  [
+     *      [ 1,2 ],
+     *      [ 0,3 ],
+     *      [ 0,4 ],
+     *      [ -2,-1 ],
+     *  ]
+     */
+    public static function listPlayableSpotsForNewToken(int $color): array
+    {
+        Game::get()->trace("listPlayableSpotsForNewToken($color)");
+
+        $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
+        $usedCoordinates = $boardCards->map(function ($card) {
+            return $card->coordArray();
+        })->toArray();
+
+        $spots = [];
+        //TODO JSA step 1 : convert cards coords to a GRID of SNOWFLAKES coords
+        //TODO JSA step 2 : LOOK at SNOWFLAKES coords to find a square of 4 of the given color
+        //TODO JSA step 3 : LOOP each found square to FILTER empty spots
+
+        $spots [] = [ -1, -2];
+       
+        return $spots;
     }
 }
