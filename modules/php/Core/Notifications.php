@@ -90,11 +90,12 @@ class Notifications
   public static function placeToken(Player $player, Token $token)
   {
     $msg = clienttranslate('${player_name} places a ${token_color} token at ${location}');
-    self::notifyAll('colorTaken', $msg, [
+    self::notifyAll('placeToken', $msg, [
       'player' => $player,
       'location' => $token->coordName(),
       'token_color' => Tokens::getColorName($token->getType()),
 
+      'token' => $token->getUiData(),
       'i18n' => ['token_color'],  
       'preserve' => [ 'token_color_type' ],
       'token_color_type' => $token->getType(),

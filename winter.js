@@ -307,6 +307,15 @@ function (dojo, declare) {
                 })
             );
         },
+        notif_placeToken: async function(args) {
+            debug('notif_placeToken...', args);
+            let pId = args.player_id;
+            let ptoken = args.token;
+            if (!$(`winter_token-${ptoken.id}`)) this.addToken(ptoken, $(`winter_reserve_${pId}_tokens`));
+            this._counters[pId].nbtokens.incValue(-1);
+            await this.slide(`winter_token-${ptoken.id}`, this.getTokenContainer(ptoken), { duration: 650,})
+        },
+
         notif_newPhase: async function(args) {
             debug('notif_newPhase: ', args);
             this.gamedatas.phase = args.phase;
