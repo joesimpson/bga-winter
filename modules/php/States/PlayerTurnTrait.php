@@ -12,6 +12,7 @@ use Bga\Games\winter\Helpers\Collection;
 use Bga\Games\winter\Helpers\Utils;
 use Bga\Games\winter\Managers\Cards;
 use Bga\Games\winter\Managers\Players;
+use Bga\Games\winter\Managers\Tokens;
 
 trait PlayerTurnTrait
 {
@@ -27,9 +28,12 @@ trait PlayerTurnTrait
   {
     $player = Players::getActive();
     $token_color = $player->getTokensColor();
+    $availableTokens = $player->getNbTokensInHand() > 0; 
+    $spots = ($availableTokens ? Utils::listPlayableSpotsForNewToken($token_color) : []);
+
     $args = [
       "t_color" => $player->getTokensColor(),
-      "spots_for_tokens" => Utils::listPlayableSpotsForNewToken($token_color),
+      "spots_for_tokens" => $spots,
     ];
       
     $this->addArgsForUndo($args);
@@ -57,4 +61,34 @@ trait PlayerTurnTrait
     $this->gamestate->nextState("draw");
   }
    
+  
+  /**
+   * Player action of placing a token in phase 1
+   *
+   * @throws BgaUserException
+   */
+  public function actPlaceToken(int $row, int $col,#[IntParam(name: 'v')] int $version,): void
+  {
+    $player = Players::getCurrent();
+    $pId = $player->getId();
+    $this->addStep();
+
+    // check input values
+    $args = $this->argPlayerTurn();
+    $spots_for_tokens = $args['spots_for_tokens'];
+    if (!in_array([$row, $col], $spots_for_tokens)) {
+      throw new UnexpectedException(101,"Invalid coordinates choice [$row, $col]");
+    }
+
+    //ACTION EFFECT
+    $token = Tokens::getPlayerHand($pId)->first();
+    $token->setRow($row);
+    $token->setCol($col);
+    $token->setLocation(TOKEN_LOCATION_BOARD);
+
+    Notifications::placeToken($player,$token);
+    $player->giveExtraTime();
+
+    $this->gamestate->nextState("next");
+  }
 }

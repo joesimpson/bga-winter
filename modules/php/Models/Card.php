@@ -3,6 +3,7 @@
 namespace Bga\Games\winter\Models;
 
 use Bga\Games\winter\Helpers\Collection;
+use Bga\Games\winter\Helpers\Utils;
 
 /*
  * Card: all utility functions concerning a card
@@ -78,11 +79,7 @@ class Card extends \Bga\Games\winter\Helpers\DB_Model
    */
   public function coordName()
   {
-    $row = $this->getRow();
-    $col = $this->getCol();
-    if( !isset($row)) return "";
-    if( !isset($col)) return "";
-    return "[".$row.",".$col."]";
+    return Utils::gridCoordName($this->getRow(), $this->getCol());
   } 
 
   /**

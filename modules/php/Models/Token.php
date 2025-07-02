@@ -2,6 +2,8 @@
 
 namespace Bga\Games\winter\Models;
 
+use Bga\Games\winter\Helpers\Utils;
+
 /*
  * Token: all utility functions concerning a Token
  */
@@ -42,5 +44,14 @@ class Token extends \Bga\Games\winter\Helpers\DB_Model
   public function getPosition(){
     return $this->getState();
   }
+
+  
+  /**
+   * @return string
+   */
+  public function coordName()
+  {
+    return Utils::gridCoordName($this->getRow(), $this->getCol());
+  } 
 
 }

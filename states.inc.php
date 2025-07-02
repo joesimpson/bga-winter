@@ -154,7 +154,7 @@ $machinestates = [
         ])
         ->transitions([
             'draw' => ST_PLAYER_TURN_PLACE_CARD, 
-            'pass' => ST_CONFIRM_TURN,
+            'next' => ST_CONFIRM_TURN,
         ])
         ->build(),
 

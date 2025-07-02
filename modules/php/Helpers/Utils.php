@@ -37,6 +37,16 @@ abstract class Utils extends \APP_DbObject
     //////// GAME SPECIFIC
     ////////////////////////////////////////////////////////////////
     /**
+     * @return string
+     */
+    public static function gridCoordName(int $row, int $col)
+    {
+        if( !isset($row)) return "";
+        if( !isset($col)) return "";
+        return "[".$row.",".$col."]";
+    } 
+
+    /**
      * @param Player $player
      * @param int $color
      */

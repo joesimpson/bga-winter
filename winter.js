@@ -173,6 +173,7 @@ function (dojo, declare) {
         onLeavingState(stateName) {
             this.inherited(arguments);
             this.empty('winter_map_card_places');
+            this.empty('winter_map_token_places');
         },
 
         onEnteringStateConfirmTurn(args) {

@@ -84,6 +84,24 @@ class Notifications
   }
   
   /**
+   * @param Player $player
+   * @param Token $token
+   */
+  public static function placeToken(Player $player, Token $token)
+  {
+    $msg = clienttranslate('${player_name} places a ${token_color} token at ${location}');
+    self::notifyAll('colorTaken', $msg, [
+      'player' => $player,
+      'location' => $token->coordName(),
+      'token_color' => Tokens::getColorName($token->getType()),
+
+      'i18n' => ['token_color'],  
+      'preserve' => [ 'token_color_type' ],
+      'token_color_type' => $token->getType(),
+    ]);
+  }
+  
+  /**
    * @param int $phase
    */
   public static function newPhase(int $phase)
