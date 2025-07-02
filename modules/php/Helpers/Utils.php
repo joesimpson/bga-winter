@@ -150,17 +150,72 @@ abstract class Utils extends \APP_DbObject
         Game::get()->trace("listPlayableSpotsForNewToken($color)");
 
         $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
-        $usedCoordinates = $boardCards->map(function ($card) {
-            return $card->coordArray();
-        })->toArray();
 
         $spots = [];
-        //TODO JSA step 1 : convert cards coords to a GRID of SNOWFLAKES coords
-        //TODO JSA step 2 : LOOK at SNOWFLAKES coords to find a square of 4 of the given color
-        //TODO JSA step 3 : LOOP each found square to FILTER empty spots
+        //step 1 : convert cards coords to an (array) GRID of SNOWFLAKES coords
+        $snowflakesGrid = [];
+        foreach($boardCards as $card){
+            $snowflakes = $card->getOrientedSnowflakes();
+            foreach( $snowflakes as $snowflake){
+                $snowflakeCoords = $snowflake->coordArrayFromBase($card->getRow(), $card->getCol());
+                $snowflakeCoordsLabel = $snowflake->coordNameFromBase($card->getRow(), $card->getCol());
 
-        $spots [] = [ -1, -2];
-       
+                $snowflakesGrid[$snowflakeCoordsLabel] = [ 
+                   'coords' => $snowflakeCoords, 
+                   'type' => $snowflake->type,
+                ];
+            }
+        }
+        //Sort array and keep associtive keys
+        asort($snowflakesGrid);
+
+        //step 2 : LOOK at SNOWFLAKES coords to find a square of 4 of the given color
+        $squareBottomRightCorners = [];
+        foreach($snowflakesGrid as $snowflakeDatas){
+            $coords = $snowflakeDatas['coords'];
+
+            //Question is "is this spot the bottom right corner of a 4-square ?"
+            $targetSquare = [
+                Utils::gridCoordName( $coords[0] -1, $coords[1]-1   ), 
+                Utils::gridCoordName( $coords[0] -1, $coords[1]     ), 
+                Utils::gridCoordName( $coords[0],    $coords[1]-1   ), 
+                Utils::gridCoordName( $coords[0],    $coords[1]     ), //SAME CELL
+            ];
+            $isSquare = Utils::isSnowflakesSquare($color, $targetSquare, $snowflakesGrid);
+            if($isSquare) $squareBottomRightCorners[] = $coords;
+        }
+
+        //step 3 : LOOP each found square to FILTER empty spots
+        $existingTokensCoords = Tokens::getBoardTokens()->map(function ($token) {
+            return $token->coordArray();
+        })->toArray();
+        foreach($squareBottomRightCorners as $squareBottomRightCorner){
+            if(!in_array($squareBottomRightCorner,$existingTokensCoords)) $spots [] = $squareBottomRightCorner;
+        }
+
+        Game::get()->trace("listPlayableSpotsForNewToken($color) for snowflakesGrid ".json_encode($snowflakesGrid)." and squareBottomRightCorners ".json_encode($squareBottomRightCorners)." => result = ".json_encode($spots));
         return $spots;
     }
+
+    /**
+     *  Question is "is this spot the top left corner of a 4-square ?"
+     * 
+     * @param int $type token color
+     * @param array $targetSquare
+     * @param array $snowflakesGrid complete grid of snowflakes array datas
+     * @return bool true if found, else false
+     */
+    public static function isSnowflakesSquare(int $type, array $targetSquare, array $snowflakesGrid)
+    {
+        Game::get()->trace("isSnowflakesSquare($type, ".json_encode($targetSquare));
+
+        foreach($targetSquare as $targetSquareSpot){
+            if(!array_key_exists($targetSquareSpot, $snowflakesGrid )) return false;
+            $snowflakeDatas = $snowflakesGrid[$targetSquareSpot];
+            if($type !== $snowflakeDatas['type']) return false;
+        }
+
+        Game::get()->trace("isSnowflakesSquare($type, ".json_encode($targetSquare).") => TRUE");
+        return true;
+    } 
 }

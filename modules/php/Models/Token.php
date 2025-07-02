@@ -47,6 +47,17 @@ class Token extends \Bga\Games\winter\Helpers\DB_Model
 
   
   /**
+   * @return array [row, col]
+   */
+  public function coordArray()
+  {
+    $row = $this->getRow();
+    $col = $this->getCol();
+    if( !isset($row)) return null;
+    if( !isset($col)) return null;
+    return [$row, $col];
+  } 
+  /**
    * @return string
    */
   public function coordName()

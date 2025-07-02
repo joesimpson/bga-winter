@@ -2,6 +2,7 @@
 
 namespace Bga\Games\winter\Models;
 
+use Bga\Games\winter\Helpers\Utils;
 use Bga\Games\winter\Managers\Tokens;
 
 /*
@@ -50,4 +51,21 @@ class Snowflake implements \JsonSerializable
 
     return $data;
   }
+  
+  /**
+   * @return string coordinates of the snowflake on the board map
+   */
+  public function coordNameFromBase(int $cardRow, int $cardCol)
+  {
+    $coords = $this->coordArrayFromBase($cardRow, $cardCol);
+    return Utils::gridCoordName($coords[0], $coords[1]);
+  } 
+
+  /**
+   * @return array [row,col] coordinates of the snowflake on the board map
+   */
+  public function coordArrayFromBase(int $cardRow, int $cardCol)
+  {
+    return [$cardRow-1 + $this->row, $cardCol-1 + $this->col];
+  } 
 }
