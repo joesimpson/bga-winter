@@ -32,13 +32,19 @@ trait PlayerTurnTrait
     $availableTokens = $player->getNbTokensInHand() > 0; 
     $spots = ($availableTokens ? Utils::listPlayableSpotsForNewToken($token_color) : []);
 
+    $actionsMessage = '';
     $possibleActions = [];
+    $removableTokens = [];
     switch($phase){
       case PHASE_FREEZING:
         $possibleActions = ['actDraw', 'actPlaceToken'];
+        //$actionsMessage = clienttranslate('draw and play a card or place 1 counter');
         break;
       case PHASE_THAWING:
         $possibleActions = ['actMoveCard','actRemoveCard', 'actRemoveToken'];
+        //$actionsMessage = clienttranslate('move a card, remove');
+        $removableTokens = Tokens::getBoardTokens($player->getId())->getIds();
+
         break;
       default: break;
     }
@@ -46,6 +52,8 @@ trait PlayerTurnTrait
     $args = [
       "t_color" => $player->getTokensColor(),
       "spots_for_tokens" => $spots,
+      "removableTokens" => $removableTokens,
+      //"actionsMessage" => $actionsMessage,
       "pActions" => $possibleActions,
     ];
       
@@ -109,6 +117,39 @@ trait PlayerTurnTrait
 
     Notifications::placeToken($player,$token);
     $player->giveExtraTime();
+
+    $this->gamestate->nextState("next");
+  }
+  
+  /**
+   * Player action of removing a token in phase 2
+   *
+   * @throws BgaUserException
+   */
+  public function actRemoveToken(int $tokenId,#[IntParam(name: 'v')] int $version,): void
+  {
+    $player = Players::getCurrent();
+    $pId = $player->getId();
+    $this->addStep();
+
+    // check input values
+    $args = $this->argPlayerTurn();
+    if (!in_array('actRemoveToken', $args['pActions'])) {
+      throw new UnexpectedException(130,"Invalid action actPlaceToken");
+    }
+    $removableTokens = $args['removableTokens'];
+    if (!in_array($tokenId, $removableTokens)) {
+      throw new UnexpectedException(140,"Invalid token id $tokenId");
+    }
+
+    //ACTION EFFECT
+    $token = Tokens::get($tokenId);
+    $fromLocation = $token->coordName();
+    $token->setRow(null);
+    $token->setCol(null);
+    $token->setLocation(TOKEN_LOCATION_HAND);
+
+    Notifications::removeToken($player,$token, $fromLocation);
 
     $this->gamestate->nextState("next");
   }

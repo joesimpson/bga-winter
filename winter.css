@@ -1874,6 +1874,8 @@
 .winter_token_spot.selectable,
 .winter_token_counter.selectable {
   cursor: pointer;
+  box-shadow: 0px 0px 10px 10px green;
+  border-radius: 50%;
 }
 .winter_token_spot.selectable:hover,
 .winter_token_counter.selectable:hover {

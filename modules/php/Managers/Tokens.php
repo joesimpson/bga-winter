@@ -42,11 +42,12 @@ class Tokens extends \Bga\Games\winter\Helpers\Pieces
  
   /**
    * Return all BOARD tokens 
+   * @param int $player_id (Optional) filter player tokens
    * @return Collection
    */
-  public static function getBoardTokens()
+  public static function getBoardTokens($player_id = null)
   {
-    return self::getFilteredQuery(null,TOKEN_LOCATION_BOARD)->get();
+    return self::getFilteredQuery($player_id,TOKEN_LOCATION_BOARD)->get();
   }
 
   /**

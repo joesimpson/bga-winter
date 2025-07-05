@@ -32,6 +32,8 @@ $token_counter_width : 40px;
     
     &.selectable {
         cursor: pointer;
+        box-shadow: 0px 0px 10px 10px green;
+        border-radius: 50%;
         &:hover {
             transform: scale(1.1);
         }

@@ -143,13 +143,14 @@ $machinestates = [
     //PLAYER turn for Phase 1 & phase 2, see Globals to know in which phase we are
     ST_PLAYER_TURN => GameStateBuilder::create()
         ->name('playerTurn')
-        ->description(clienttranslate('${actplayer} must draw and play a card or place 1 counter'))
-        ->descriptionmyturn(clienttranslate('${you} must draw and play a card or place 1 counter'))
+        ->description(clienttranslate('${actplayer} must play an action'))
+        ->descriptionmyturn(clienttranslate('${you} must play an action'))
         ->type(StateType::ACTIVE_PLAYER)
         ->args('argPlayerTurn')
         ->possibleactions([
             'actDraw', 
             'actPlaceToken', 
+            'actRemoveToken',
             'actUndoToStep', 'actRestart',
         ])
         ->transitions([

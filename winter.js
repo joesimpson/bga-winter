@@ -241,6 +241,17 @@ function (dojo, declare) {
                 });
             }
 
+            if(possibleActions.includes('actRemoveToken')){
+                let removableTokens = args.removableTokens;
+                Object.values(removableTokens).forEach( (tokenId) => {
+
+                    let callbackSpotSelection = (evt) => {
+                        this.performAction('actRemoveToken', { 'tokenId':tokenId });
+                    };
+                    this.onClick(`winter_token-${tokenId}`, callbackSpotSelection);
+                });
+            }
+
         },         
         
         //////////////////////////////////////////////////////////////
@@ -323,6 +334,18 @@ function (dojo, declare) {
             if (!$(`winter_token-${ptoken.id}`)) this.addToken(ptoken, $(`winter_reserve_${pId}_tokens`));
             this._counters[pId].nbtokens.incValue(-1);
             await this.slide(`winter_token-${ptoken.id}`, this.getTokenContainer(ptoken), { duration: 650,})
+        },
+        notif_removeToken: async function(args) {
+            debug('notif_removeToken...', args);
+            let pId = args.player_id;
+            let ptoken = args.token;
+
+            await this.slide(`winter_token-${ptoken.id}`, $(`winter_reserve_${pId}_tokens`), { 
+                destroy: true,
+                phantom: false,
+                duration: 650,
+            })
+            this._counters[pId].nbtokens.incValue(+1);
         },
 
         notif_newPhase: async function(args) {

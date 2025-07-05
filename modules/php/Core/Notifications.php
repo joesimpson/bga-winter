@@ -103,6 +103,25 @@ class Notifications
   }
   
   /**
+   * @param Player $player
+   * @param Token $token
+   * @param string $fromLocation
+   */
+  public static function removeToken(Player $player, Token $token, string $fromLocation)
+  {
+    $msg = clienttranslate('${player_name} takes away a ${token_color} token at ${location}');
+    self::notifyAll('removeToken', $msg, [
+      'player' => $player,
+      'location' => $fromLocation,
+      'token_color' => Tokens::getColorName($token->getType()),
+
+      'token' => $token->getUiData(),
+      'i18n' => ['token_color'],  
+      'preserve' => [ 'token_color_type' ],
+      'token_color_type' => $token->getType(),
+    ]);
+  }
+  /**
    * @param int $phase
    */
   public static function newPhase(int $phase)
