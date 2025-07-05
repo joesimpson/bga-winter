@@ -38,6 +38,21 @@ class Notifications
       'card' => $card->getUiData(),
     ]);
   }
+  
+  /**
+   * @param Player $player
+   * @param Card $card
+   * @param string $fromLocation
+   */
+  public static function removeCard(Player $player, Card $card, string $fromLocation)
+  {
+    $msg = clienttranslate('${player_name} removes a card at ${location}');
+    self::notifyAll('removeCard', $msg, [
+      'player' => $player,
+      'location' => $fromLocation,
+      'card' => $card->getUiData(),
+    ]);
+  }
 
   /**
    * @param Player $player

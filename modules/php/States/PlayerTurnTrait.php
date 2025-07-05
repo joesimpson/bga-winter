@@ -89,6 +89,40 @@ trait PlayerTurnTrait
     $this->addCheckpoint(ST_PLAYER_TURN_PLACE_CARD);
     $this->gamestate->nextState("draw");
   }
+
+  
+  /**
+   * Player action of removing a card in phase 2
+   *
+   * @throws BgaUserException
+   */
+  public function actRemoveCard(int $cardId,#[IntParam(name: 'v')] int $version,): void
+  {
+    $player = Players::getCurrent();
+    $pId = $player->getId();
+    $this->addStep();
+
+    // check input values
+    $args = $this->argPlayerTurn();
+    if (!in_array('actRemoveCard', $args['pActions'])) {
+      throw new UnexpectedException(130,"Invalid action actRemoveCard");
+    }
+    $removableCards = $args['r_cards'];
+    if (!in_array($cardId, $removableCards)) {
+      throw new UnexpectedException(141,"Invalid card id $cardId");
+    }
+
+    //ACTION EFFECT
+    $card = Cards::get($cardId);
+    $fromLocation = $card->coordName();
+    $card->setRow(null);
+    $card->setCol(null);
+    $card->setLocation(CARD_LOCATION_DISCARD);
+
+    Notifications::removeCard($player,$card, $fromLocation);
+
+    $this->gamestate->nextState("next");
+  }
    
   
   /**
