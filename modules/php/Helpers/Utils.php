@@ -100,6 +100,9 @@ abstract class Utils extends \APP_DbObject
             }
         }
 
+        //SORT Array to help ui & help debug
+        sort($lookingAtSpots);
+
         //$possible = array_diff($lookingAtSpots, $usedCoordinates);
         Game::get()->trace("listPlayableSpotsForNewCard() for used ".json_encode($usedCoordinates)." and intersectUnavailable ".json_encode($intersectUnavailable)." result = ".json_encode($lookingAtSpots));
         //Game::get()->trace("listPlayableSpotsForNewCard() =>".json_encode($lookingAtSpots));
