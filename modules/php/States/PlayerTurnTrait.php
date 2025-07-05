@@ -26,14 +26,27 @@ trait PlayerTurnTrait
    */
   public function argPlayerTurn(): array
   {
+    $phase = Globals::getPhase();
     $player = Players::getActive();
     $token_color = $player->getTokensColor();
     $availableTokens = $player->getNbTokensInHand() > 0; 
     $spots = ($availableTokens ? Utils::listPlayableSpotsForNewToken($token_color) : []);
 
+    $possibleActions = [];
+    switch($phase){
+      case PHASE_FREEZING:
+        $possibleActions = ['actDraw', 'actPlaceToken'];
+        break;
+      case PHASE_THAWING:
+        $possibleActions = ['actMoveCard','actRemoveCard', 'actRemoveToken'];
+        break;
+      default: break;
+    }
+
     $args = [
       "t_color" => $player->getTokensColor(),
       "spots_for_tokens" => $spots,
+      "pActions" => $possibleActions,
     ];
       
     $this->addArgsForUndo($args);
@@ -50,6 +63,11 @@ trait PlayerTurnTrait
     $player = Players::getCurrent();
     $pId = $player->getId();
     $this->addStep();
+
+    $args = $this->argPlayerTurn();
+    if (!in_array('actDraw', $args['pActions'])) {
+      throw new UnexpectedException(130,"Invalid action actDraw");
+    }
 
     //Deck should not be empty in phase 1
     $card = Cards::pickOneForLocation(CARD_LOCATION_DECK, CARD_LOCATION_HAND);
@@ -75,6 +93,9 @@ trait PlayerTurnTrait
 
     // check input values
     $args = $this->argPlayerTurn();
+    if (!in_array('actPlaceToken', $args['pActions'])) {
+      throw new UnexpectedException(130,"Invalid action actPlaceToken");
+    }
     $spots_for_tokens = $args['spots_for_tokens'];
     if (!in_array([$row, $col], $spots_for_tokens)) {
       throw new UnexpectedException(101,"Invalid coordinates choice [$row, $col]");

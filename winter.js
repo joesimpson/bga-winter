@@ -217,23 +217,29 @@ function (dojo, declare) {
         onEnteringStatePlayerTurn(args){
             debug('onEnteringStatePlayerTurn', args);
 
-            this.addPrimaryActionButton("btnDrawCard", _("Draw"), (evt) => {
-                this.performAction('actDraw', { });
-            });
- 
-            let spots_for_tokens = args.spots_for_tokens;
-            let color = args.t_color;
-            let futureToken = { type : color};
-            Object.values(spots_for_tokens).forEach( (spot) => {
-                let row = spot[0];
-                let col = spot[1];
-                let spotDiv = this.addSelectableTokenSpot( futureToken, row, col);
+            let possibleActions = args.pActions;
 
-                let callbackSpotSelection = (evt) => {
-                    this.performAction('actPlaceToken', { 'row': row, 'col': col });
-                };
-                this.onClick(`${spotDiv.id}`, callbackSpotSelection);
-            });
+            if(possibleActions.includes('actDraw')){
+                this.addPrimaryActionButton("btnDrawCard", _("Draw"), (evt) => {
+                    this.performAction('actDraw', { });
+                });
+            }
+            
+            if(possibleActions.includes('actPlaceToken')){
+                let spots_for_tokens = args.spots_for_tokens;
+                let color = args.t_color;
+                let futureToken = { type : color};
+                Object.values(spots_for_tokens).forEach( (spot) => {
+                    let row = spot[0];
+                    let col = spot[1];
+                    let spotDiv = this.addSelectableTokenSpot( futureToken, row, col);
+
+                    let callbackSpotSelection = (evt) => {
+                        this.performAction('actPlaceToken', { 'row': row, 'col': col });
+                    };
+                    this.onClick(`${spotDiv.id}`, callbackSpotSelection);
+                });
+            }
 
         },         
         

@@ -14,8 +14,8 @@ trait NextTurnTrait
    * The action method of state `nextPlayer` is called everytime the current game state is set to `nextPlayer`.
    */
   public function stNextPlayer(): void {
-    // Retrieve the active player ID.
-    $player_id = (int)$this->getActivePlayerId();
+
+    $phase = Globals::getPhase();
 
     if(false){
       //TODO JSA END GAME TRIGGER
