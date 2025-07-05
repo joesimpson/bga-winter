@@ -43,6 +43,7 @@ $card_height: var(--winter_board_card_height);
 
     position: relative; 
     &.selectable {
+        z-index: 2;
         box-shadow: 0px 0px 2px 2px green;
         cursor: pointer;
         &:hover {

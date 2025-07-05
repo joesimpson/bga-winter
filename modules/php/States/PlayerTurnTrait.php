@@ -44,7 +44,7 @@ trait PlayerTurnTrait
       case PHASE_THAWING:
         $possibleActions = ['actMoveCard','actRemoveCard', 'actRemoveToken'];
         //$actionsMessage = clienttranslate('move a card, remove');
-        $removableCards = Utils::listRemovableCardsOnBoard()->getIds();
+        $removableCards = Utils::listRemovableCardsOnBoard();
         $removableTokens = Tokens::getBoardTokens($player->getId())->getIds();
 
         break;
@@ -118,6 +118,8 @@ trait PlayerTurnTrait
     $card->setRow(null);
     $card->setCol(null);
     $card->setLocation(CARD_LOCATION_DISCARD);
+
+    //TODO JSA Check if 2 disconnected groups of cards => ask player to keep 1 when equality
 
     Notifications::removeCard($player,$card, $fromLocation);
 

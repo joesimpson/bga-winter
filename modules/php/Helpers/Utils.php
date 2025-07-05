@@ -87,7 +87,7 @@ abstract class Utils extends \APP_DbObject
         })->toArray();
         $intersectUnavailable = [];
         foreach($boardCards as $card){
-            $intersectUnavailable = array_merge($intersectUnavailable,Utils::gridIntersectionListFrom($card->getRow(), $card->getCol()));
+            $intersectUnavailable = array_merge($intersectUnavailable,Utils::gridOverlappingCardsFrom($card->getRow(), $card->getCol()));
         }
         
         $lookingAtSpots = [];
@@ -113,9 +113,9 @@ abstract class Utils extends \APP_DbObject
     /**
      * @param int $row
      * @param int $col
-    * @return array of coordinates of card overlaping position [row, col] (because card size is 2 cols/2rows )
+    * @return array of coordinates of card overlapping position [row, col] (because card size is 2 cols/2rows )
     */
-    public static function gridIntersectionListFrom(int $row, int $col): array
+    public static function gridOverlappingCardsFrom(int $row, int $col): array
     {
         return [
             [$row -1 , $col -1],
@@ -132,6 +132,28 @@ abstract class Utils extends \APP_DbObject
         ];
     }
 
+    /**
+     * @param int $row
+     * @param int $col
+    * @return array of coordinates of Token overlapping position [row, col] (because card size is 2 cols/2rows )
+    */
+    public static function gridOverlappingTokensFromCard(int $row, int $col): array
+    {
+        return [
+            [$row  , $col ], // CARD cell = Token on Top left corner
+            [$row  , $col +1],
+            [$row  , $col +2],
+
+            [$row +1 , $col ],
+            [$row +1 , $col +1],
+            [$row +1 , $col +2],
+
+            [$row +2 , $col ],
+            [$row +2 , $col +1],
+            [$row +2 , $col +2], // Bottom right
+            
+        ];
+    }
     
     /**
      * 
@@ -224,19 +246,52 @@ abstract class Utils extends \APP_DbObject
 
     
     /**
-    * @return Collection of Card
+     * Find which cards can be removed from the game board
+     * 
+    * @return array of Card id
     */
-    public static function listRemovableCardsOnBoard(): Collection
+    public static function listRemovableCardsOnBoard(): array
     {
-        $list = new Collection();
+        $list = [];
         //TEST
-        $list[2881] = Cards::get(2881);
-        $list[2884] = Cards::get(2884);
+        //$list = new Collection();
+        //$list->append(Cards::get(2881));
+        //$list->append(Cards::get(2884));
 
-        //TODO JSA Step 1 READ TOKENS on board
-        //TODO JSA Step 2 : LOOP Tokens and save coordinate
-        //TODO JSA step 3 : LOOP Cards on Board 
-        //TODO JSA step 4 : filter cards with neighbouring tokens spots not from step 1
+        //Step 1 READ TOKENS on board
+        $tokens = Tokens::getBoardTokens();
+        //Step 2 : LOOP Tokens and save coordinate
+        $existingTokensCoords = $tokens->map(function ($token) {
+            return $token->coordArray();
+        })->toArray();
+        
+        Game::get()->trace("listRemovableCardsOnBoard() for existingTokensCoords ".json_encode($existingTokensCoords));
+
+        //step 3 : LOOP Cards on Board 
+        $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
+        foreach($boardCards as $card){
+            $tokenOnCard = false;
+            $row = $card->getRow();
+            $col = $card->getCol();
+            $intersectUnavailable = Utils::gridOverlappingTokensFromCard($row, $col);
+
+            Game::get()->trace("listRemovableCardsOnBoard() -> intersectUnavailable ($row, $col) = ".json_encode($intersectUnavailable));
+
+            //step 4 : filter cards with neighbouring tokens spots not from step 1
+            //$tokensOnCard = array_diff($intersectUnavailable, $existingTokensCoords);
+            //if(count($tokensOnCard) == 0){
+            //    $list->append($card);
+            //}
+            foreach($intersectUnavailable as $coord){
+                if(in_array($coord,$existingTokensCoords)){
+                    $tokenOnCard = true;
+                }
+            }
+            if(!$tokenOnCard){
+                $list[] = $card->getId();
+            }
+        }
+        Game::get()->trace("listRemovableCardsOnBoard() -> result ".json_encode($list));
 
         return $list;
     }
