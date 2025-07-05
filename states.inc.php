@@ -151,6 +151,7 @@ $machinestates = [
             'actDraw', 
             'actPlaceToken', 
             'actRemoveToken',
+            'actRemoveCard',
             'actUndoToStep', 'actRestart',
         ])
         ->transitions([

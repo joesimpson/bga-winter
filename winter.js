@@ -225,6 +225,17 @@ function (dojo, declare) {
                 });
             }
             
+            if(possibleActions.includes('actRemoveCard')){
+                let removableCards = args.r_cards;
+                Object.values(removableCards).forEach( (cardId) => {
+
+                    let callbackSpotSelection = (evt) => {
+                        this.performAction('actRemoveCard', { 'cardId':cardId });
+                    };
+                    this.onClick(`winter_card-${cardId}`, callbackSpotSelection);
+                });
+            }
+            
             if(possibleActions.includes('actPlaceToken')){
                 let spots_for_tokens = args.spots_for_tokens;
                 let color = args.t_color;

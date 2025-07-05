@@ -221,4 +221,23 @@ abstract class Utils extends \APP_DbObject
         Game::get()->trace("isSnowflakesSquare($type, ".json_encode($targetSquare).") => TRUE");
         return true;
     } 
+
+    
+    /**
+    * @return Collection of Card
+    */
+    public static function listRemovableCardsOnBoard(): Collection
+    {
+        $list = new Collection();
+        //TEST
+        $list[2881] = Cards::get(2881);
+        $list[2884] = Cards::get(2884);
+
+        //TODO JSA Step 1 READ TOKENS on board
+        //TODO JSA Step 2 : LOOP Tokens and save coordinate
+        //TODO JSA step 3 : LOOP Cards on Board 
+        //TODO JSA step 4 : filter cards with neighbouring tokens spots not from step 1
+
+        return $list;
+    }
 }
