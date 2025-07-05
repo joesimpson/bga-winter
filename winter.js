@@ -311,6 +311,17 @@ function (dojo, declare) {
             await this.slide(`winter_card-${pcard.id}`, this.getCardContainer(pcard), { duration: 650,})
             
         },
+        
+        notif_removeCard: async function(args) {
+            debug('notif_removeCard...', args);
+            let pcard = args.card;
+            if ($(`winter_card-${pcard.id}`)){
+                await this.slide(`winter_card-${pcard.id}`, this.getVisibleTitleContainer(), {
+                    destroy: true,
+                    phantom: false,
+                 })
+            }
+        },
 
         notif_newPlayerColor: async function(args) {
             debug('notif_newPlayerColor: receiving a new color', args);
