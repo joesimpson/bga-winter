@@ -271,13 +271,16 @@ function (dojo, declare) {
             this._counters['deckSize'].toValue(args.datas.deckSize);
         },
 
+        notif_cardDrawn: async function(args) {
+            debug('notif_cardDrawn...', args);
+            this._counters['deckSize'].incValue(-1);
+        },
         
         notif_cardPlayed: async function(args) {
             debug('notif_cardPlayed...', args);
             let pcard = args.card;
             if (!$(`winter_card-${pcard.id}`)) this.addCard(pcard, this.getVisibleTitleContainer());
             await this.slide(`winter_card-${pcard.id}`, this.getCardContainer(pcard), { duration: 650,})
-            //TODO JSA decrease deck size or the card is already drawn
             
         },
 
