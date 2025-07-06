@@ -109,13 +109,15 @@ class Card extends \Bga\Games\winter\Helpers\DB_Model
   } 
 
   /**
+   * @param int $forceDir
+   * 
    * @return array list of fixed snowflakes, but ordered from TOP to bottom, and from LEft to right even whenthe card is rotated
    */
-  public function getOrientedSnowflakes()
+  public function getOrientedSnowflakes(?int $forceDir = null)
   {
     $snowflakes = $this->getSnowflakes();
     $dir = $this->getDirection();
-    if ($dir == CARD_DIRECTION_DOWN){
+    if ($dir == CARD_DIRECTION_DOWN && !isset($forceDir) || $forceDir == CARD_DIRECTION_DOWN ){
       //Reverse order and coord
       $snowflakes = [
         new Snowflake($snowflakes[3]->type,1,1),

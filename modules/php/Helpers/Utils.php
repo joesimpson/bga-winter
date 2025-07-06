@@ -94,7 +94,7 @@ abstract class Utils extends \APP_DbObject
         foreach($boardCards as $card){
             $newSpots = $card->getNeighbouringSpots();
             foreach($newSpots as $spot){
-                if(!in_array($spot, $usedCoordinates) && !in_array($spot, $intersectUnavailable)){
+                if(!in_array($spot, $lookingAtSpots) && !in_array($spot, $usedCoordinates) && !in_array($spot, $intersectUnavailable)){
                     $lookingAtSpots[] = $spot;
                 }
             }
@@ -154,6 +154,53 @@ abstract class Utils extends \APP_DbObject
             
         ];
     }
+
+    /**
+     * @param Collection $boardCards cards already read from DB
+     * @param array $tempCardLocations (Optional) array of different cards location [card_id => [row,col, dir]] 
+     * @return array of datas about Snowflakes on card where the array key is the coord label
+     */
+    public static function gridComputeSnowflakesGrid(Collection $boardCards, array $tempCardLocations = []): array
+    {
+        $snowflakesGrid = [];
+        foreach($boardCards as $cardId => $card){
+            $snowflakes = $card->getOrientedSnowflakes();
+            $cardRow = $card->getRow();
+            $cardCol = $card->getCol();
+            if(array_key_exists($cardId, $tempCardLocations)){
+                $cardRow = $tempCardLocations[$cardId]['row'];
+                $cardCol = $tempCardLocations[$cardId]['col'];
+                $snowflakes = $card->getOrientedSnowflakes( $tempCardLocations[$cardId]['dir']);
+            }
+
+            foreach( $snowflakes as $snowflake){
+                $snowflakeCoords = $snowflake->coordArrayFromBase($cardRow, $cardCol);
+                $snowflakeCoordsLabel = $snowflake->coordNameFromBase($cardRow, $cardCol);
+
+                $snowflakesGrid[$snowflakeCoordsLabel] = [ 
+                   'coords' => $snowflakeCoords, 
+                   'type' => $snowflake->type,
+                ];
+            }
+        }
+        //Sort array and keep associtive keys
+        asort($snowflakesGrid);
+        return $snowflakesGrid;
+    }
+    /**
+     * @param array $coords source coordinates
+     * @return array of 4 coordinates [row,col]
+     */
+    public static function computeTargetSquareBottomRight(array $coords): array
+    {
+        //Question is "is this spot the bottom right corner of a 4-square ?"
+        return [
+            Utils::gridCoordName( $coords[0] -1, $coords[1]-1   ), 
+            Utils::gridCoordName( $coords[0] -1, $coords[1]     ), 
+            Utils::gridCoordName( $coords[0],    $coords[1]-1   ), 
+            Utils::gridCoordName( $coords[0],    $coords[1]     ), //SAME CELL
+        ];
+    }
     
     /**
      * 
@@ -175,24 +222,9 @@ abstract class Utils extends \APP_DbObject
         Game::get()->trace("listPlayableSpotsForNewToken($color)");
 
         $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
-
         $spots = [];
         //step 1 : convert cards coords to an (array) GRID of SNOWFLAKES coords
-        $snowflakesGrid = [];
-        foreach($boardCards as $card){
-            $snowflakes = $card->getOrientedSnowflakes();
-            foreach( $snowflakes as $snowflake){
-                $snowflakeCoords = $snowflake->coordArrayFromBase($card->getRow(), $card->getCol());
-                $snowflakeCoordsLabel = $snowflake->coordNameFromBase($card->getRow(), $card->getCol());
-
-                $snowflakesGrid[$snowflakeCoordsLabel] = [ 
-                   'coords' => $snowflakeCoords, 
-                   'type' => $snowflake->type,
-                ];
-            }
-        }
-        //Sort array and keep associtive keys
-        asort($snowflakesGrid);
+        $snowflakesGrid = Utils::gridComputeSnowflakesGrid($boardCards); 
 
         //step 2 : LOOK at SNOWFLAKES coords to find a square of 4 of the given color
         $squareBottomRightCorners = [];
@@ -200,12 +232,7 @@ abstract class Utils extends \APP_DbObject
             $coords = $snowflakeDatas['coords'];
 
             //Question is "is this spot the bottom right corner of a 4-square ?"
-            $targetSquare = [
-                Utils::gridCoordName( $coords[0] -1, $coords[1]-1   ), 
-                Utils::gridCoordName( $coords[0] -1, $coords[1]     ), 
-                Utils::gridCoordName( $coords[0],    $coords[1]-1   ), 
-                Utils::gridCoordName( $coords[0],    $coords[1]     ), //SAME CELL
-            ];
+            $targetSquare = Utils::computeTargetSquareBottomRight($coords);
             $isSquare = Utils::isSnowflakesSquare($color, $targetSquare, $snowflakesGrid);
             if($isSquare) $squareBottomRightCorners[] = $coords;
         }
@@ -232,7 +259,7 @@ abstract class Utils extends \APP_DbObject
      */
     public static function isSnowflakesSquare(int $type, array $targetSquare, array $snowflakesGrid)
     {
-        Game::get()->trace("isSnowflakesSquare($type, ".json_encode($targetSquare));
+        //Game::get()->trace("isSnowflakesSquare($type, ".json_encode($targetSquare));
 
         foreach($targetSquare as $targetSquareSpot){
             if(!array_key_exists($targetSquareSpot, $snowflakesGrid )) return false;
@@ -244,7 +271,6 @@ abstract class Utils extends \APP_DbObject
         return true;
     } 
 
-    
     /**
      * Find which cards can be removed from the game board
      * 
@@ -292,6 +318,67 @@ abstract class Utils extends \APP_DbObject
             }
         }
         Game::get()->trace("listRemovableCardsOnBoard() -> result ".json_encode($list));
+
+        return $list;
+    }
+    
+    /**
+     * Find which cards can be moved from the game board : it is a subset of removable cards
+     * 
+     * @param int $token_color : Color of token to place after move
+     * @param int $availableTokens : number of available tokens to place after move
+     * @param array $removableCardsIds : cards ids we can remove
+     * 
+    * @return array of destinations for cards : [card_id1 => [[row,col], [row,col], [row,col]], card_id2 => [[row,col], [row,col], [row,col]], ... ]
+    */
+    public static function listMovableCardsOnBoard(int $token_color, int $availableTokens, array $removableCardsIds): array
+    {
+        $list = [];
+
+        //Step 1 look at targets for card
+        $spotsForCard = Utils::listPlayableSpotsForNewCard();
+
+        //step 2 : LOOP Cards 
+        $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
+        $removableCards = Cards::getMany($removableCardsIds);
+        foreach($removableCards as $card){ 
+            //STEP 3 : can we move the card to a place where we can add this color token(s) ?
+            //TODO JSA check we can slide the card a little bit to +1/-1 row/col in spotsForCard
+            
+            $targetsForCard = [];
+
+            foreach($spotsForCard as $coord){ 
+                $isSquare = false;
+                //Check ALL possible DIRS
+                $allDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
+
+                foreach( $allDirs as $dir){
+                    $tempCardLocations = [
+                        $card->getId() => [
+                            'row' => $coord[0], 
+                            'col' => $coord[1], 
+                            'dir' => $dir,
+                        ]];
+                    $snowflakesGrid = Utils::gridComputeSnowflakesGrid($boardCards, $tempCardLocations); 
+                    $cardRow = $tempCardLocations[$card->getId()]['row'];
+                    $cardCol = $tempCardLocations[$card->getId()]['col'];
+
+                    $snowflakes = $card->getOrientedSnowflakes($dir);
+                    foreach( $snowflakes as $snowflake){
+                        $snowflakeCoords = $snowflake->coordArrayFromBase($cardRow, $cardCol);
+                        $targetSquare = Utils::computeTargetSquareBottomRight($snowflakeCoords);
+                        $isSquare = $isSquare || Utils::isSnowflakesSquare($token_color, $targetSquare, $snowflakesGrid);
+                        if($isSquare) break;//Don't compute all squares for now
+                    }
+                }
+
+                if($isSquare && !in_array($coord,$targetsForCard)) $targetsForCard[] = $coord;
+
+            }
+
+            if(count($targetsForCard)>0) $list[ $card->getId()] = $targetsForCard;
+        }
+        Game::get()->trace("listMovableCardsOnBoard($token_color,$availableTokens) -> result ".json_encode($list));
 
         return $list;
     }

@@ -34,6 +34,7 @@ trait PlayerTurnTrait
 
     $actionsMessage = '';
     $possibleActions = [];
+    $movableCards = [];
     $removableCards = [];
     $removableTokens = [];
     switch($phase){
@@ -45,6 +46,7 @@ trait PlayerTurnTrait
         $possibleActions = ['actMoveCard','actRemoveCard', 'actRemoveToken'];
         //$actionsMessage = clienttranslate('move a card, remove');
         $removableCards = Utils::listRemovableCardsOnBoard();
+        $movableCards = Utils::listMovableCardsOnBoard($token_color, $availableTokens,$removableCards);
         $removableTokens = Tokens::getBoardTokens($player->getId())->getIds();
 
         break;
@@ -53,6 +55,7 @@ trait PlayerTurnTrait
 
     $args = [
       "t_color" => $player->getTokensColor(),
+      "m_cards" => $movableCards,
       "r_cards" => $removableCards,
       "spots_for_tokens" => $spots,
       "removableTokens" => $removableTokens,
