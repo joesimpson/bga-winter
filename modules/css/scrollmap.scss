@@ -8,6 +8,7 @@
     height: 600px;
     //box-shadow: 1px 1px 5px black;
     outline: 2px dotted black;
+    margin-right: 2px;
 }
 #winter_map_scrollable, #winter_map_scrollable_oversurface {
     position: absolute;
@@ -43,6 +44,7 @@
     background-image: url('../../../img/common/arrows.png');
     width: 32px;
     height: 32px;
+    z-index: 300;
 }
 
 .movetop {
