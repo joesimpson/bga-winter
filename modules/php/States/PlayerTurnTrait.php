@@ -131,6 +131,51 @@ trait PlayerTurnTrait
    
   
   /**
+   * Player action in phase 2 : move a card and place tokens
+   *
+   * @throws BgaUserException
+   */
+  public function actMoveCard(int $cardId, int $dir,int $row, int $col, #[IntParam(name: 'v')] int $version,): void
+  {
+    Game::get()->checkVersion($version);
+    self::trace("actMoveCard($cardId, $dir,$row, $col,)");
+
+    $player = Players::getCurrent();
+    $pId = $player->getId();
+    $this->addStep();
+    
+    // check input values
+    $args = $this->argPlayerTurn();
+    if (!in_array('actMoveCard', $args['pActions'])) {
+      throw new UnexpectedException(130,"Invalid action actMoveCard");
+    }
+    $movableCards = $args['m_cards'];
+    if (!array_key_exists($cardId, $movableCards)) {
+      throw new UnexpectedException(141,"Invalid card id $cardId");
+    }
+    $moveTargets = $movableCards[$cardId];
+    if (!in_array(['row'=>$row, 'col'=>$col, 'dir'=>$dir], $moveTargets)) {
+      throw new UnexpectedException(150,"Invalid target [$row, $col, $dir]");
+    }
+
+    //ACTION EFFECT
+    //TODO JSA Check if 2 disconnected groups of cards => ask player to keep 1 when equality
+    $card = Cards::get($cardId);
+    $fromLocation = $card->coordName();
+    $card->setRow($row);
+    $card->setCol($col);
+    $card->setDirection($dir);
+    //$card->setLocation(CARD_LOCATION_BOARD);
+    
+    //TODO JSA PLACE TOKENS
+
+    Notifications::cardMoved($player,$card,$fromLocation);
+
+    // at the end of the action, move to the next state
+    $this->gamestate->nextState("next");
+  }
+  
+  /**
    * Player action of placing a token in phase 1
    *
    * @throws BgaUserException

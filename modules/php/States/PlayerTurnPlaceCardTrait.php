@@ -46,7 +46,7 @@ trait PlayerTurnPlaceCardTrait
   }
 
   /**
-   * Player action, example content.
+   * Player action in phase 1 : place the drawn card
    *
    * @throws BgaUserException
    */

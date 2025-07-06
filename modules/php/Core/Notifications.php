@@ -53,6 +53,22 @@ class Notifications
       'card' => $card->getUiData(),
     ]);
   }
+  
+  /**
+   * @param Player $player
+   * @param Card $card
+   * @param string $fromLocation
+   */
+  public static function cardMoved(Player $player, Card $card, string $fromLocation)
+  {
+    $msg = clienttranslate('${player_name} moves a card from ${A} to ${B}');
+    self::notifyAll('cardMoved', $msg, [
+      'player' => $player,
+      'card' => $card->getUiData(),
+      'A' => $fromLocation,
+      'B' => $card->coordName(),
+    ]);
+  }
 
   /**
    * @param Player $player

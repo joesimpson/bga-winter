@@ -149,6 +149,7 @@ $machinestates = [
         ->args('argPlayerTurn')
         ->possibleactions([
             'actDraw', 
+            'actMoveCard',
             'actPlaceToken', 
             'actRemoveToken',
             'actRemoveCard',

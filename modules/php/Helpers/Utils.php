@@ -348,11 +348,12 @@ abstract class Utils extends \APP_DbObject
             $targetsForCard = [];
 
             foreach($spotsForCard as $coord){ 
-                $isSquare = false;
                 //Check ALL possible DIRS
                 $allDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
 
                 foreach( $allDirs as $dir){
+                    $isSquare = false;
+
                     $tempCardLocations = [
                         $card->getId() => [
                             'row' => $coord[0], 
@@ -370,9 +371,10 @@ abstract class Utils extends \APP_DbObject
                         $isSquare = $isSquare || Utils::isSnowflakesSquare($token_color, $targetSquare, $snowflakesGrid);
                         if($isSquare) break;//Don't compute all squares for now
                     }
+                    
+                    $targetForCard = $tempCardLocations[$card->getId()];//[$cardRow, $cardCol, $dir ];
+                    if($isSquare && !in_array($targetForCard,$targetsForCard)) $targetsForCard[] = $targetForCard;
                 }
-
-                if($isSquare && !in_array($coord,$targetsForCard)) $targetsForCard[] = $coord;
 
             }
 
