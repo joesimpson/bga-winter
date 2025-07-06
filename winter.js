@@ -342,8 +342,36 @@ function (dojo, declare) {
             debug('notif_cardPlayed...', args);
             let pcard = args.card;
             if (!$(`winter_card-${pcard.id}`)) this.addCard(pcard, this.getVisibleTitleContainer());
-            await this.slide(`winter_card-${pcard.id}`, this.getCardContainer(pcard), { duration: 650,})
+            await this.slide(`winter_card-${pcard.id}`, this.getCardContainer(pcard), { duration: 650,});
             
+        },
+
+        notif_cardMoved: async function(args) {
+            debug('notif_cardMoved...', args);
+            let pcard = args.card;
+            let divIdCard = `winter_card-${pcard.id}`;
+            if (!$(divIdCard)) this.addCard(pcard, this.getCardContainer(pcard));
+            else {
+                //Fake spots for Origin/dest of the move
+                let spotSrc = this.addSelectableCardSpot(pcard, $(divIdCard).dataset.row, $(divIdCard).dataset.col);
+                spotSrc.dataset.dir = $(divIdCard).dataset.dir;
+                let spotDest = this.addSelectableCardSpot(pcard, pcard.row, pcard.col);
+                //ANIMATION
+                await this.slide(divIdCard, this.getCardContainer(pcard), {
+                                from: spotSrc,
+                                to: spotDest,
+                });
+                //Finally update  card datas :
+                $(divIdCard).dataset.row = pcard.row;
+                $(divIdCard).dataset.col = pcard.col;
+                $(divIdCard).dataset.dir = pcard.dir;
+                 
+                //update card tooltip
+                this.addCustomTooltip(divIdCard, this.getCardTooltip(pcard));
+
+                this.destroy(spotSrc);
+                this.destroy(spotDest);
+            }
         },
         
         notif_removeCard: async function(args) {

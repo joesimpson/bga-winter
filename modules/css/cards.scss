@@ -90,10 +90,10 @@ $card_height: var(--winter_board_card_height);
     }
 
         
-    &[data-dir="1"]:not([data-dirs*="1"]){
+    &[data-dir="1"]:not([data-dirs="undefined"]):not([data-dirs*="1"]){
         visibility: hidden;
     }
-    &[data-dir="2"]:not([data-dirs*="2"]){//CARD_DIRECTION_DOWN
+    &[data-dir="2"]:not([data-dirs="undefined"]):not([data-dirs*="2"]){//CARD_DIRECTION_DOWN
         visibility: hidden;
     }
 }

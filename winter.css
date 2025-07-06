@@ -240,10 +240,10 @@
   z-index: 3;
   opacity: 1;
 }
-.winter_card_spot[data-dir="1"]:not([data-dirs*="1"]) {
+.winter_card_spot[data-dir="1"]:not([data-dirs=undefined]):not([data-dirs*="1"]) {
   visibility: hidden;
 }
-.winter_card_spot[data-dir="2"]:not([data-dirs*="2"]) {
+.winter_card_spot[data-dir="2"]:not([data-dirs=undefined]):not([data-dirs*="2"]) {
   visibility: hidden;
 }
 

@@ -374,9 +374,6 @@ abstract class Utils extends \APP_DbObject
                         if($isSquare) break;//Don't compute all squares for now
                     }
 
-                    //TODO JSA REMOVE TEST
-                    //if(CARD_DIRECTION_DOWN == $dir) $isSquare = true;
-                    
                     if($isSquare) $playableDirs [] = $dir;
                 }
                 $targetForCard = [ 'row' => $cardRow, 'col' => $cardCol, 'dirs' => $playableDirs ];
