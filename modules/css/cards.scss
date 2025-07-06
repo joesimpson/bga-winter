@@ -56,6 +56,7 @@ $card_height: var(--winter_board_card_height);
 
     &.selected,
     &.selected:hover {
+        z-index: 2;
         box-shadow: 0px 0px 6px 6px #d3ff00, 0px 0px 6px 6px #dfff00, 0px 0px 6px 6px #fffb00;
     }
  
@@ -86,6 +87,14 @@ $card_height: var(--winter_board_card_height);
             z-index: 3;
             opacity: 1;
         }
+    }
+
+        
+    &[data-dir="1"]:not([data-dirs*="1"]){
+        visibility: hidden;
+    }
+    &[data-dir="2"]:not([data-dirs*="2"]){//CARD_DIRECTION_DOWN
+        visibility: hidden;
     }
 }
 

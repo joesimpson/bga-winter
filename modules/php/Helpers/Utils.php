@@ -329,7 +329,7 @@ abstract class Utils extends \APP_DbObject
      * @param int $availableTokens : number of available tokens to place after move
      * @param array $removableCardsIds : cards ids we can remove
      * 
-    * @return array of destinations for cards : [card_id1 => [[row,col], [row,col], [row,col]], card_id2 => [[row,col], [row,col], [row,col]], ... ]
+    * @return array of destinations for cards : [card_id1 => [[row,col,dirs], [row,col,dirs], [row,col,dirs]], card_id2 => [[row,col,dirs], ], ... ]
     */
     public static function listMovableCardsOnBoard(int $token_color, int $availableTokens, array $removableCardsIds): array
     {
@@ -350,19 +350,21 @@ abstract class Utils extends \APP_DbObject
             foreach($spotsForCard as $coord){ 
                 //Check ALL possible DIRS
                 $allDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
+                $playableDirs = [];
+
+                $cardRow = $coord[0];
+                $cardCol = $coord[1];
 
                 foreach( $allDirs as $dir){
                     $isSquare = false;
 
                     $tempCardLocations = [
                         $card->getId() => [
-                            'row' => $coord[0], 
-                            'col' => $coord[1], 
+                            'row' => $cardRow, 
+                            'col' => $cardCol, 
                             'dir' => $dir,
                         ]];
                     $snowflakesGrid = Utils::gridComputeSnowflakesGrid($boardCards, $tempCardLocations); 
-                    $cardRow = $tempCardLocations[$card->getId()]['row'];
-                    $cardCol = $tempCardLocations[$card->getId()]['col'];
 
                     $snowflakes = $card->getOrientedSnowflakes($dir);
                     foreach( $snowflakes as $snowflake){
@@ -371,10 +373,14 @@ abstract class Utils extends \APP_DbObject
                         $isSquare = $isSquare || Utils::isSnowflakesSquare($token_color, $targetSquare, $snowflakesGrid);
                         if($isSquare) break;//Don't compute all squares for now
                     }
+
+                    //TODO JSA REMOVE TEST
+                    //if(CARD_DIRECTION_DOWN == $dir) $isSquare = true;
                     
-                    $targetForCard = $tempCardLocations[$card->getId()];//[$cardRow, $cardCol, $dir ];
-                    if($isSquare && !in_array($targetForCard,$targetsForCard)) $targetsForCard[] = $targetForCard;
+                    if($isSquare) $playableDirs [] = $dir;
                 }
+                $targetForCard = [ 'row' => $cardRow, 'col' => $cardCol, 'dirs' => $playableDirs ];
+                if(count($playableDirs)>0 && !in_array($targetForCard,$targetsForCard)) $targetsForCard[] = $targetForCard;
 
             }
 

@@ -34,6 +34,9 @@ function (dojo, declare) {
 
     const CARD_LOCATION_BOARD = 'board';
     const TOKEN_LOCATION_BOARD = 'board';
+    
+    const CARD_DIRECTION_UP = 1;
+    const CARD_DIRECTION_DOWN = 2;
 
     const PREF_UNDO_STYLE = 101;
     const PREF_CONFIRM = 102;
@@ -218,6 +221,8 @@ function (dojo, declare) {
             debug('onEnteringStatePlayerTurn', args);
 
             let possibleActions = args.pActions;
+            let removableCards = args.r_cards; 
+            let movableCards = args.m_cards;
 
             if(possibleActions.includes('actDraw')){
                 this.addPrimaryActionButton("btnDrawCard", _("Draw"), (evt) => {
@@ -225,16 +230,25 @@ function (dojo, declare) {
                 });
             }
             
-            if(possibleActions.includes('actRemoveCard')){
-                let removableCards = args.r_cards;
-                Object.values(removableCards).forEach( (cardId) => {
+            //Manage various actions on same cards :
+            let boardCards = document.getElementById('winter_map_cards').querySelectorAll(".winter_card");
+            boardCards.forEach( (div) => {
+                let card_id = div.dataset.id;
+                let cardDatas = { 'id': parseInt(card_id), 'type': parseInt(div.dataset.type), 'dir': parseInt(div.dataset.dir)};
+                let removableCard = (possibleActions.includes('actRemoveCard') && Object.values(removableCards).indexOf(cardDatas.id)>=0) ? true : false;
+                let movableCard =  (possibleActions.includes('actMoveCard') && Object.keys(movableCards).indexOf(card_id)>=0) ? true : false;
+                if(!removableCard && !movableCard) return;
 
-                    let callbackSpotSelection = (evt) => {
-                        this.performAction('actRemoveCard', { 'cardId':cardId });
-                    };
-                    this.onClick(`winter_card-${cardId}`, callbackSpotSelection);
-                });
-            }
+                let callbackCardSelection = (evt) => {
+                    this.clientState('cardActionSelection',  this.fsr(_('Select a target for that card'), {}), {
+                        cardId: card_id,
+                        card: cardDatas,
+                        removableCard: removableCard,
+                        movableCardTargets: movableCard ? movableCards[card_id] : null,
+                    });
+                };
+                this.onClick(`${div.id}`, callbackCardSelection);
+            });
             
             if(possibleActions.includes('actPlaceToken')){
                 let spots_for_tokens = args.spots_for_tokens;
@@ -263,7 +277,27 @@ function (dojo, declare) {
                 });
             }
 
-        },         
+        },     
+        
+        //Client state
+        onEnteringStateCardActionSelection(args){
+            debug('onEnteringStateCardActionSelection', args);
+            
+            this.addCancelStateBtn(_('Go back'));
+            
+            let cardId = args.cardId;
+            $(`winter_card-${cardId}`).classList.add('selected');
+
+            if(args.removableCard){
+                this.addPrimaryActionButton('btnDiscardCard',  _('Discard'), () => {
+                    this.performAction('actRemoveCard', { 'cardId':cardId });
+                });
+            }
+
+            if(args.movableCardTargets){
+                this.displayCardSpotsSelectionForDir("actMoveCard", args.card, args.movableCardTargets, );
+            }
+        },    
         
         //////////////////////////////////////////////////////////////
         //    _   _       _   _  __ _           _   _                 
@@ -421,6 +455,41 @@ function (dojo, declare) {
                 let spot = this.addSelectableCardSpot(card, row, col);
                 let callbackSpotSelection = (evt) => {
                     this.performAction(serverAction, { dir: this.chosenDir, row: row,  col: col});
+                };
+                this.onClick(`${spot.id}`, callbackSpotSelection);
+            });
+        },
+
+        /**
+         * Display card spots to place a card with a specific dir for each specific coord
+         * @param {*} serverAction 
+         * @param {*} card 
+         * @param {*} playableCoords 
+         */
+        displayCardSpotsSelectionForDir: function(serverAction, card, playableCoords, ) {
+            let allPlayableDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
+            this.chosenDir = card.dir;
+            this.addPrimaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + _(`Rotate card`), () => {
+                this.chosenDir = allPlayableDirs [ (allPlayableDirs.indexOf(this.chosenDir) + 1) % allPlayableDirs.length ];
+                document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
+                    oCard.dataset.dir = this.chosenDir;
+                });
+            });
+
+            Object.values(playableCoords).forEach( (playableCoord) => {
+                let row = playableCoord.row;
+                let col = playableCoord.col;
+                let playableDirs = playableCoord.dirs;
+
+                //we need good CSS or an ordered array from TOP LEFT to BOTTOM right in order to be able to click on every spot corner
+                let spot = this.addSelectableCardSpot(card, row, col);
+                spot.dataset.dirs = playableDirs;
+
+                let callbackSpotSelection = (evt) => {
+                    // Hidden by CSS
+                    //if(playableDirs.indexOf(this.chosenDir ) >0){ 
+                        this.performAction(serverAction, {'cardId':card.id, 'dir': this.chosenDir, 'row': row,  'col': col});
+                    //}
                 };
                 this.onClick(`${spot.id}`, callbackSpotSelection);
             });
@@ -715,7 +784,9 @@ function (dojo, declare) {
             return spot;
         },
         tplCardSpot(datas) {
-            return `<div class="winter_card_spot" id="winter_card_spot_${datas.row}_${datas.column}" data-type="${datas.card.type}" data-dir="1" data-row="${datas.row}" data-col="${datas.column}">
+            return `<div class="winter_card_spot" id="winter_card_spot_${datas.row}_${datas.column}" data-type="${datas.card.type}" data-row="${datas.row}" data-col="${datas.column}"
+                data-dir="${datas.card.dir ? datas.card.dir : CARD_DIRECTION_UP}" data-dirs="${datas.card.playableDirs}"
+            >
                 </div>`;
         },
     

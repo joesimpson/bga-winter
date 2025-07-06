@@ -153,9 +153,16 @@ trait PlayerTurnTrait
     if (!array_key_exists($cardId, $movableCards)) {
       throw new UnexpectedException(141,"Invalid card id $cardId");
     }
+    $foundPossibleTarget = false;
     $moveTargets = $movableCards[$cardId];
-    if (!in_array(['row'=>$row, 'col'=>$col, 'dir'=>$dir], $moveTargets)) {
-      throw new UnexpectedException(150,"Invalid target [$row, $col, $dir]");
+    foreach($moveTargets as $moveTarget){
+      if($moveTarget['row'] != $row ) continue;
+      if($moveTarget['col'] != $col ) continue;
+      if(!in_array($dir,$moveTarget['dirs'] )) continue;
+      $foundPossibleTarget = true;
+    }
+    if (!$foundPossibleTarget) {
+      throw new UnexpectedException(150,"Invalid target [$row, $col, $dir] ");
     }
 
     //ACTION EFFECT
