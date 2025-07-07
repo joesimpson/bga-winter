@@ -172,11 +172,45 @@ trait PlayerTurnTrait
     $card->setRow($row);
     $card->setCol($col);
     $card->setDirection($dir);
-    //$card->setLocation(CARD_LOCATION_BOARD);
-    
-    //TODO JSA PLACE TOKENS
-
     Notifications::cardMoved($player,$card,$fromLocation);
+    
+    //PLACE TOKENS on each border of this card when matching a NEW square
+    $token_color = $player->getTokensColor();
+    $existingTokensCoords = Tokens::getBoardTokens()->map(function ($token) {
+      return $token->coordArray();
+    })->toArray();
+    $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
+    $snowflakesGrid = Utils::gridComputeSnowflakesGrid($boardCards); 
+    // $snowflakes = $card->getOrientedSnowflakes($dir);
+    // foreach( $snowflakes as $snowflake){
+    //   $snowflakeCoords = $snowflake->coordArrayFromBase($row, $col);
+    //   $targetSquare = Utils::computeTargetSquareBottomRight($snowflakeCoords);
+    //   //TODO JSA ? not only bottom right 
+    //   $isSquare = Utils::isSnowflakesSquare($token_color, $targetSquare, $snowflakesGrid);
+    //   if($isSquare){
+    //     $token = Tokens::getPlayerHand($pId)->first();
+    //     if(!isset($token)) break;
+    //     $token->setRow($row);
+    //     $token->setCol($col);
+    //     $token->setLocation(TOKEN_LOCATION_BOARD);
+    //     Notifications::placeToken($player,$token);
+    //   }
+    // }
+
+    $tokensSpots = Utils::gridOverlappingTokensFromCard($card->getRow(), $card->getCol());
+    foreach( $tokensSpots as $spot){
+      $targetSquare = Utils::computeTargetSquareBottomRight($spot);
+      $isSquare = Utils::isSnowflakesSquare($token_color, $targetSquare, $snowflakesGrid);
+      if($isSquare && !in_array($spot,$existingTokensCoords)){
+        //If new right spot for a token, Then add new token
+        $token = Tokens::getPlayerHand($pId)->first();
+        if(!isset($token)) break;
+        $token->setRow($spot[0]);
+        $token->setCol($spot[1]);
+        $token->setLocation(TOKEN_LOCATION_BOARD);
+        Notifications::placeToken($player,$token);
+      }
+    }
 
     // at the end of the action, move to the next state
     $this->gamestate->nextState("next");
@@ -210,7 +244,6 @@ trait PlayerTurnTrait
     $token->setLocation(TOKEN_LOCATION_BOARD);
 
     Notifications::placeToken($player,$token);
-    $player->giveExtraTime();
 
     $this->gamestate->nextState("next");
   }

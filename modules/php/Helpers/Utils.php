@@ -335,6 +335,8 @@ abstract class Utils extends \APP_DbObject
     {
         $list = [];
 
+        if($availableTokens <1) return $list;
+
         //Step 1 look at targets for card
         $spotsForCard = Utils::listPlayableSpotsForNewCard();
 
