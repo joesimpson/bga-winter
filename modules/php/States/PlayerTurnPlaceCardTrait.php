@@ -77,6 +77,10 @@ trait PlayerTurnPlaceCardTrait
 
     // Notify all players about the card played.
     Notifications::cardPlayed($player,$card);
+    
+    Globals::setLastPlayedTokens([]);
+    Globals::setLastPlayedCards([$card->getId()]);
+    Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
 
     // at the end of the action, move to the next state
     $this->gamestate->nextState("playCard");

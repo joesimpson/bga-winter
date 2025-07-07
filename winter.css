@@ -213,6 +213,11 @@
   z-index: 2;
   box-shadow: 0px 0px 6px 6px #d3ff00, 0px 0px 6px 6px #dfff00, 0px 0px 6px 6px #fffb00;
 }
+.winter_card_back.lastPlayed,
+.winter_card_spot.lastPlayed,
+.winter_card.lastPlayed {
+  box-shadow: 0px 0px 3px 3px red;
+}
 
 .winter_card_tooltip {
   text-align: center;

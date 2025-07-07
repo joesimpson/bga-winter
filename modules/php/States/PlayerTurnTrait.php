@@ -126,6 +126,10 @@ trait PlayerTurnTrait
 
     Notifications::removeCard($player,$card, $fromLocation);
 
+    Globals::setLastPlayedTokens([]);
+    Globals::setLastPlayedCards([]);
+    Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
+    
     $this->gamestate->nextState("next");
   }
    
@@ -202,6 +206,7 @@ trait PlayerTurnTrait
     Globals::setLastPlayedTokens($newTokens->map(function ($token) {
         return $token->getId();
       })->toArray());
+    Globals::setLastPlayedCards([$card->getId()]);
     Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
 
     // at the end of the action, move to the next state
@@ -238,6 +243,7 @@ trait PlayerTurnTrait
     Notifications::placeToken($player,$token);
 
     Globals::setLastPlayedTokens([$token->getId()]);
+    Globals::setLastPlayedCards([]);
     Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
 
     $this->gamestate->nextState("next");
@@ -272,6 +278,10 @@ trait PlayerTurnTrait
     $token->setLocation(TOKEN_LOCATION_HAND);
 
     Notifications::removeToken($player,$token, $fromLocation);
+
+    Globals::setLastPlayedTokens([]);
+    Globals::setLastPlayedCards([]);
+    Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
 
     $this->gamestate->nextState("next");
   }

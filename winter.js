@@ -337,6 +337,15 @@ function (dojo, declare) {
             debug('notif_refreshLastPlayed:', args); 
             this.gamedatas['lastPlayed'] = args.datas;
 
+            //Refresh cards
+            document.querySelectorAll('.winter_card').forEach((div) => {
+                div.classList.remove("lastPlayed");
+            });
+            let lastPlayedCards = this.gamedatas.lastPlayed.cards;
+            Object.values(lastPlayedCards).forEach( (cardId) => {
+                $(`winter_card-${cardId}`).classList.add("lastPlayed");
+            });
+            
             //Refresh tokens
             document.querySelectorAll('.winter_token').forEach((oToken) => {
                 oToken.classList.remove("lastPlayed");
@@ -345,6 +354,7 @@ function (dojo, declare) {
             Object.values(lastPlayedTokens).forEach( (tokenId) => {
                 $(`winter_token-${tokenId}`).classList.add("lastPlayed");
             });
+            
         },
 
         notif_cardDrawn: async function(args) {
@@ -773,6 +783,11 @@ function (dojo, declare) {
                     dojo.place(o, container);
                 }
                 return card.id;
+            });
+            
+            let lastPlayedCards = this.gamedatas.lastPlayed.cards;
+            Object.values(lastPlayedCards).forEach( (cardId) => {
+                $(`winter_card-${cardId}`).classList.add("lastPlayed");
             });
         },
     
