@@ -46,7 +46,7 @@ trait PlayerTurnTrait
         $possibleActions = ['actMoveCard','actRemoveCard', 'actRemoveToken'];
         //$actionsMessage = clienttranslate('move a card, remove');
         $removableCards = Utils::listRemovableCardsOnBoard();
-        $movableCards = Utils::listMovableCardsOnBoard($token_color, $availableTokens,$removableCards);
+        $movableCards = Utils::listMovableCardsOnBoard($token_color, $player->getNbTokensInHand(),$removableCards);
         $removableTokens = Tokens::getBoardTokens($player->getId())->getIds();
 
         break;
@@ -129,7 +129,7 @@ trait PlayerTurnTrait
     Globals::setLastPlayedTokens([]);
     Globals::setLastPlayedCards([]);
     Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
-    
+
     $this->gamestate->nextState("next");
   }
    
@@ -180,18 +180,12 @@ trait PlayerTurnTrait
     
     //PLACE TOKENS on each border of this card when matching a NEW square
     $token_color = $player->getTokensColor();
-    $existingTokensCoords = Tokens::getBoardTokens()->map(function ($token) {
-      return $token->coordArray();
-    })->toArray();
     $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
-    $snowflakesGrid = Utils::gridComputeSnowflakesGrid($boardCards);  
-
-    $tokensSpots = Utils::gridOverlappingTokensFromCard($card->getRow(), $card->getCol());
+    $boardTokens = Tokens::getBoardTokens();
+    $squareSpots = Utils::listMovableCardNewTokens( $cardId, $row, $col, $dir,$token_color, $boardCards, $boardTokens);
+    
     $newTokens = new Collection();
-    foreach( $tokensSpots as $spot){
-      $targetSquare = Utils::computeTargetSquareBottomRight($spot);
-      $isSquare = Utils::isSnowflakesSquare($token_color, $targetSquare, $snowflakesGrid);
-      if($isSquare && !in_array($spot,$existingTokensCoords)){
+    foreach( $squareSpots as $spot){
         //If new right spot for a token, Then add new token
         $token = Tokens::getPlayerHand($pId)->first();
         if(!isset($token)) break;
@@ -200,7 +194,6 @@ trait PlayerTurnTrait
         $token->setLocation(TOKEN_LOCATION_BOARD);
         $newTokens->append( $token);
         Notifications::placeToken($player,$token);
-      }
     }
 
     Globals::setLastPlayedTokens($newTokens->map(function ($token) {

@@ -66,6 +66,8 @@ abstract class Utils extends \APP_DbObject
     }
 
     /**
+     * 
+     * @param array $flyingCards (Optional) : list of cards ids we don't consider as placed on the table
      * @return array of available coordinates to place a card on the board
      * 
      * Example : 
@@ -77,21 +79,25 @@ abstract class Utils extends \APP_DbObject
      *      [ -2,-1 ],
      *  ]
      */
-    public static function listPlayableSpotsForNewCard(): array
+    public static function listPlayableSpotsForNewCard(?array $flyingCards ): array
     {
         Game::get()->trace("listPlayableSpotsForNewCard()");
         $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
 
-        $usedCoordinates = $boardCards->map(function ($card) {
+        $usedCoordinates = $boardCards->filter(function ($card) {
+            return !isset($flyingCards) || !in_array($card->getId(),$flyingCards);
+        })->map(function ($card) {
             return $card->coordArray();
         })->toArray();
         $intersectUnavailable = [];
         foreach($boardCards as $card){
+            if(isset($flyingCards) && in_array($card->getId(),$flyingCards)) continue;
             $intersectUnavailable = array_merge($intersectUnavailable,Utils::gridOverlappingCardsFrom($card->getRow(), $card->getCol()));
         }
         
         $lookingAtSpots = [];
         foreach($boardCards as $card){
+            if(isset($flyingCards) && in_array($card->getId(),$flyingCards)) continue;
             $newSpots = $card->getNeighbouringSpots();
             foreach($newSpots as $spot){
                 if(!in_array($spot, $lookingAtSpots) && !in_array($spot, $usedCoordinates) && !in_array($spot, $intersectUnavailable)){
@@ -321,6 +327,69 @@ abstract class Utils extends \APP_DbObject
 
         return $list;
     }
+
+    /**
+     * @param int $cardId
+     * @param int $row
+     * @param int $col
+     * @param int $dir
+     * @param int $token_color
+     * @param Collection $boardCards read Card list in DB
+     * @param Collection $boardTokens read Token list in DB
+     * 
+     * @return array list only if this destination is valid for that card 
+     */
+    public static function listMovableCardNewTokens(int $cardId, int $row, int $col, int $dir,
+        int $token_color,
+        Collection $boardCards,
+        Collection $boardTokens,
+        ): array
+    {
+        $squareSpots = [];
+
+        $existingTokensCoords = $boardTokens->map(function ($token) {
+          return $token->coordArray();
+        })->toArray();
+
+        $tokensSpots = Utils::gridOverlappingTokensFromCard($row, $col);
+        $tempCardLocations = [
+            $cardId => [
+                'row' => $row, 
+                'col' => $col, 
+                'dir' => $dir,
+            ]];
+        $snowflakesGrid = Utils::gridComputeSnowflakesGrid($boardCards, $tempCardLocations); 
+
+        foreach( $tokensSpots as $spot){
+            $targetSquare = Utils::computeTargetSquareBottomRight($spot);
+            $isSquare = Utils::isSnowflakesSquare($token_color, $targetSquare, $snowflakesGrid);
+            if($isSquare && !in_array($spot,$existingTokensCoords)){
+                $squareSpots[] = $spot;
+            }
+        }
+        return $squareSpots;
+    }
+
+    /**
+     * @param int $cardId
+     * @param int $row
+     * @param int $col
+     * @param int $dir
+     * @param int $token_color
+     * @param Collection $boardCards read Card list in DB
+     * @param Collection $boardTokens read Token list in DB
+     * 
+     * @return bool true only if this destination is valid for that card moved by this player
+     */
+    public static function isMovableCard(int $cardId, int $row, int $col, int $dir,
+        int $token_color,
+        Collection $boardCards,
+        Collection $boardTokens,
+        ): bool
+    { 
+        $squareSpots = Utils::listMovableCardNewTokens( $cardId, $row, $col, $dir,$token_color, $boardCards, $boardTokens);
+        return count($squareSpots) >0;
+    }
     
     /**
      * Find which cards can be moved from the game board : it is a subset of removable cards
@@ -338,17 +407,18 @@ abstract class Utils extends \APP_DbObject
         if($availableTokens <1) return $list;
 
         //Step 1 look at targets for card
-        $spotsForCard = Utils::listPlayableSpotsForNewCard();
+        //No, it depends on selected card because a card can slide a little bit to +1/-1 row/col
+        //$spotsForCard = Utils::listPlayableSpotsForNewCard();
 
         //step 2 : LOOP Cards 
+        $boardTokens = Tokens::getBoardTokens();
         $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
         $removableCards = Cards::getMany($removableCardsIds);
         foreach($removableCards as $card){ 
             //STEP 3 : can we move the card to a place where we can add this color token(s) ?
-            //TODO JSA check we can slide the card a little bit to +1/-1 row/col in spotsForCard
             
             $targetsForCard = [];
-
+            $spotsForCard = Utils::listPlayableSpotsForNewCard([$card->getId()]);
             foreach($spotsForCard as $coord){ 
                 //Check ALL possible DIRS
                 $allDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
@@ -358,24 +428,7 @@ abstract class Utils extends \APP_DbObject
                 $cardCol = $coord[1];
 
                 foreach( $allDirs as $dir){
-                    $isSquare = false;
-
-                    $tempCardLocations = [
-                        $card->getId() => [
-                            'row' => $cardRow, 
-                            'col' => $cardCol, 
-                            'dir' => $dir,
-                        ]];
-                    $snowflakesGrid = Utils::gridComputeSnowflakesGrid($boardCards, $tempCardLocations); 
-
-                    $snowflakes = $card->getOrientedSnowflakes($dir);
-                    foreach( $snowflakes as $snowflake){
-                        $snowflakeCoords = $snowflake->coordArrayFromBase($cardRow, $cardCol);
-                        $targetSquare = Utils::computeTargetSquareBottomRight($snowflakeCoords);
-                        $isSquare = $isSquare || Utils::isSnowflakesSquare($token_color, $targetSquare, $snowflakesGrid);
-                        if($isSquare) break;//Don't compute all squares for now
-                    }
-
+                    $isSquare = Utils::isMovableCard($card->getId(),$cardRow, $cardCol, $dir,$token_color,$boardCards, $boardTokens);
                     if($isSquare) $playableDirs [] = $dir;
                 }
                 $targetForCard = [ 'row' => $cardRow, 'col' => $cardCol, 'dirs' => $playableDirs ];

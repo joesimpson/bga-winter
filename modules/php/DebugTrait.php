@@ -6,6 +6,7 @@ use Bga\Games\winter\Core\Notifications;
 use Bga\Games\winter\Core\Stats;
 use Bga\Games\winter\Helpers\Log;
 use Bga\Games\winter\Helpers\QueryBuilder;
+use Bga\Games\winter\Helpers\Utils;
 use Bga\Games\winter\Managers\Cards;
 use Bga\Games\winter\Managers\Players;
 use Bga\Games\winter\Managers\Tokens;
@@ -224,5 +225,32 @@ trait DebugTrait
     //THEN REFRESH PAGE
   }
 
+
+  
+  function debug_isMovableCard(int $cardId, int $row, int $col,){
+    $player = Players::getActive();
+    $token_color = $player->getTokensColor();
+    // $removableCards = Utils::listRemovableCardsOnBoard();
+    // $movableCards = Utils::listMovableCardsOnBoard($token_color, $player->getNbTokensInHand(),$removableCards);
+    //Notifications::message("movableCards".json_encode($movableCards),['json' => $movableCards]);
+
+    $card = Cards::get($cardId);
+    //$spotsForCard = Utils::listPlayableSpotsForNewCard([$cardId]);
+    //Notifications::message("spotsForCard".json_encode($spotsForCard),['json' => $spotsForCard]);
+
+    ////////////////////---------------------------------------------------------------------
+    $boardTokens = Tokens::getBoardTokens();
+    $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
+    $allDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
+    
+    foreach( $allDirs as $dir){
+      $isMovableCard = Utils::isMovableCard($cardId,$row, $col, $dir,$token_color,$boardCards, $boardTokens);
+      Notifications::message("isMovableCard with dir $dir ? ".json_encode($isMovableCard),['json' => $isMovableCard]);
+    }
+    ////////////////////---------------------------------------------------------------------
+
+
+
+  }
 
 }
