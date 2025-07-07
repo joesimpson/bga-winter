@@ -164,6 +164,16 @@ class Notifications
     ]);
   }
   /**
+   * @param array $datas
+   */
+  public static function refreshLastPlayed(array $datas)
+  {
+    
+    self::notifyAll('refreshLastPlayed', '', [
+      'datas' => $datas,
+    ]);
+  }
+  /**
    */  
   /*************************
    **** GENERIC METHODS ****
@@ -251,12 +261,12 @@ class Notifications
   public static function refreshUI($datas)
   {
     // Keep only the things from getAllDatas that matters
-    $players = $datas['players'];
     $gameDatas = [
       'players' => $datas['players'],
       'cards' => $datas['cards'],
       'deckSize' => $datas['deckSize'],
       'phase' => $datas['phase'],
+      'lastPlayed' => $datas['lastPlayed'],
       'tokens' => $datas['tokens'],
     ];
 

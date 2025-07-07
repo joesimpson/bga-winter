@@ -180,24 +180,10 @@ trait PlayerTurnTrait
       return $token->coordArray();
     })->toArray();
     $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
-    $snowflakesGrid = Utils::gridComputeSnowflakesGrid($boardCards); 
-    // $snowflakes = $card->getOrientedSnowflakes($dir);
-    // foreach( $snowflakes as $snowflake){
-    //   $snowflakeCoords = $snowflake->coordArrayFromBase($row, $col);
-    //   $targetSquare = Utils::computeTargetSquareBottomRight($snowflakeCoords);
-    //   //TODO JSA ? not only bottom right 
-    //   $isSquare = Utils::isSnowflakesSquare($token_color, $targetSquare, $snowflakesGrid);
-    //   if($isSquare){
-    //     $token = Tokens::getPlayerHand($pId)->first();
-    //     if(!isset($token)) break;
-    //     $token->setRow($row);
-    //     $token->setCol($col);
-    //     $token->setLocation(TOKEN_LOCATION_BOARD);
-    //     Notifications::placeToken($player,$token);
-    //   }
-    // }
+    $snowflakesGrid = Utils::gridComputeSnowflakesGrid($boardCards);  
 
     $tokensSpots = Utils::gridOverlappingTokensFromCard($card->getRow(), $card->getCol());
+    $newTokens = new Collection();
     foreach( $tokensSpots as $spot){
       $targetSquare = Utils::computeTargetSquareBottomRight($spot);
       $isSquare = Utils::isSnowflakesSquare($token_color, $targetSquare, $snowflakesGrid);
@@ -208,9 +194,15 @@ trait PlayerTurnTrait
         $token->setRow($spot[0]);
         $token->setCol($spot[1]);
         $token->setLocation(TOKEN_LOCATION_BOARD);
+        $newTokens->append( $token);
         Notifications::placeToken($player,$token);
       }
     }
+
+    Globals::setLastPlayedTokens($newTokens->map(function ($token) {
+        return $token->getId();
+      })->toArray());
+    Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
 
     // at the end of the action, move to the next state
     $this->gamestate->nextState("next");
@@ -244,6 +236,9 @@ trait PlayerTurnTrait
     $token->setLocation(TOKEN_LOCATION_BOARD);
 
     Notifications::placeToken($player,$token);
+
+    Globals::setLastPlayedTokens([$token->getId()]);
+    Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
 
     $this->gamestate->nextState("next");
   }

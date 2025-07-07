@@ -317,7 +317,7 @@ function (dojo, declare) {
             debug('notif_refreshUI: refreshing UI', args);
             this.clearPossible();
             this.refreshPlayersDatas(args.datas['players']);
-            ['cards', 'tokens', 'deckSize', 'phase'].forEach((value) => {
+            ['cards', 'tokens', 'deckSize', 'phase', 'lastPlayed'].forEach((value) => {
                 this.gamedatas[value] = args.datas[value];
             });
             $("winter_counter_phase").innerHTML = this.formatPhaseName(this.gamedatas.phase);
@@ -331,6 +331,20 @@ function (dojo, declare) {
                 this._counters[pId].nbtokens.toValue(player.nbtokens.hand);
             });
             this._counters['deckSize'].toValue(args.datas.deckSize);
+        },
+        
+        notif_refreshLastPlayed: async function(args) {
+            debug('notif_refreshLastPlayed:', args); 
+            this.gamedatas['lastPlayed'] = args.datas;
+
+            //Refresh tokens
+            document.querySelectorAll('.winter_token').forEach((oToken) => {
+                oToken.classList.remove("lastPlayed");
+            });
+            let lastPlayedTokens = this.gamedatas.lastPlayed.tokens;
+            Object.values(lastPlayedTokens).forEach( (tokenId) => {
+                $(`winter_token-${tokenId}`).classList.add("lastPlayed");
+            });
         },
 
         notif_cardDrawn: async function(args) {
@@ -845,6 +859,11 @@ function (dojo, declare) {
             let tokenIds = this.gamedatas.tokens.map((token) => {
                 this.addToken(token);
                 return token.id;
+            });
+
+            let lastPlayedTokens = this.gamedatas.lastPlayed.tokens;
+            Object.values(lastPlayedTokens).forEach( (tokenId) => {
+                $(`winter_token-${tokenId}`).classList.add("lastPlayed");
             });
         },
         getTokenContainer(token) { 

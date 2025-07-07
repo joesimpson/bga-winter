@@ -22,10 +22,20 @@ class Globals extends \Bga\Games\winter\Helpers\DB_Manager
     'turn' => 'int',
     'firstPlayer' => 'int',
     'phase' => 'int',
+    //Array of tokens ids
+    'lastPlayedTokens' => 'obj',
 
     //For Undo log module
     'choices' => 'int',
   ];
+  
+  public static function getLastPlayedDatas()
+  {
+    return [
+      'tokens' => self::getLastPlayedTokens(),
+      //'cards' => self::getLastPlayedCards(),//TODO JSA
+    ] ;
+  }
  
   /*
    * Setup new game
@@ -35,6 +45,7 @@ class Globals extends \Bga\Games\winter\Helpers\DB_Manager
 
     self::setTurn(0);
     self::setPhase(PHASE_BEGINNING);
+    self::setLastPlayedTokens([]);
 
     foreach($players as $pId => $player){
 

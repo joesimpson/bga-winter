@@ -38,6 +38,10 @@ $token_counter_width : 40px;
             transform: scale(1.1);
         }
     }
+
+    &.lastPlayed{
+        box-shadow: 0px 0px 3px 3px red;
+    }
 }
 
 .winter_token_spot{

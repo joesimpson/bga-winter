@@ -1889,6 +1889,10 @@
 .winter_token_counter.selectable:hover {
   transform: scale(1.1);
 }
+.winter_token_spot.lastPlayed,
+.winter_token_counter.lastPlayed {
+  box-shadow: 0px 0px 3px 3px red;
+}
 
 .winter_token_spot {
   opacity: 0.5;

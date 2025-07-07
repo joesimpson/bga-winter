@@ -152,6 +152,7 @@ class Game extends \Bga\GameFramework\Table
         $result["cards"] = Cards::getUiData($current_player_id);
         $result["deckSize"] = Cards::countInLocation(CARD_LOCATION_DECK);
         $result["phase"] = Globals::getPhase();
+        $result["lastPlayed"] = Globals::getLastPlayedDatas();
         $result["tokens"] = Tokens::getUiData($current_player_id);
         $result["prefs"] = Preferences::getUiData($current_player_id);
         $result["version"] = intval($this->gamestate->table_globals[BGA_GAMESTATE_GAMEVERSION]);
