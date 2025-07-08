@@ -158,7 +158,7 @@ trait PlayerTurnTrait
       throw new UnexpectedException(141,"Invalid card id $cardId");
     }
     $foundPossibleTarget = false;
-    $moveTargets = $movableCards[$cardId];
+    $moveTargets = $movableCards[$cardId]['targets'];
     foreach($moveTargets as $moveTarget){
       if($moveTarget['row'] != $row ) continue;
       if($moveTarget['col'] != $col ) continue;

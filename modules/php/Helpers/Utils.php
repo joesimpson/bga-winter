@@ -5,6 +5,7 @@ use Bga\Games\winter\Core\Notifications;
 use Bga\Games\winter\Game;
 use Bga\Games\winter\Managers\Cards;
 use Bga\Games\winter\Managers\Tokens;
+use Bga\Games\winter\Models\Card;
 use Bga\Games\winter\Models\Player;
 
 abstract class Utils extends \APP_DbObject
@@ -415,6 +416,10 @@ abstract class Utils extends \APP_DbObject
         $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
         $removableCards = Cards::getMany($removableCardsIds);
         foreach($removableCards as $card){ 
+            
+            //STEP 2.5 : Does moving imply dividing the board into 2 lakes ?
+            $list[ $card->getId()]['split'] = Utils::isCardBetween2Lakes($boardCards, $card);
+
             //STEP 3 : can we move the card to a place where we can add this color token(s) ?
             
             $targetsForCard = [];
@@ -436,10 +441,55 @@ abstract class Utils extends \APP_DbObject
 
             }
 
-            if(count($targetsForCard)>0) $list[ $card->getId()] = $targetsForCard;
+            if(count($targetsForCard)>0) $list[ $card->getId()]['targets'] = $targetsForCard;
+            else unset($list[ $card->getId()]);
         }
         Game::get()->trace("listMovableCardsOnBoard($token_color,$availableTokens) -> result ".json_encode($list));
 
         return $list;
     }
+
+    /**
+     * 
+     * @param Collection $boardCards : cards placed on Board (already read from DB)
+     * @param Card $card : the card to analyze
+     * 
+     * @return bool true if the specified card is placed on a "bridge" between 2 lakes, false otherwise
+     */
+    public static function isCardBetween2Lakes(
+        Collection $boardCards,
+        Card $card,
+        ): bool
+    { 
+
+        $usedCoordinates = $boardCards->filter(function ($c) use ($card) {
+            return $c->getId() != $card->getId() ;
+        })->map(function ($c) {
+            return $c->coordArray();
+        })->toArray();
+
+        $maxMoves = count($usedCoordinates);
+        $moveCostCallback = function ($source, $target, $d) use ($usedCoordinates) {
+            $spot = [$target['y'], $target['x']];
+            if(!in_array($spot, $usedCoordinates)) return 10000;//not valid position: we cannot move through empty spot
+            return 1;
+        };
+        //STEP 1 : Loop each board card coord A
+        foreach($usedCoordinates as $coord){
+
+            //STEP 2 : Loop each Other board card coord B
+            //If no path between A and B thus there is a hole
+
+            $startingCell = [ 'x' => $coord[1], 'y' => $coord[0], ];
+            $cellsMarkers = GridUtils::getReachableCellsAtDistance($startingCell,$maxMoves, $moveCostCallback, $usedCoordinates);
+            $cells = $cellsMarkers[0];
+            if(count($cells) +1 < count($usedCoordinates)){
+                Game::get()->trace("isCardBetween2Lakes TRUE (".json_encode($startingCell)." ) : cells=".json_encode($cells)." /// : markers=".json_encode($cellsMarkers[1]));
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

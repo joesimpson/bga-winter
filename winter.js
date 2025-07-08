@@ -238,13 +238,15 @@ function (dojo, declare) {
                 let removableCard = (possibleActions.includes('actRemoveCard') && Object.values(removableCards).indexOf(cardDatas.id)>=0) ? true : false;
                 let movableCard =  (possibleActions.includes('actMoveCard') && Object.keys(movableCards).indexOf(card_id)>=0) ? true : false;
                 if(!removableCard && !movableCard) return;
+                let movingCreates2Lakes = movableCard ? movableCards[card_id]['split'] : false;
 
                 let callbackCardSelection = (evt) => {
                     this.clientState('cardActionSelection',  this.fsr(_('Select a target for that card'), {}), {
                         cardId: card_id,
                         card: cardDatas,
                         removableCard: removableCard,
-                        movableCardTargets: movableCard ? movableCards[card_id] : null,
+                        movableCardTargets: movableCard ? movableCards[card_id]['targets'] : null,
+                        movingCreates2Lakes: movingCreates2Lakes,
                     });
                 };
                 this.onClick(`${div.id}`, callbackCardSelection);
@@ -294,9 +296,16 @@ function (dojo, declare) {
                 });
             }
 
-            if(args.movableCardTargets){
+            if(args.movingCreates2Lakes) {
+                //IN this case we will change state to let player choose according to melt results
+                this.addPrimaryActionButton("btnMoveCardSelect", _("Move"), (evt) => {
+                    this.performAction('actMoveCardSelect', { });
+                });
+            }
+            else if(args.movableCardTargets){
                 this.displayCardSpotsSelectionForDir("actMoveCard", args.card, args.movableCardTargets, );
             }
+            
         },    
         
         //////////////////////////////////////////////////////////////
