@@ -48,6 +48,8 @@ class Card extends \Bga\Games\winter\Helpers\DB_Model
   {
     $data = parent::getUiData();
     $data["dir"] = $this->getDirection();
+    //Hide snowflakes from UI json because it is useless for now
+    $data["snowflakes"] = '';
     return $data;
   } 
   
