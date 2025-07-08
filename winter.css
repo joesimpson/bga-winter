@@ -112,7 +112,7 @@
   border: var(--winter_board_card_border) solid #959595;
   border-radius: 5px;
   border-radius: 5%;
-  background-size: 400% 300%;
+  background-size: 500% 200%;
   background-image: url("img/cards.jpg");
   position: relative;
 }
@@ -125,44 +125,44 @@
 .winter_card_back[data-type="2"],
 .winter_card_spot[data-type="2"],
 .winter_card[data-type="2"] {
-  background-position-x: 33.3333333333%;
+  background-position-x: 25%;
   background-position-y: 0%;
 }
 .winter_card_back[data-type="3"],
 .winter_card_spot[data-type="3"],
 .winter_card[data-type="3"] {
-  background-position-x: 66.6666666667%;
+  background-position-x: 50%;
   background-position-y: 0%;
 }
 .winter_card_back[data-type="4"],
 .winter_card_spot[data-type="4"],
 .winter_card[data-type="4"] {
-  background-position-x: 100%;
+  background-position-x: 75%;
   background-position-y: 0%;
 }
 .winter_card_back[data-type="5"],
 .winter_card_spot[data-type="5"],
 .winter_card[data-type="5"] {
-  background-position-x: 0%;
-  background-position-y: 50%;
+  background-position-x: 100%;
+  background-position-y: 0%;
 }
 .winter_card_back[data-type="6"],
 .winter_card_spot[data-type="6"],
 .winter_card[data-type="6"] {
-  background-position-x: 33.3333333333%;
-  background-position-y: 50%;
+  background-position-x: 0%;
+  background-position-y: 100%;
 }
 .winter_card_back[data-type="7"],
 .winter_card_spot[data-type="7"],
 .winter_card[data-type="7"] {
-  background-position-x: 66.6666666667%;
-  background-position-y: 50%;
+  background-position-x: 25%;
+  background-position-y: 100%;
 }
 .winter_card_back[data-type="8"],
 .winter_card_spot[data-type="8"],
 .winter_card[data-type="8"] {
-  background-position-x: 100%;
-  background-position-y: 50%;
+  background-position-x: 50%;
+  background-position-y: 100%;
 }
 .winter_card_back[data-dir="2"],
 .winter_card_spot[data-dir="2"],
@@ -172,7 +172,7 @@
 .winter_card_back.winter_card_back,
 .winter_card_spot.winter_card_back,
 .winter_card.winter_card_back {
-  background-position-x: 0%;
+  background-position-x: 100%;
   background-position-y: 100%;
 }
 .winter_card_back.winter_card_back .winter_deck_size,
