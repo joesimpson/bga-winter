@@ -63,11 +63,12 @@ trait PlayerTurnLakeChoiceTrait
         
         // check input values
         $args = $this->argLakeChoice();
-        if (!in_array($lakeIndex, $args['lakes'])) {
+        $lakes = $args['lakes'];
+        if (!in_array($lakeIndex, array_keys($lakes))) {
             throw new UnexpectedException(105,"Invalid lake choice $lakeIndex");
         }
     
-        //TODO JSA ACTION EFFECT
+        //TODO JSA ACTION EFFECT : discard cards AND tokens
 
         // at the end of the action, move to the next state
         $this->gamestate->nextState("next");

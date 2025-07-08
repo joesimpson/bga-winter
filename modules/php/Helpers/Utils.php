@@ -80,7 +80,7 @@ abstract class Utils extends \APP_DbObject
      *      [ -2,-1 ],
      *  ]
      */
-    public static function listPlayableSpotsForNewCard(?array $flyingCards ): array
+    public static function listPlayableSpotsForNewCard(?array $flyingCards = null ): array
     {
         Game::get()->trace("listPlayableSpotsForNewCard()");
         $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);

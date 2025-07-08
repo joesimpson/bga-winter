@@ -308,6 +308,27 @@ function (dojo, declare) {
             
         },    
         
+        onEnteringStateLakeChoice(args){
+            debug('onEnteringStateLakeChoice', args);
+
+            let lakes = args.lakes;
+            Object.entries(lakes).forEach(  (lake_datas) => {
+                let lake_id = lake_datas[0];
+                let cards_ids = lake_datas[1];
+
+                Object.values(cards_ids).forEach( (cardId) => {
+                    let div = $(`winter_card-${cardId}`);
+                    div.dataset.lake = lake_id;
+                
+                    let callbackCardSelection = (evt) => {
+                        this.performAction('actLake', { 'lakeIndex': lake_id });
+                    };
+                    this.onClick(`${div.id}`, callbackCardSelection);
+                });
+            });
+
+        },
+        
         //////////////////////////////////////////////////////////////
         //    _   _       _   _  __ _           _   _                 
         //   | \ | |     | | (_)/ _(_)         | | (_)                
