@@ -7,6 +7,7 @@ use Bga\Games\winter\Core\Globals;
 use Bga\Games\winter\Core\Notifications;
 use Bga\Games\winter\Exceptions\UnexpectedException;
 use Bga\Games\winter\Game;
+use Bga\Games\winter\Helpers\Collection;
 use Bga\Games\winter\Helpers\Utils;
 use Bga\Games\winter\Managers\Cards;
 use Bga\Games\winter\Managers\Players;
@@ -75,6 +76,7 @@ trait PlayerTurnLakeChoiceTrait
         $cardsIdsToDiscard = $lakes[$lakeIndex];
         $cards = Cards::getMany($cardsIdsToDiscard);
         $tokens = Tokens::getBoardTokens();
+        $removedTokens = new Collection();
         foreach( $cards as $card){
             //Remove TOKENS on card
             $tokensSpotsOnCard = Utils::gridOverlappingTokensFromCard($card->getRow(), $card->getCol());
@@ -87,7 +89,8 @@ trait PlayerTurnLakeChoiceTrait
                     $token->setRow(null);
                     $token->setCol(null);
                     $token->setLocation(TOKEN_LOCATION_HAND);
-                    Notifications::removeToken($player,$token, $fromLocation);
+                    //Notifications::removeToken($player,$token, $fromLocation);
+                    $removedTokens->append($token);
                 }
             }
             //THEN Remove card
@@ -95,9 +98,10 @@ trait PlayerTurnLakeChoiceTrait
             $card->setRow(null);
             $card->setCol(null);
             $card->setLocation(CARD_LOCATION_DISCARD);
-            Notifications::removeCard($player,$card, $fromLocation);
+            //Notifications::removeCard($player,$card, $fromLocation);
         }
-        //TODO JSA send 1 notif for all cards and tokens ?
+        //send 1 notif for all cards and tokens
+        Notifications::removeLakeGroup($player,$cards,$removedTokens);
             
         Globals::setLastPlayedTokens([]);
         Globals::setLastPlayedCards([]);

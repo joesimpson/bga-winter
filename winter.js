@@ -438,6 +438,34 @@ function (dojo, declare) {
                  })
             }
         },
+        notif_removeLakeGroup: async function(args) {
+            debug('notif_removeLakeGroup...', args);
+            let pCards = Object.values(args.cards);
+            let pTokens = Object.values(args.tokens);
+            
+            await Promise.all(
+                pTokens.map(async (token, i) => {
+                    await this.wait(100 * i).then(async () => 
+                        await this.slide(`winter_token-${token.id}`, $(`winter_reserve_${token.pId}_tokens`), { 
+                            destroy: true,
+                            phantom: false,
+                        })
+                    );
+                    this._counters[token.pId].nbtokens.incValue(+1);
+                })
+            );
+            
+            await Promise.all(
+                pCards.map(async (pcard, i) => {
+                    await this.wait(100 * i).then(async () => 
+                        await this.slide(`winter_card-${pcard.id}`, this.getVisibleTitleContainer(), {
+                            destroy: true,
+                            phantom: false,
+                        })
+                    );
+                })
+            );
+        },
 
         notif_newPlayerColor: async function(args) {
             debug('notif_newPlayerColor: receiving a new color', args);

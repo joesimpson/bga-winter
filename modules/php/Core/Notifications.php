@@ -152,6 +152,24 @@ class Notifications
       'token_color_type' => $token->getType(),
     ]);
   }
+
+  
+  /**
+   * @param Player $player
+   * @param Collection $cards
+   * @param Collection $tokens
+   * 
+   */
+  public static function removeLakeGroup(Player $player, Collection $cards, Collection $tokens): void
+  {
+    $msg = clienttranslate('${player_name} removes all cards and counters from a lake');
+    self::notifyAll('removeLakeGroup', $msg, [
+      'player' => $player,
+      'cards' => $cards->ui(),
+      'tokens' => $tokens->ui(),
+    ]);
+  }
+
   /**
    * @param int $phase
    */
