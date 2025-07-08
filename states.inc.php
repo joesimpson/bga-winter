@@ -70,8 +70,14 @@ use Bga\GameFramework\StateType;
  |            | |                              ^
  |            v v                              |
  |            playerTurn  --\                  |
- |                          |                  |
- |                          v                  |
+ |             |            |                  |
+ |             v            |                  |
+ |      lakeChoice -->\     |                  |
+ |             |      |     |                  |
+ |             v      |     |                  |
+ |      placeCard -->\|     |                  |
+ |                   ||     |                  |
+ |                   vv     v                  |
  |                   confirm --> endTurn ----->/
  v  
  \-> scoring
@@ -151,6 +157,7 @@ $machinestates = [
         ->args('argPlayerTurn')
         ->possibleactions([
             'actDraw', 
+            'actPrepareMoveCard',
             'actMoveCard',
             'actPlaceToken', 
             'actRemoveToken',
@@ -159,6 +166,8 @@ $machinestates = [
         ])
         ->transitions([
             'draw' => ST_PLAYER_TURN_PLACE_CARD, 
+            'prepareMove' => ST_PLAYER_TURN_PLACE_CARD, 
+            'lakeChoice' => ST_PLAYER_TURN_LAKE_CHOICE, 
             'next' => ST_CONFIRM_TURN,
         ])
         ->build(),
@@ -176,6 +185,23 @@ $machinestates = [
         ->transitions([
             'playCard' => ST_CONFIRM_TURN, 
             'pass' => ST_CONFIRM_TURN,
+        ])
+        ->build(),
+
+    ST_PLAYER_TURN_LAKE_CHOICE => GameStateBuilder::create()
+        ->name('lakeChoice')
+        ->description(clienttranslate('${actplayer} must choose a group of cards to discard'))
+        ->descriptionmyturn(clienttranslate('${you} must choose a group of cards to discard'))
+        ->type(StateType::ACTIVE_PLAYER)
+        ->args('argLakeChoice')
+        ->action("stLakeChoice")
+        ->possibleactions([
+            'actLake', 
+            'actUndoToStep', 'actRestart',
+        ])
+        ->transitions([
+            'next' => ST_PLAYER_TURN_PLACE_CARD, 
+            'pass' => ST_PLAYER_TURN_PLACE_CARD,
         ])
         ->build(),
         

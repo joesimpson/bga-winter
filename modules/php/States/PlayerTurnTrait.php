@@ -43,7 +43,7 @@ trait PlayerTurnTrait
         //$actionsMessage = clienttranslate('draw and play a card or place 1 counter');
         break;
       case PHASE_THAWING:
-        $possibleActions = ['actMoveCard','actRemoveCard', 'actRemoveToken'];
+        $possibleActions = ['actMoveCard','actPrepareMoveCard','actRemoveCard', 'actRemoveToken'];
         //$actionsMessage = clienttranslate('move a card, remove');
         $removableCards = Utils::listRemovableCardsOnBoard();
         $movableCards = Utils::listMovableCardsOnBoard($token_color, $player->getNbTokensInHand(),$removableCards);
@@ -204,6 +204,55 @@ trait PlayerTurnTrait
 
     // at the end of the action, move to the next state
     $this->gamestate->nextState("next");
+  }
+
+  
+  /**
+   * Player action in phase 2 : prepare the move a card when we need player action before the end of this "action"
+   *
+   * @throws BgaUserException
+   */
+  public function actPrepareMoveCard(int $cardId, #[IntParam(name: 'v')] int $version,): void
+  {
+    Game::get()->checkVersion($version);
+    self::trace("actPrepareMoveCard($cardId, )");
+
+    $player = Players::getCurrent();
+    $pId = $player->getId();
+    $this->addStep();
+    
+    // check input values
+    $args = $this->argPlayerTurn();
+    if (!in_array('actPrepareMoveCard', $args['pActions'])) {
+      throw new UnexpectedException(130,"Invalid action actPrepareMoveCard");
+    }
+    $movableCards = $args['m_cards'];
+    if (!array_key_exists($cardId, $movableCards)) {
+      throw new UnexpectedException(141,"Invalid card id $cardId");
+    }
+    
+
+    //ACTION EFFECT
+    $card = Cards::get($cardId);
+    $card->setLocation(CARD_LOCATION_HAND);
+    $fromLocation = $card->coordName();
+    $card->setRow(null);
+    $card->setCol(null);
+    Notifications::removeCard($player,$card, $fromLocation);
+
+    $moveWillSplit = $movableCards[$cardId]['split'];
+
+    Globals::setLastPlayedTokens([]);
+    Globals::setLastPlayedCards([]);
+    Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
+
+    // at the end of the action, move to the next state
+    if($moveWillSplit){
+      $this->gamestate->nextState("lakeChoice");
+    }
+    else {
+      $this->gamestate->nextState("prepareMove");
+    }
   }
   
   /**

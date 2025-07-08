@@ -35,6 +35,7 @@ class Game extends \Bga\GameFramework\Table
     use States\EndTurnTrait;
     use States\NextTurnTrait;
     use States\PlayerTurnTrait;
+    use States\PlayerTurnLakeChoiceTrait;
     use States\PlayerTurnPlaceCardTrait;
     use States\ScoringTrait;
     use States\SecondPlayerTrait;

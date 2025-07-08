@@ -52,7 +52,7 @@ function (dojo, declare) {
             this._counters = {};
             
             //Filter states where we don't want other players to display state actions
-            this._activeStates = ['startingCard','colorChoice','playerTurn','placeCard','confirmTurn'];
+            this._activeStates = ['startingCard','colorChoice','lakeChoice','playerTurn','placeCard','confirmTurn'];
             this._inactiveStates = ['scoring','gameEnd'];
         },
         
@@ -299,7 +299,7 @@ function (dojo, declare) {
             if(args.movingCreates2Lakes) {
                 //IN this case we will change state to let player choose according to melt results
                 this.addPrimaryActionButton("btnMoveCardSelect", _("Move"), (evt) => {
-                    this.performAction('actMoveCardSelect', { });
+                    this.performAction('actPrepareMoveCard', { 'cardId':cardId });
                 });
             }
             else if(args.movableCardTargets){
