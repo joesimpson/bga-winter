@@ -106,6 +106,7 @@ $machinestates = [
 
     ST_SECOND_PLAYER => GameStateBuilder::create()
         ->name('secondPlayer')
+        ->description('')
         ->type(StateType::GAME)
         ->action("stSecondPlayer")
         ->transitions([
@@ -131,6 +132,7 @@ $machinestates = [
 
     ST_NEXT_TURN => GameStateBuilder::create()
         ->name('nextPlayer')
+        ->description('')
         ->type(StateType::GAME)
         ->action("stNextPlayer")
         ->transitions([
@@ -207,6 +209,7 @@ $machinestates = [
         
     ST_END_SCORING => GameStateBuilder::create()
         ->name('scoring')
+        ->description('')
         //->description(clienttranslate('Scoring'))
         ->type(StateType::GAME)
         ->action("stScoring")
@@ -218,6 +221,7 @@ $machinestates = [
 
     ST_PRE_END_OF_GAME => GameStateBuilder::create()
         ->name('preEndOfGame')
+        ->description('')
         ->type(StateType::GAME)
         ->action("stPreEndOfGame")
         ->transitions([
