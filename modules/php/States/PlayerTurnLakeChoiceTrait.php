@@ -26,10 +26,8 @@ trait PlayerTurnLakeChoiceTrait
     public function argLakeChoice(): array
     {
         $player = Players::getActive();
-        $smallestLakes = [
-            1 => [2868, 2880],
-            2 => [2873, 2882],
-        ]; //TODO JSA compute LAKES cards ids
+        $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
+        $smallestLakes = Utils::listBoardLakes($boardCards);
 
         $args = [
             'lakes' => $smallestLakes,

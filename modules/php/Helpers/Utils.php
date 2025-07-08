@@ -484,7 +484,7 @@ abstract class Utils extends \APP_DbObject
             $cellsMarkers = GridUtils::getReachableCellsAtDistance($startingCell,$maxMoves, $moveCostCallback, $usedCoordinates);
             $cells = $cellsMarkers[0];
             if(count($cells) +1 < count($usedCoordinates)){
-                Game::get()->trace("isCardBetween2Lakes TRUE (".json_encode($startingCell)." ) : cells=".json_encode($cells)." /// : markers=".json_encode($cellsMarkers[1]));
+                Game::get()->trace("isCardBetween2Lakes (".json_encode($card->coordArray()).") TRUE (".json_encode($startingCell)." ) : cells=".json_encode($cells)); //." /// : markers=".json_encode($cellsMarkers[1]));
                 return true;
             }
         }
@@ -492,4 +492,42 @@ abstract class Utils extends \APP_DbObject
         return false;
     }
 
+    
+    public static function listBoardLakes(
+        Collection $boardCards,
+        ): array
+    { 
+        $usedCoordinates = $boardCards->map(function ($c) {
+            return $c->coordArray();
+        })->toArray();
+
+        $maxMoves = count($usedCoordinates);
+        $moveCostCallback = function ($source, $target, $d) use ($usedCoordinates) {
+            $spot = [$target['y'], $target['x']];
+            if(!in_array($spot, $usedCoordinates)) return 10000;//not valid position: we cannot move through empty spot
+            return 1;
+        };
+
+        $firstCard = $boardCards->first();
+        $lake1 = [$firstCard->getId()];
+        $lake2 = [];
+        foreach($boardCards as $card){
+            if($card->getId() == $firstCard->getId() ) continue;
+
+            $startingCell = [ 'x' => $card->getCol(), 'y' => $card->getRow(), ];
+            $cellsMarkers = GridUtils::getReachableCellsAtDistance($startingCell,$maxMoves, $moveCostCallback, $usedCoordinates);
+            $cells = $cellsMarkers[0];
+            $reacheableCellInLake1 = GridUtils::searchCell($cells, $firstCard->getCol(), $firstCard->getRow());
+            if ($reacheableCellInLake1 === false) {
+                $lake2[] = $card->getId();
+            }
+            else {
+                $lake1[] = $card->getId();
+            }
+        }
+
+        $lakes = [1 => $lake1];
+        if(count($lake2) > 0) $lakes[2] = $lake2;
+        return $lakes;
+    }
 }

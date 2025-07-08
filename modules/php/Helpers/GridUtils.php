@@ -71,6 +71,30 @@ abstract class GridUtils
     {
         return !GridUtils::isCoordOutOfGrid($cell['y'],$cell['x'],$currentBoardCoords);
     }
+    
+    public static function array_usearch($array, $test)
+    {
+        $found = false;
+        $iterator = new \ArrayIterator($array);
+
+        while ($found === false && $iterator->valid()) {
+            if ($test($iterator->current())) {
+                $found = $iterator->key();
+            }
+            $iterator->next();
+        }
+
+        return $found;
+    }
+    public static function searchCell($cells, $x, $y)
+    {
+        return self::array_usearch($cells, function ($cell) use ($x, $y) {
+            if(!isset($cell['x'])) return false;
+            if(!isset($cell['y'])) return false;
+            return $cell['x'] == $x && $cell['y'] == $y;
+        });
+    }
+    
     /**
      * @return array $cells : list of orthogonal neighbours to be used with path algorythm
      */

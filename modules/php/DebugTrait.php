@@ -4,6 +4,7 @@ namespace Bga\Games\winter;
 use Bga\Games\winter\Core\Globals;
 use Bga\Games\winter\Core\Notifications;
 use Bga\Games\winter\Core\Stats;
+use Bga\Games\winter\Helpers\GridUtils;
 use Bga\Games\winter\Helpers\Log;
 use Bga\Games\winter\Helpers\QueryBuilder;
 use Bga\Games\winter\Helpers\Utils;
@@ -251,6 +252,17 @@ trait DebugTrait
 
 
 
+  }
+
+  
+  function debug_PlaceToken(int $row, int $col){
+
+    $player = Players::getCurrent();
+    $token = Tokens::getPlayerHand($player->getId())->first();
+    $token->setLocation(TOKEN_LOCATION_BOARD);
+    $token->setRow($row);
+    $token->setCol($col);
+    Notifications::placeToken($player,$token);
   }
 
 }
