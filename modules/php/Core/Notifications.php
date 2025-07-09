@@ -162,9 +162,11 @@ class Notifications
    */
   public static function removeLakeGroup(Player $player, Collection $cards, Collection $tokens): void
   {
-    $msg = clienttranslate('${player_name} removes all cards and counters from a lake');
+    $msg = clienttranslate('${player_name} removes ${n} cards and ${m} counters from a lake');
     self::notifyAll('removeLakeGroup', $msg, [
       'player' => $player,
+      'n' => $cards->count(),
+      'm' => $tokens->count(),
       'cards' => $cards->ui(),
       'tokens' => $tokens->ui(),
     ]);
