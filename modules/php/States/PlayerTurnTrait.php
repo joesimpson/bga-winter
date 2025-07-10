@@ -169,9 +169,13 @@ trait PlayerTurnTrait
     if (!$foundPossibleTarget) {
       throw new UnexpectedException(150,"Invalid target [$row, $col, $dir] ");
     }
+    
+    $moveWillSplit = $movableCards[$cardId]['split'];
+    if ($moveWillSplit) {//UI should call actPrepareMoveCard
+      throw new UnexpectedException(151,"Forbidden action actMoveCard");
+    }
 
     //ACTION EFFECT
-    //TODO JSA Check if 2 disconnected groups of cards => ask player to keep 1 when equality
     $card = Cards::get($cardId);
     $fromLocation = $card->coordName();
     $card->setRow($row);
