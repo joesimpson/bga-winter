@@ -56,8 +56,15 @@ trait PlayerTurnLakeChoiceTrait
     public function stLakeChoice(): void
     {
         $args = $this->argLakeChoice();
+        $player = Players::getActive();
         if ($args['_no_notify']) {
-            $this->gamestate->nextState('pass');
+            $cardToPlace = Cards::getDrawnCard($player);
+            if(isset($cardToPlace)){
+                $this->gamestate->nextState("place");
+            }
+            else {
+                $this->gamestate->nextState("next");
+            }
             return;
         }
         $biggestLakes = $args['lakes_choice'];
@@ -143,7 +150,13 @@ trait PlayerTurnLakeChoiceTrait
         Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
 
         // at the end of the action, move to the next state
-        $this->gamestate->nextState("next");
+        $cardToPlace = Cards::getDrawnCard($player);
+        if(isset($cardToPlace)){
+            $this->gamestate->nextState("place");
+        }
+        else {
+            $this->gamestate->nextState("next");
+        }
     }
 
 }

@@ -201,8 +201,8 @@ $machinestates = [
             'actUndoToStep', 'actRestart',
         ])
         ->transitions([
-            'next' => ST_PLAYER_TURN_PLACE_CARD, 
-            'pass' => ST_PLAYER_TURN_PLACE_CARD,
+            'next' => ST_CONFIRM_TURN, 
+            'place' => ST_PLAYER_TURN_PLACE_CARD, 
         ])
         ->build(),
         

@@ -118,12 +118,12 @@ trait PlayerTurnTrait
 
     //ACTION EFFECT
     $card = Cards::get($cardId);
+    $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
+    $split = Utils::isCardBetween2Lakes($boardCards, $card);
     $fromLocation = $card->coordName();
     $card->setRow(null);
     $card->setCol(null);
     $card->setLocation(CARD_LOCATION_DISCARD);
-
-    //TODO JSA Check if 2 disconnected groups of cards => ask player to keep 1 when equality
 
     Notifications::removeCard($player,$card, $fromLocation);
 
@@ -131,7 +131,12 @@ trait PlayerTurnTrait
     Globals::setLastPlayedCards([]);
     Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
 
-    $this->gamestate->nextState("next");
+    if($split){
+      $this->gamestate->nextState("lakeChoice");
+    }
+    else {
+      $this->gamestate->nextState("next");
+    }
   }
    
   
