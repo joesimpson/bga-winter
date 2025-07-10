@@ -45,7 +45,7 @@ trait PlayerTurnPlaceCardTrait
         $token_color = $player->getTokensColor();
         $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
         $boardTokens = Tokens::getBoardTokens();
-        $targetsForCard = Utils::listPlayableSpotsForNewCardAndTokens($card->getId(), $token_color, $boardCards, $boardTokens);
+        $targetsForCard = Utils::listPlayableSpotsForNewCardAndTokens($card, $token_color, $boardCards, $boardTokens);
 
         //$playableCoords = [];
         //foreach($targetsForCard as $target ){
@@ -115,7 +115,7 @@ trait PlayerTurnPlaceCardTrait
       $token_color = $player->getTokensColor();
       $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
       $boardTokens = Tokens::getBoardTokens();
-      $squareSpots = Utils::listMovableCardNewTokens( $card->getId(), $row, $col, $dir,$token_color, $boardCards, $boardTokens);
+      $squareSpots = Utils::listMovableCardNewTokens( $card, $row, $col, $dir,$token_color, $boardCards, $boardTokens);
       
       $newTokens = new Collection();
       foreach( $squareSpots as $spot){

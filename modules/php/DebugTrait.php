@@ -250,7 +250,7 @@ trait DebugTrait
     $allDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
     
     foreach( $allDirs as $dir){
-      $isMovableCard = Utils::isMovableCard($cardId,$row, $col, $dir,$token_color,$boardCards, $boardTokens);
+      $isMovableCard = Utils::isMovableCard($card,$row, $col, $dir,$token_color,$boardCards, $boardTokens);
       Notifications::message("isMovableCard with dir $dir ? ".json_encode($isMovableCard),['json' => $isMovableCard]);
     }
     ////////////////////---------------------------------------------------------------------
