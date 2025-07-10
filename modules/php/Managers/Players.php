@@ -62,6 +62,11 @@ class Players extends \Bga\Games\winter\Helpers\DB_Manager
       }
     }
     Game::get()->reloadPlayersBasicInfos();
+
+    //Init first player
+    $player = Players::get(Globals::getFirstPlayer());
+    Players::changeActive($player->getId());
+    $player->giveExtraTime();
     
     return $playersObjects;
   }
