@@ -312,9 +312,11 @@ function (dojo, declare) {
             debug('onEnteringStateLakeChoice', args);
 
             let lakes = args.lakes;
+            let lakes_choice = Object.values(args.lakes_choice);
             Object.entries(lakes).forEach(  (lake_datas) => {
                 let lake_id = lake_datas[0];
                 let cards_ids = lake_datas[1];
+                if( !lakes_choice.includes(parseInt(lake_id))) return;
 
                 Object.values(cards_ids).forEach( (cardId) => {
                     let div = $(`winter_card-${cardId}`);

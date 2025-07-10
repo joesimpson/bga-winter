@@ -191,8 +191,8 @@ $machinestates = [
 
     ST_PLAYER_TURN_LAKE_CHOICE => GameStateBuilder::create()
         ->name('lakeChoice')
-        ->description(clienttranslate('${actplayer} must choose a group of cards to discard'))
-        ->descriptionmyturn(clienttranslate('${you} must choose a group of cards to discard'))
+        ->description(clienttranslate('${actplayer} must choose a group of cards to keep'))
+        ->descriptionmyturn(clienttranslate('${you} must choose a group of cards to keep'))
         ->type(StateType::ACTIVE_PLAYER)
         ->args('argLakeChoice')
         ->action("stLakeChoice")

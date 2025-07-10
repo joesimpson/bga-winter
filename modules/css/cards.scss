@@ -55,8 +55,15 @@ $card_height: var(--winter_board_card_height);
         &[data-lake="1"]{
             box-shadow: 0px 0px 2px 2px green;
         }
+        
         &[data-lake="2"]{
             box-shadow: 0px 0px 2px 2px black;
+        }
+        &[data-lake="3"]{
+            box-shadow: 0px 0px 2px 2px #40f;
+        }
+        &[data-lake="4"]{
+            box-shadow: 0px 0px 2px 2px rgb(213, 2, 255);
         }
     }
 

@@ -541,6 +541,20 @@ abstract class Utils extends \APP_DbObject
     }
 
     
+    /**
+     * @param Collection $boardCards : cards placed on Board (already read from DB)
+     * 
+     * @return array of array of cards ids grouped by lake 
+     * 
+     * Example :
+     *  [ 
+     *      1=> [ 10,11,12,13,],
+     *      2=> [ 20,21,22,23,24],
+     *      3=> [ 75,84],
+     *      4=> [ 100],
+     *  ]
+     * 
+     */
     public static function listBoardLakes(
         Collection $boardCards,
         ): array
@@ -575,7 +589,19 @@ abstract class Utils extends \APP_DbObject
         }
 
         $lakes = [1 => $lake1];
-        if(count($lake2) > 0) $lakes[2] = $lake2;
+        if(count($lake2) > 0){
+            //$lakes[2] = $lake2;
+            //!WRONG : we could have 4 (or more ?) lakes if we remove a centered card
+            //==> recursive call to get more details on this 'lake2'
+            $cardsOnOtherLakes = $boardCards->filter(function ($c) use ($lake2) {
+                return in_array($c->getId(),$lake2);
+            });
+            $otherLakes = self::listBoardLakes($cardsOnOtherLakes);
+            if(count($otherLakes) >= 1){
+                //$lakes = array_merge($lakes, $otherLakes);
+                foreach($otherLakes as $otherLake) $lakes[] = $otherLake;
+            }
+        }
         return $lakes;
     }
 }

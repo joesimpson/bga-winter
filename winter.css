@@ -215,6 +215,16 @@
 .winter_card.selectable[data-lake="2"] {
   box-shadow: 0px 0px 2px 2px black;
 }
+.winter_card_back.selectable[data-lake="3"],
+.winter_card_spot.selectable[data-lake="3"],
+.winter_card.selectable[data-lake="3"] {
+  box-shadow: 0px 0px 2px 2px #40f;
+}
+.winter_card_back.selectable[data-lake="4"],
+.winter_card_spot.selectable[data-lake="4"],
+.winter_card.selectable[data-lake="4"] {
+  box-shadow: 0px 0px 2px 2px rgb(213, 2, 255);
+}
 .winter_card_back.selected, .winter_card_back.selected:hover,
 .winter_card_spot.selected,
 .winter_card_spot.selected:hover,

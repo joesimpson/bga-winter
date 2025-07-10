@@ -284,4 +284,73 @@ trait DebugTrait
     $snowflakesGrid = Utils::gridComputeSnowflakesGrid($boardCards, $tempCardLocations); 
     Notifications::message("gridComputeSnowflakesGrid : ".json_encode($snowflakesGrid),['json' => $snowflakesGrid]);
   }
+
+  function debug_listLakes(){
+
+    $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
+    $lakes = Utils::listBoardLakes($boardCards);
+    Notifications::message("lakes : ".json_encode($lakes),['json' => $lakes]);
+  }
+
+  // Objective : test different lakes configurations, and confirm we have a choice when 2 lakes of same size
+  function debug_SelectFrozenLake(bool $withChoice, bool $preview){
+
+    $player = Players::getCurrent();
+    Globals::setPhase(PHASE_THAWING);
+    $coords = [ [-3,-2], [-2,-0], [-1,-4], [-1,-2], [0,0], [2,0], 
+        [2,4],  [3,-4], [3,-2], [4,0], [4,3], [5,5], [5,7], [6,3], [7,6], [7,8], [7,10], 
+        [2,2],  
+      ];
+    if($withChoice){
+      $coords = [ [-3,-2], [-2,-0], [-1,-4], [-1,-2], [0,0], [-2,2], 
+          [2,-4], [2,-2], 
+          [4,0], 
+          [2,2], [4,3], [5,5], [5,7], [7,6], [7,8],  
+          [2,0],//Bridge between 4 Lakes !
+        ];
+    }
+
+    $tokensCoord = [
+      [4,0], [0,-0], [5,6], [7,8], 
+    ];
+
+    $cards = Cards::getAll();
+    $k=0;
+    foreach($cards as $card){
+      if($k >= count($coords)){
+        //cards we don't need for this test
+        $card->setRow(null);
+        $card->setCol(null);
+        $card->setLocation(CARD_LOCATION_DISCARD);
+        continue;
+      }
+      $coord = $coords[$k];
+      $card->setRow($coord[0]);
+      $card->setCol($coord[1]);
+      $card->setLocation(CARD_LOCATION_BOARD);
+      $k++;
+
+      if($k == count($coords)){
+        //LAST card is for prepared move
+        $card->setRow(null);
+        $card->setCol(null);
+        $card->setLocation(CARD_LOCATION_HAND);
+      }
+    }
+
+    //Tokens coords :
+    Tokens::moveAllInLocation(TOKEN_LOCATION_BOARD,TOKEN_LOCATION_HAND);
+    foreach($tokensCoord as $coord){
+      $token = Tokens::getPlayerHand($player->getId())->first();
+      $token->setLocation(TOKEN_LOCATION_BOARD);
+      $token->setRow($coord[0]);
+      $token->setCol($coord[1]);
+    }
+    
+    $this->debug_UI();
+    
+    if(!$preview){
+      $this->gamestate->jumpToState(ST_PLAYER_TURN_LAKE_CHOICE);
+    }
+  }
 }

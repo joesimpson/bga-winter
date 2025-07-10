@@ -172,10 +172,10 @@ class Notifications
     ]);
   }
 
-  public static function smallestLake(int $lakeIndex, array $lakeCardIds): void
+  public static function biggestLake(int $lakeIndex): void
   {
     $msg = clienttranslate('The smallest frozen lake (group of cards) automatically melts');
-    self::notifyAll('smallestLake', $msg, [
+    self::notifyAll('biggestLake', $msg, [
       'lakeIndex' => $lakeIndex,
     ]);
   }
