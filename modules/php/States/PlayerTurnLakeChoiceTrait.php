@@ -45,25 +45,42 @@ trait PlayerTurnLakeChoiceTrait
     {
         $args = $this->argLakeChoice();
         if ($args['_no_notify']) {
-
-            //TODO JSA MELT SMALLEST LAKE
             $this->gamestate->nextState('pass');
+            return;
+        }
+        $lakes = $args['lakes'];
+        $lakesDifferentSize = (count($lakes[1]) != count($lakes[2]) );
+        if ($lakesDifferentSize){
+            //GAME RUle : if one lake is smaller, this is automatically chosen
+            $smallest = 1;
+            if( count($lakes[1]) > count($lakes[2])) $smallest = 2;
+
+            //Automatic action
+            Notifications::smallestLake($smallest, $lakes[$smallest]);
+            $this->actLake($smallest, 0, true);
+
             return;
         }
     }
     /**
      * Player action in phase 2 : choose a lake to discard
+     * @param int $lakeIndex : index of lake to melt
+     * @param bool $auto : (optional) is this action automatic ?
      * 
      * @throws BgaUserException
      */
-    public function actLake(int $lakeIndex, #[IntParam(name: 'v')] int $version,): void
+    public function actLake(int $lakeIndex, #[IntParam(name: 'v')] int $version, bool $auto = false): void
     {
-        Game::get()->checkVersion($version);
+        if (!$auto) {
+            Game::get()->checkVersion($version);
+        }
         self::trace("actPlaceCard($lakeIndex,)");
 
         $player = Players::getCurrent();
         $pId = $player->getId();
-        $this->addStep();
+        if (!$auto) {
+            $this->addStep();
+        }
         
         // check input values
         $args = $this->argLakeChoice();
@@ -110,5 +127,5 @@ trait PlayerTurnLakeChoiceTrait
         // at the end of the action, move to the next state
         $this->gamestate->nextState("next");
     }
-   
+
 }
