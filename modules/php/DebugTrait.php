@@ -265,4 +265,18 @@ trait DebugTrait
     Notifications::placeToken($player,$token);
   }
 
+  function debug_SnowflakesGrid(int $cardId, int $row, int $col, int $dir){
+
+    $player = Players::getCurrent();
+    $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
+
+    $tempCardLocations = [
+        $cardId => [
+            'row' => $row, 
+            'col' => $col, 
+            'dir' => $dir,
+        ]];
+    $snowflakesGrid = Utils::gridComputeSnowflakesGrid($boardCards, $tempCardLocations); 
+    Notifications::message("gridComputeSnowflakesGrid : ".json_encode($snowflakesGrid),['json' => $snowflakesGrid]);
+  }
 }

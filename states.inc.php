@@ -57,6 +57,7 @@ use Bga\GameFramework\StateType;
 
                 SETUP
                 |
+                v
                 startingCard
                 |
                 v
@@ -69,12 +70,12 @@ use Bga\GameFramework\StateType;
  /<-----------|nextPlayer  <-------------------\
  |            | |                              ^
  |            v v                              |
- |            playerTurn  --\                  |
- |             |            |                  |
- |             v            |                  |
- |      lakeChoice -->\     |                  |
- |             |      |     |                  |
- |             v      |     |                  |
+ |      playerTurn   -------\                  |
+ |     |       |            |                  |
+ |     |       v            |                  |
+ |     |lakeChoice -->\     |                  |
+ |     |       |      |     |                  |
+ |     v       v      |     |                  |
  |      placeCard -->\|     |                  |
  |                   ||     |                  |
  |                   vv     v                  |

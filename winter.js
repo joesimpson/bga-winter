@@ -191,13 +191,13 @@ function (dojo, declare) {
         onEnteringStateStartingCard(args){
             debug('onEnteringStateStartingCard', args);
  
-            this.displayCardSpotsSelection("actPlayStartingCard", args.card, args.playableDir, args.playableCoords, );
+            this.displayCardSpotsSelection("actPlayStartingCard", args.card, args.playableCoords, );
 
         },
         onEnteringStatePlaceCard(args){
             debug('onEnteringStatePlaceCard', args);
 
-            this.displayCardSpotsSelection("actPlaceCard", args.card, args.playableDir, args.playableCoords, );
+            this.displayCardSpotsSelection("actPlaceCard", args.card, args.playableCoords, );
         },
         
         onEnteringStateColorChoice(args){
@@ -542,19 +542,21 @@ function (dojo, declare) {
         //     dojo.style($('winter_map_container'), 'height', (cur_h + 300) + 'px');
         // },
 
-        displayCardSpotsSelection: function(serverAction, card, playableDirs, playableCoords, ) {
+        displayCardSpotsSelection: function(serverAction, card, playableCoords, ) {
             
-            this.chosenDir = playableDirs[0];
+            let allPlayableDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
+            this.chosenDir = allPlayableDirs[0];
             this.addPrimaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + _(`Rotate card`), () => {
-                this.chosenDir = playableDirs [ (playableDirs.indexOf(this.chosenDir) + 1) % playableDirs.length ];
+                this.chosenDir = allPlayableDirs [ (allPlayableDirs.indexOf(this.chosenDir) + 1) % allPlayableDirs.length ];
                 document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
                     oCard.dataset.dir = this.chosenDir;
                 });
             });
 
             Object.values(playableCoords).forEach( (playableCoord) => {
-                let row = playableCoord[0];
-                let col = playableCoord[1];
+                let row = playableCoord.row;
+                let col = playableCoord.col;
+                let playableDirs = playableCoord.dirs;
 
                 //Coord buttons For debug only ?
                 //this.addPrimaryActionButton(`btnCoord_${row}_${col}`, (`${row},${col}`), () => {
@@ -563,6 +565,8 @@ function (dojo, declare) {
 
                 //we need good CSS or an ordered array from TOP LEFT to BOTTOM right in order to be able to click on every spot corner
                 let spot = this.addSelectableCardSpot(card, row, col);
+                spot.dataset.dirs = playableDirs;
+                
                 let callbackSpotSelection = (evt) => {
                     this.performAction(serverAction, { dir: this.chosenDir, row: row,  col: col});
                 };

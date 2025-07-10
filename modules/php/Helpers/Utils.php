@@ -116,6 +116,49 @@ abstract class Utils extends \APP_DbObject
         
         return $lookingAtSpots;
     }
+
+    
+    /**
+     * 
+     * @param array $flyingCards (Optional) : list of cards ids we don't consider as placed on the table
+     * @return array of available coordinates to place a card on the board + add tokens
+     * 
+     * Example : 
+     * 
+     *  [
+     *      [ 'row' => 1, 'col' => 2, 'dirs' => [1, 2] ],
+     *      [ 'row' => 0, 'col' => 3, 'dirs' => [1,] ],
+     *  ]
+     */
+    public static function listPlayableSpotsForNewCardAndTokens(
+        int $cardId, 
+        int $token_color, 
+        Collection $boardCards, Collection $boardTokens,
+    ): array
+    {
+        Game::get()->trace("listPlayableSpotsForNewCardAndTokens($cardId,$token_color)");
+        $targetsForCard = [];
+        $spotsForCard = Utils::listPlayableSpotsForNewCard([$cardId]);
+        foreach($spotsForCard as $coord){ 
+            //Check ALL possible DIRS
+            $allDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
+            $playableDirs = [];
+
+            $cardRow = $coord[0];
+            $cardCol = $coord[1];
+
+            foreach( $allDirs as $dir){
+                $isSquare = Utils::isMovableCard($cardId,$cardRow, $cardCol, $dir,$token_color,$boardCards, $boardTokens);
+                if($isSquare) $playableDirs [] = $dir;
+            }
+            $targetForCard = [ 'row' => $cardRow, 'col' => $cardCol, 'dirs' => $playableDirs ];
+            if(count($playableDirs)>0 && !in_array($targetForCard,$targetsForCard)) $targetsForCard[] = $targetForCard;
+
+        }
+
+        Game::get()->trace("listPlayableSpotsForNewCardAndTokens($cardId,$token_color) => ".json_encode($targetsForCard));
+        return $targetsForCard;
+    }
     
     /**
      * @param int $row
@@ -179,14 +222,33 @@ abstract class Utils extends \APP_DbObject
                 $cardCol = $tempCardLocations[$cardId]['col'];
                 $snowflakes = $card->getOrientedSnowflakes( $tempCardLocations[$cardId]['dir']);
             }
-
             foreach( $snowflakes as $snowflake){
                 $snowflakeCoords = $snowflake->coordArrayFromBase($cardRow, $cardCol);
                 $snowflakeCoordsLabel = $snowflake->coordNameFromBase($cardRow, $cardCol);
 
                 $snowflakesGrid[$snowflakeCoordsLabel] = [ 
-                   'coords' => $snowflakeCoords, 
-                   'type' => $snowflake->type,
+                    'coords' => $snowflakeCoords, 
+                    'type' => $snowflake->type,
+                ];
+            }
+
+        }
+        //Look at cards which are no more on board :
+        foreach($tempCardLocations as $cardId => $tempCardDatas){
+            if(!array_key_exists($cardId, $boardCards->getIds())){
+                //TODO JSA if card is temp but not on board, we cannot access getOrientedSnowflakes
+                $card = Cards::get($cardId);
+                $cardRow = $tempCardDatas['row'];
+                $cardCol = $tempCardDatas['col'];
+                $snowflakes = $card->getOrientedSnowflakes( $tempCardDatas['dir']);
+            }
+            foreach( $snowflakes as $snowflake){
+                $snowflakeCoords = $snowflake->coordArrayFromBase($cardRow, $cardCol);
+                $snowflakeCoordsLabel = $snowflake->coordNameFromBase($cardRow, $cardCol);
+
+                $snowflakesGrid[$snowflakeCoordsLabel] = [ 
+                    'coords' => $snowflakeCoords, 
+                    'type' => $snowflake->type,
                 ];
             }
         }
@@ -389,7 +451,10 @@ abstract class Utils extends \APP_DbObject
         ): bool
     { 
         $squareSpots = Utils::listMovableCardNewTokens( $cardId, $row, $col, $dir,$token_color, $boardCards, $boardTokens);
-        return count($squareSpots) >0;
+        $isMovable = (count($squareSpots) >0);
+        //Game::get()->trace("isMovableCard($cardId, $row, $col, $dir,$token_color) -> result ".json_encode($isMovable));
+
+        return $isMovable;
     }
     
     /**
@@ -422,24 +487,7 @@ abstract class Utils extends \APP_DbObject
 
             //STEP 3 : can we move the card to a place where we can add this color token(s) ?
             
-            $targetsForCard = [];
-            $spotsForCard = Utils::listPlayableSpotsForNewCard([$card->getId()]);
-            foreach($spotsForCard as $coord){ 
-                //Check ALL possible DIRS
-                $allDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
-                $playableDirs = [];
-
-                $cardRow = $coord[0];
-                $cardCol = $coord[1];
-
-                foreach( $allDirs as $dir){
-                    $isSquare = Utils::isMovableCard($card->getId(),$cardRow, $cardCol, $dir,$token_color,$boardCards, $boardTokens);
-                    if($isSquare) $playableDirs [] = $dir;
-                }
-                $targetForCard = [ 'row' => $cardRow, 'col' => $cardCol, 'dirs' => $playableDirs ];
-                if(count($playableDirs)>0 && !in_array($targetForCard,$targetsForCard)) $targetsForCard[] = $targetForCard;
-
-            }
+            $targetsForCard = Utils::listPlayableSpotsForNewCardAndTokens($card->getId(), $token_color, $boardCards, $boardTokens);
 
             if(count($targetsForCard)>0) $list[ $card->getId()]['targets'] = $targetsForCard;
             else unset($list[ $card->getId()]);
