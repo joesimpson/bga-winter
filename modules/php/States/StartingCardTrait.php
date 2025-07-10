@@ -24,10 +24,16 @@ trait StartingCardTrait
     $firstCard = Cards::getTopOf(CARD_LOCATION_BOARD);
     $card = Cards::getDrawnCard($player);
 
+    $playableDirs = [ CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
+    $neighbouringSpots = $firstCard->getNeighbouringSpots();
+    $playableCoords = [];
+    foreach($neighbouringSpots as $coord){
+      $playableCoords[] = [ 'row' => $coord[0], 'col' => $coord[1], 'dirs' => $playableDirs ];
+    }
+
     $args = [
       "card" => $card,
-      "playableDir" => [ CARD_DIRECTION_UP, CARD_DIRECTION_DOWN],
-      "playableCoords" => $firstCard->getNeighbouringSpots(),
+      "playableCoords" => $playableCoords,
     ];
       
     $this->addArgsForUndo($args);
@@ -51,11 +57,15 @@ trait StartingCardTrait
     // check input values
     $args = $this->argStartingCard();
     $playableCoords = $args['playableCoords'];
-    if (!in_array([$row, $col], $playableCoords)) {
-      throw new UnexpectedException(101,"Invalid coordinates choice [$row, $col]");
+    $foundPossibleTarget = false;
+    foreach($playableCoords as $moveTarget){
+      if($moveTarget['row'] != $row ) continue;
+      if($moveTarget['col'] != $col ) continue;
+      if(!in_array($dir,$moveTarget['dirs'] )) continue;
+      $foundPossibleTarget = true;
     }
-    if (!in_array($dir, $args['playableDir'])) {
-      throw new UnexpectedException(102,"Invalid direction choice $dir");
+    if (!$foundPossibleTarget) {
+      throw new UnexpectedException(150,"Invalid target [$row, $col, $dir] ");
     }
 
     //ACTION EFFECT

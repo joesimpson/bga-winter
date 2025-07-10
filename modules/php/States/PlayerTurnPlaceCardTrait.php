@@ -3,7 +3,6 @@
 namespace Bga\Games\winter\States;
 
 use Bga\GameFramework\Actions\Types\IntParam;
-use Bga\GameFramework\Notify;
 use Bga\Games\winter\Core\Globals;
 use Bga\Games\winter\Core\Notifications;
 use Bga\Games\winter\Core\Stats;
@@ -32,12 +31,13 @@ trait PlayerTurnPlaceCardTrait
     $card = Cards::getDrawnCard($player);
 
     $phase = Globals::getPhase();
+    $playableCoords = [];
     
     switch($phase){
       case PHASE_FREEZING:
-        $playableCoords = Utils::listPlayableSpotsForNewCard();
-        foreach($playableCoords as $coord ){
-          $coord = [ 'row' => $coord[0], 'col' => $coord[1], 'dirs' => [ CARD_DIRECTION_UP, CARD_DIRECTION_DOWN] ];
+        $spots = Utils::listPlayableSpotsForNewCard();
+        foreach($spots as $coord ){
+          $playableCoords[] = [ 'row' => $coord[0], 'col' => $coord[1], 'dirs' => [ CARD_DIRECTION_UP, CARD_DIRECTION_DOWN] ];
         }
         break;
       case PHASE_THAWING:
@@ -53,7 +53,7 @@ trait PlayerTurnPlaceCardTrait
         //}
         $playableCoords = $targetsForCard;
         break;
-      default:
+      default: 
         break;
     }
 

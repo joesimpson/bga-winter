@@ -30,7 +30,7 @@ trait PlayerTurnTrait
     $player = Players::getActive();
     $token_color = $player->getTokensColor();
     $availableTokens = $player->getNbTokensInHand() > 0; 
-    $spots = ($availableTokens ? Utils::listPlayableSpotsForNewToken($token_color) : []);
+    $spots = [];
 
     $actionsMessage = '';
     $possibleActions = [];
@@ -41,6 +41,7 @@ trait PlayerTurnTrait
       case PHASE_FREEZING:
         $possibleActions = ['actDraw', 'actPlaceToken'];
         //$actionsMessage = clienttranslate('draw and play a card or place 1 counter');
+        $spots = ($availableTokens ? Utils::listPlayableSpotsForNewToken($token_color) : []);
         break;
       case PHASE_THAWING:
         $possibleActions = ['actMoveCard','actPrepareMoveCard','actRemoveCard', 'actRemoveToken'];

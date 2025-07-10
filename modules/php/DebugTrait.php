@@ -46,7 +46,7 @@ trait DebugTrait
     Game::get()->trace("debug_Setup - START ////////////////////////////////////////////////////");
     $this->debug_ClearLogs();
     Log::disable();
-    $options = [];
+    $options = ["DEBUG_SETUP"=> true,  ];
     $players = self::loadPlayersBasicInfos();
     $playersDatas = Players::getAll();
     
@@ -227,6 +227,11 @@ trait DebugTrait
   }
 
 
+  function debug_spotsForNewCard(){
+
+    $playableCoords = Utils::listPlayableSpotsForNewCard();
+    Notifications::message("playableCoords ? ".json_encode($playableCoords),['json' => $playableCoords]);
+  }
   
   function debug_isMovableCard(int $cardId, int $row, int $col,){
     $player = Players::getActive();
