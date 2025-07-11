@@ -204,7 +204,7 @@ class Notifications
   
   public static function endTriggered(Player $player)
   {
-    $msg = clienttranslate('Game end is triggered because ${player_name} has no more counter on the board');
+    $msg = clienttranslate('Game end is triggered because ${player_name} has no more counters on the board');
     
     self::notifyAll('endTriggered', $msg, [
       'player' => $player,
