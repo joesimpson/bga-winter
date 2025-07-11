@@ -98,9 +98,36 @@ class Game extends \Bga\GameFramework\Table
      */
     public function getGameProgression()
     {
-        // TODO: compute and return the game progression
+        $progressPhase1 = 0;
+        $progressPhase2 = 0;
 
-        return 0;
+        $initialDeckSize = Cards::countAll();
+
+        $phase = Globals::getPhase();
+        switch($phase){
+            case PHASE_BEGINNING:
+                break;
+            case PHASE_FREEZING:
+                //Phase will end when no more cards are in deck
+                $currentDeckSize = Cards::countInLocation(CARD_LOCATION_DECK);
+                $progressPhase1 = ($initialDeckSize - $currentDeckSize) / $initialDeckSize;
+                $progressPhase2 = 0;
+                break;
+            case PHASE_THAWING:
+                //Phase will end when no more token of 1 player are on board (ie when player tokens's hand is full)
+                $progressPhase1 = 1;
+                
+                $players = Players::getAll();
+                $maxNbTokensInHand = max($players->map(function($player) { return $player->getNbTokensInHand();})->toArray()  );
+                //add average progress on remaining cards on board because in this phase the cards may be removed but not added
+                $nbCardsOnBoards = Cards::countInLocation(CARD_LOCATION_BOARD);
+                $progressPhase2 = max( ($maxNbTokensInHand / NB_COUNTER_COPIES), ($initialDeckSize - $nbCardsOnBoards) / $initialDeckSize);
+
+                break;
+        }
+
+        //We expect 50% of the game in phase 1 + 50% in phase 2
+        return 100 * ($progressPhase1 * 50/100 + $progressPhase2 * 50/100);
     }
      
     /**
