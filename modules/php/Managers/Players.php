@@ -65,7 +65,8 @@ class Players extends \Bga\Games\winter\Helpers\DB_Manager
 
     //Init first player
     if(!array_key_exists("DEBUG_SETUP",$options)){
-      Players::changeActive(Globals::getFirstPlayer());
+      $player = Players::get(Globals::getFirstPlayer());
+      Players::changeActive($player->getId());
       $player->giveExtraTime();
     }
 
@@ -208,7 +209,7 @@ class Players extends \Bga\Games\winter\Helpers\DB_Manager
   /**
    * This allow to change active player
    */
-  public static function changeActive($pId)
+  public static function changeActive(int $pId)
   {
     Game::get()->gamestate->changeActivePlayer($pId);
   }
@@ -218,7 +219,7 @@ class Players extends \Bga\Games\winter\Helpers\DB_Manager
    * @param array $player_ids
    * @param int $turn
    */
-  public static function startTurn($player_ids,$turn)
+  public static function startTurn(array $player_ids,int $turn)
   {
     foreach($player_ids as $player_id){
       $player = self::get($player_id);
