@@ -521,6 +521,14 @@ function (dojo, declare) {
             this.gamedatas.phase = args.phase;
             $("winter_counter_phase").innerHTML = this.formatPhaseName(this.gamedatas.phase);
         },
+        
+        notif_addPoints: async function(args) {
+            debug('notif_addPoints : new score', args);
+            let pId = args.player_id;
+            let points = args.n;
+            this.scoreCtrl[pId].incValue(points);
+            await this.wait(100);
+        },
         ///////////////////////////////////////////////////
         //    _    _ _   _ _     
         //   | |  | | | (_) |    

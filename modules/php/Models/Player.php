@@ -44,7 +44,7 @@ class Player extends \Bga\Games\winter\Helpers\DB_Model
     return $data;
   }
 
-  public function getPref($prefId)
+  public function getPref(int $prefId)
   {
     //return Preferences::get($this->id, $prefId);
     //BGA framework :
@@ -57,24 +57,24 @@ class Player extends \Bga\Games\winter\Helpers\DB_Model
     return Stats::$name($this->getId());
   }
   
-  // /**
-  //  * @param int $points
-  //  * @param bool $sendNotif (Default true)
-  //  */
-  // public function addPoints($points, $sendNotif = true)
-  // {
-  //   if($points == 0) return;
-  //   //REAL INC in DB in case of not up to date score in object
-  //   Players::incPlayerScore($this->getId(), $points);
-  //   Stats::inc( "score", $this->getId(), $points );
-  //   if($sendNotif) Notifications::addPoints($this,$points);
-  // }
+  /**
+   * @param int $points
+   * @param bool $sendNotif (Default true)
+   */
+  public function addPoints(int $points, bool $sendNotif = true)
+  {
+    if($points == 0) return;
+    //REAL INC in DB in case of not up to date score in object
+    Players::incPlayerScore($this->getId(), $points);
+    Stats::inc( "score", $this->getId(), $points );
+    if($sendNotif) Notifications::addPoints($this,$points);
+  }
 
-  public function setTieBreakerPoints($points)
+  public function setTieBreakerPoints(int $points)
   {
     $this->setScoreAux($points);
   }
-  public function addTieBreakerPoints($points)
+  public function addTieBreakerPoints(int $points)
   {
     if($points == 0) return;
     $this->incScoreAux($points);
@@ -84,7 +84,7 @@ class Player extends \Bga\Games\winter\Helpers\DB_Model
    * Sets player datas related to turn number $turnIndex
    * @param int $turnIndex
    */
-  public function startTurn($turnIndex)
+  public function startTurn(int $turnIndex)
   { 
   }
   

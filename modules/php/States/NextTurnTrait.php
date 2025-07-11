@@ -24,7 +24,7 @@ trait NextTurnTrait
       if($playersWithAllTokens->count() > 0 ) {
         //END GAME TRIGGER : 1 player has no more tokens on board (= all tokens are in hand)
         //Due to game rules, only 1 player should be able to lost all tokens in the same turn
-        Notifications::endTriggered($playersWithAllTokens);
+        Notifications::endTriggered($playersWithAllTokens->first());
         $this->addCheckpoint(ST_END_SCORING);
         $this->gamestate->nextState('end');
         return;

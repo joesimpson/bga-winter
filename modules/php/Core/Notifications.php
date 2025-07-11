@@ -202,12 +202,30 @@ class Notifications
     ]);
   }
   
-  public static function endTriggered(Collection $playersWithAllTokens)
+  public static function endTriggered(Player $player)
   {
-    $msg = clienttranslate('Game end is triggered because a player has no more counter on the board');
+    $msg = clienttranslate('Game end is triggered because ${player_name} has no more counter on the board');
     
     self::notifyAll('endTriggered', $msg, [
+      'player' => $player,
     ]);
+  }
+
+  /**
+   * @param Player $player
+   * @param int $points
+   * @param string $msg (optional) Message to overwrite default
+   * @param string $n2 (optional) Second number argument used in $msg
+   */
+  public static function addPoints(Player $player,int $points, ?string $msg = null, ?int $n2 =null){
+    // Commented because unused in this game, and we don't need to translate that message
+    //if(!isset($msg)) $msg = clienttranslate('${player_name} scores ${n} points');
+    $args = [ 
+      'player' => $player,
+      'n' => $points,
+    ];
+    if(isset($n2)) $args['n2'] = $n2;
+    self::notifyAll('addPoints',$msg, $args, );
   }
   /**
    */  
