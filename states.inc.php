@@ -143,7 +143,7 @@ $machinestates = [
         ->type(StateType::GAME)
         ->action("stNextPlayer")
         ->transitions([
-            'endGame' => ST_END_GAME, 
+            'end' => ST_END_SCORING, 
             'nextPlayer' => ST_PLAYER_TURN,
         ])
         ->updateGameProgression(true)

@@ -201,6 +201,14 @@ class Notifications
       'datas' => $datas,
     ]);
   }
+  
+  public static function endTriggered(Collection $playersWithAllTokens)
+  {
+    $msg = clienttranslate('Game end is triggered because a player has no more counter on the board');
+    
+    self::notifyAll('endTriggered', $msg, [
+    ]);
+  }
   /**
    */  
   /*************************
