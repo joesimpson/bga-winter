@@ -2,6 +2,7 @@
 namespace Bga\Games\winter\Helpers;
 
 use Bga\Games\winter\Core\Notifications;
+use Bga\Games\winter\Core\Stats;
 use Bga\Games\winter\Game;
 use Bga\Games\winter\Managers\Cards;
 use Bga\Games\winter\Managers\Tokens;
@@ -57,6 +58,7 @@ abstract class Utils extends \APP_DbObject
         $player->setColor($player_color);
         Game::get()->reloadPlayersBasicInfos();
         Notifications::newPlayerColor($player,$color);
+        Stats::set("playedColor",$player,$color);
 
         $tokensOfThatColor = Tokens::DB()->where('type', $color)->get();
         foreach($tokensOfThatColor as $tokenOfThatColor){

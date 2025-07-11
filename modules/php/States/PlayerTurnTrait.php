@@ -87,6 +87,7 @@ trait PlayerTurnTrait
     //Deck should not be empty in phase 1
     $card = Cards::pickOneForLocation(CARD_LOCATION_DECK, CARD_LOCATION_HAND);
 
+    Stats::inc("actions_draw",$player);
     Notifications::cardDrawn($player,$card);
     $player->giveExtraTime();
 
@@ -130,6 +131,7 @@ trait PlayerTurnTrait
     Globals::setLastPlayedTokens([]);
     Globals::setLastPlayedCards([]);
     Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
+    Stats::inc("actions_discard_card",$player);
 
     if($split){
       $this->gamestate->nextState("lakeChoice");
@@ -212,6 +214,8 @@ trait PlayerTurnTrait
     Globals::setLastPlayedCards([$card->getId()]);
     Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
 
+    Stats::inc("actions_move_card",$player);
+
     // at the end of the action, move to the next state
     $this->gamestate->nextState("next");
   }
@@ -255,6 +259,8 @@ trait PlayerTurnTrait
     Globals::setLastPlayedTokens([]);
     Globals::setLastPlayedCards([]);
     Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
+    
+    Stats::inc("actions_move_card",$player);
 
     // at the end of the action, move to the next state
     if($moveWillSplit){
@@ -297,6 +303,8 @@ trait PlayerTurnTrait
     Globals::setLastPlayedTokens([$token->getId()]);
     Globals::setLastPlayedCards([]);
     Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
+    
+    Stats::inc("actions_place_token",$player);
 
     $this->gamestate->nextState("next");
   }
@@ -334,6 +342,8 @@ trait PlayerTurnTrait
     Globals::setLastPlayedTokens([]);
     Globals::setLastPlayedCards([]);
     Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
+    
+    Stats::inc("actions_discard_token",$player);
 
     $this->gamestate->nextState("next");
   }

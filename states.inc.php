@@ -266,7 +266,6 @@ $machinestates = [
         "descriptionmyturn" => ('${you} Game Over'),
         'type' => 'activeplayer',
         "args" => "argPlayerTurn",
-        "args" => "argCardCollect",
         "possibleactions" => ["endGame"],
         "transitions" => [
             "next" => ST_END_GAME,

@@ -22,7 +22,42 @@
         "name": "Turn order",
         "type": "int"
       }
+      ,"playedColor": {
+        "id": 14,
+        "name": "Played color",
+        "type": "int"
+      }
+      ,"actions_draw": {
+        "id": 20,
+        "name": "Played actions 'Draw card'",
+        "type": "int"
+      }
+      ,"actions_place_token": {
+        "id": 21,
+        "name": "Played actions 'Place counter'",
+        "type": "int"
+      }
+      ,"actions_discard_card": {
+        "id": 22,
+        "name": "Played actions 'Discard card'",
+        "type": "int"
+      }
+      ,"actions_discard_token": {
+        "id": 23,
+        "name": "Played actions 'Discard counter'",
+        "type": "int"
+      }
+      ,"actions_move_card": {
+        "id": 24,
+        "name": "Played actions 'Move card'",
+        "type": "int"
+      }
     },
-    "value_labels": { 
+    
+  "value_labels": {
+    "14": {
+      "1": "light blue",
+      "2": "dark blue"
     }
+  }
 }
