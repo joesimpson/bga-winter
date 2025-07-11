@@ -125,7 +125,7 @@ trait PlayerTurnLakeChoiceTrait
                     $token = $tokens->filter(function ($token) use ($coord) {
                         return $token->coordArray() === $coord;
                     })->first();
-                    if(isset($token)){
+                    if(isset($token) && !$removedTokens->includes($token) ){
                         $fromLocation = $token->coordName();
                         $token->setRow(null);
                         $token->setCol(null);

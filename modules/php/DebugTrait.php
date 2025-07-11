@@ -340,6 +340,12 @@ trait DebugTrait
 
     //Tokens coords :
     Tokens::moveAllInLocation(TOKEN_LOCATION_BOARD,TOKEN_LOCATION_HAND);
+    $tokensHand = Tokens::getInLocation(TOKEN_LOCATION_HAND);
+    foreach($tokensHand as $t){
+      // reset row /col in them
+      $t->setRow(null);
+      $t->setCol(null);
+    }
     foreach($tokensCoord as $coord){
       $token = Tokens::getPlayerHand($player->getId())->first();
       $token->setLocation(TOKEN_LOCATION_BOARD);
