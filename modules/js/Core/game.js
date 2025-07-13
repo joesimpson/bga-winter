@@ -446,15 +446,18 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
      * Add a blue/grey button if it doesn't already exists
      */
     addPrimaryActionButton(id, text, callback, zone = 'customActions') {
-      if (!$(id)) this.addActionButton(id, text, callback, zone, false, 'blue');
+      this.addPrimaryActionButtonWithConfirm(id, text, callback, null, zone);
     },
 
+    addPrimaryActionButtonWithConfirm(id, text, callback, confirmText, zone = 'customActions') {
+      if (!$(id)) this.statusBar.addActionButton(text, callback, {'id': id, 'destination': $(zone), 'color': 'blue', 'confirm': confirmText, });
+    },
     addSecondaryActionButton(id, text, callback, zone = 'customActions') {
-      if (!$(id)) this.addActionButton(id, text, callback, zone, false, 'gray');
+      if (!$(id)) this.statusBar.addActionButton(text, callback, {'id': id, 'destination': $(zone), 'color': 'gray', });
     },
 
     addDangerActionButton(id, text, callback, zone = 'customActions') {
-      if (!$(id)) this.addActionButton(id, text, callback, zone, false, 'red');
+      if (!$(id)) this.statusBar.addActionButton(text, callback, {'id': id, 'destination': $(zone), 'color': 'red', });
     },
     /**
      * div_html is string not node

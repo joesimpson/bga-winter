@@ -260,15 +260,10 @@ function (dojo, declare) {
                     <i class="fa6 fa6-hand-lizard fa6-stack-2x winter_icon_draw_hand"></i>
                 </span>`;
                 
-                this.addPrimaryActionButton("btnDrawCard", iconDraw +_("Draw"), (evt) => {
-                    let prefConfirmDraw = this.getGameUserPreference(PREF_DRAW_CONFIRM) == PREF_DRAW_CONFIRM_ENABLED;
-                    if(prefConfirmDraw){
-                        this.confirmationDialog(_('Are you sure to draw a card ?'), () => {
-                            this.performAction('actDraw', { });
-                        });
-                    }
-                    else this.performAction('actDraw', { });
-                });
+                let prefConfirmDraw = this.getGameUserPreference(PREF_DRAW_CONFIRM) == PREF_DRAW_CONFIRM_ENABLED;
+                this.addPrimaryActionButtonWithConfirm("btnDrawCard", iconDraw +_("Draw"), (evt) => {
+                    this.performAction('actDraw', { });
+                }, prefConfirmDraw ? _('Are you sure to draw a card ?') : null );
             }
             
             //Manage various actions on same cards :
