@@ -136,7 +136,7 @@ function (dojo, declare) {
 
             this.setupPlayers();
             this.setupInfoPanel();
-            this.setupCards();
+            this.setupCards(true);
             this.setupTokens();
 
             this._counters['deckSize'] = this.createCounter('winter_deck_size',this.gamedatas.deckSize);
@@ -867,7 +867,7 @@ function (dojo, declare) {
         //////////////////////////////////////////////////////////
 
         // This function is refreshUI compatible
-        setupCards() {
+        setupCards(initScrollMap = false) {
             debug("setupCards");
             //destroy previous cards
             document.querySelectorAll('.winter_card[id^="winter_card-"]').forEach((oCard) => {
@@ -888,11 +888,25 @@ function (dojo, declare) {
                 }
                 return card.id;
             });
-            
             let lastPlayedCards = this.gamedatas.lastPlayed.cards;
             Object.values(lastPlayedCards).forEach( (cardId) => {
                 $(`winter_card-${cardId}`).classList.add("lastPlayed");
             });
+            if(initScrollMap){
+                let cardRows = this.gamedatas.cards.filter((card) => card.row != null).map((card) => { 
+                    return card.row;
+                });
+                let cardCols = this.gamedatas.cards.filter((card) => card.col != null).map((card) => { 
+                    return card.row;
+                });
+                let boardMinRow = Math.min(...cardRows);
+                let boardMaxRow = Math.max(...cardRows);
+                let boardMinCol = Math.min(...cardCols);
+                let boardMaxCol = Math.max(...cardCols);
+                let boardCenterRow = (boardMaxRow-boardMinRow)/2;
+                let boardCenterCol = (boardMaxCol-boardMinCol)/2;
+                this.scrollBoardTo(boardCenterRow,boardCenterCol);
+            }
         },
     
         addCard(card, location = null) {
