@@ -88,7 +88,25 @@
     border: 1px solid #697f2b;
     color: white;
     .winter_icon_rotate{
-        margin-right: 5px;
+        margin-right: 0.3em;
+    }
+}
+#btnMoveCardSelect{
+    .winter_icon_move{
+        margin-right: 0.3em;
+    }
+}
+#btnDiscardCard{
+    .winter_icon_discard{
+        margin-right: 0.3em;
+    }
+}
+#btnConfirmTurn{
+    .winter_icon_confirm{
+        color: white;
+        .winter_icon_check{
+            color: green;
+        }
     }
 }
 

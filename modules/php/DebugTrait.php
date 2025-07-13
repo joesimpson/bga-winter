@@ -95,6 +95,11 @@ trait DebugTrait
   function debug_GoToPlayerTurn(){
     $this->gamestate->jumpToState(ST_PLAYER_TURN);
   }
+  function debug_GoToPhase(int $phase){
+    Globals::setPhase($phase);
+    Notifications::newPhase($phase);
+    $this->gamestate->jumpToState(ST_PLAYER_TURN);
+  }
   
   function debug_GridCards(int $nbCards){
     Cards::moveAllInLocation(CARD_LOCATION_BOARD,CARD_LOCATION_DECK);

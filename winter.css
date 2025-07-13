@@ -4259,7 +4259,22 @@ body.notouch-device #help-mode-switch:hover {
   color: white;
 }
 #btnRotateDir .winter_icon_rotate {
-  margin-right: 5px;
+  margin-right: 0.3em;
+}
+
+#btnMoveCardSelect .winter_icon_move {
+  margin-right: 0.3em;
+}
+
+#btnDiscardCard .winter_icon_discard {
+  margin-right: 0.3em;
+}
+
+#btnConfirmTurn .winter_icon_confirm {
+  color: white;
+}
+#btnConfirmTurn .winter_icon_confirm .winter_icon_check {
+  color: green;
 }
 
 body[data-winter_undo_style="1"] #btnIconUndoLastStep,

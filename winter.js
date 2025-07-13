@@ -181,8 +181,11 @@ function (dojo, declare) {
 
         onEnteringStateConfirmTurn(args) {
             debug('onEnteringStateConfirmTurn', args);
-
-            let confirmText = _('Confirm');
+            let iconConfirm = `<span class="fa6-stack winter_icon_confirm">
+                <i class="fa6 fa6-circle fa6-stack-2x"></i>
+                <i class="fa6 fa6-check fa6-stack-1x winter_icon_check"></i>
+            </span>`;
+            let confirmText = iconConfirm + _('Confirm');
             this.addPrimaryActionButton('btnConfirmTurn', confirmText, () => {
                     this.performAction('actConfirmTurn');
                 }, 'restartAction');
@@ -295,14 +298,18 @@ function (dojo, declare) {
             $(`winter_card-${cardId}`).classList.add('selected');
 
             if(args.removableCard){
-                this.addPrimaryActionButton('btnDiscardCard',  _('Discard'), () => {
+                let iconDiscard = `
+                    <i class="fa6 fa6-trash-arrow-up winter_icon_discard"></i>
+                `;
+                this.addPrimaryActionButton('btnDiscardCard', iconDiscard + _('Discard'), () => {
                     this.performAction('actRemoveCard', { 'cardId':cardId });
                 });
             }
 
             if(args.movingCreates2Lakes) {
                 //IN this case we will change state to let player choose according to melt results
-                this.addPrimaryActionButton("btnMoveCardSelect", _("Move"), (evt) => {
+                let iconMove = `<i class="fa6-solid fa6-up-down-left-right winter_icon_move"></i>`;
+                this.addPrimaryActionButton("btnMoveCardSelect", iconMove + _("Move"), (evt) => {
                     this.performAction('actPrepareMoveCard', { 'cardId':cardId });
                 });
             }
