@@ -109,6 +109,11 @@
         }
     }
 }
+.btnChooseColor{
+    .winter_icon {
+        box-shadow: 0px 0px 2px 2px white;
+    }
+}
 
 body[data-winter_undo_style='1']{//PREF_UNDO_STYLE_TEXT
     #btnIconUndoLastStep, 

@@ -4291,6 +4291,10 @@ body.notouch-device #help-mode-switch:hover {
   color: green;
 }
 
+.btnChooseColor .winter_icon {
+  box-shadow: 0px 0px 2px 2px white;
+}
+
 body[data-winter_undo_style="1"] #btnIconUndoLastStep,
 body[data-winter_undo_style="1"] #btnIconRestartTurn {
   display: none !important;
