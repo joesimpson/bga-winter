@@ -17,6 +17,9 @@
         "name": "Ask for turn confirmation",
         "needReload": false,
         "values": {
+            "3": {
+                "name": "Enabled for 1st card"
+            },
             "2": {
                 "name": "Enabled"
             },
@@ -24,6 +27,6 @@
                 "name": "Disabled"
             }
         },
-        "default": 0
+        "default": 3
     }
 }
