@@ -13,6 +13,11 @@ $card_height: var(--winter_board_card_height);
     border-radius: 5px;
     border-radius: 5%;//% to avoid a different radius whent card is resized 
 
+    .help-marker{
+        top: 10%;
+        left: 10%;
+    }
+
     //sprite positions
     background-size: 500% 200%;
     background-image: url("img/cards.jpg");
@@ -24,7 +29,14 @@ $card_height: var(--winter_board_card_height);
     }
     &[data-dir="2"]{//CARD_DIRECTION_DOWN -> card is rotated on the table
         transform: rotateZ(180deg);
+            
+        .help-marker{
+            transform: rotateZ(180deg);
+            top: 75%;
+            left: 70%;
+        }
     }
+    
 
     &.winter_card_back{
         background-position-x: 100%;

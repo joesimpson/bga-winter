@@ -120,6 +120,12 @@
   background-image: url("img/cards.jpg");
   position: relative;
 }
+.winter_card_back .help-marker,
+.winter_card_spot .help-marker,
+.winter_card .help-marker {
+  top: 10%;
+  left: 10%;
+}
 .winter_card_back[data-type="1"],
 .winter_card_spot[data-type="1"],
 .winter_card[data-type="1"] {
@@ -172,6 +178,13 @@
 .winter_card_spot[data-dir="2"],
 .winter_card[data-dir="2"] {
   transform: rotateZ(180deg);
+}
+.winter_card_back[data-dir="2"] .help-marker,
+.winter_card_spot[data-dir="2"] .help-marker,
+.winter_card[data-dir="2"] .help-marker {
+  transform: rotateZ(180deg);
+  top: 75%;
+  left: 70%;
 }
 .winter_card_back.winter_card_back,
 .winter_card_spot.winter_card_back,
