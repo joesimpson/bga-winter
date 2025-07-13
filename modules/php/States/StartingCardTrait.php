@@ -80,7 +80,7 @@ trait StartingCardTrait
     Notifications::cardPlayed($player,$card);
 
     // at the end of the action, move to the next state
-    $this->addCheckpoint(ST_COLOR_CHOICE);
+    //$this->addCheckpoint(ST_SECOND_PLAYER);
     $this->gamestate->nextState("next");
   }
  

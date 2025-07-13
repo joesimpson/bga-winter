@@ -106,7 +106,8 @@ $machinestates = [
             'actPlayStartingCard', 
         ])
         ->transitions([
-            'next' => ST_SECOND_PLAYER, 
+            //'next' => ST_SECOND_PLAYER, 
+            'next' => ST_CONFIRM_TURN,
             'zombiePass' => ST_SECOND_PLAYER,
         ])
         ->build(),
@@ -219,6 +220,7 @@ $machinestates = [
         ])
         ->transitions([
             'confirm' => ST_END_TURN, 
+            'confirmStart' => ST_SECOND_PLAYER, 
             'zombiePass'=> ST_END_TURN,
         ])
         ->build(),

@@ -64,6 +64,12 @@ trait ConfirmUndoTrait
 
         $player = Players::getCurrent();
         $pId = $player->getId(); 
+
+        $phase = Globals::getPhase();
+        if( PHASE_BEGINNING == $phase){
+            $this->gamestate->nextState('confirmStart');
+            return;
+        }
         
         $this->gamestate->nextState('confirm');
     }
