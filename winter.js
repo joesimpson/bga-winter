@@ -763,6 +763,15 @@ function (dojo, declare) {
             });
     
         },
+            
+        getPlayerDatasByTokenColor(token_color){
+            debug("getPlayerDatasByTokenColor()",token_color);
+            let players = Object.values(this.gamedatas.players).filter((player) => {
+                return player.t_color == token_color;
+            });
+            if(players) return players[0];
+            return null;
+        },
 
         ////////////////////////////////////////////////////////
         //  ___        __         ____                  _
@@ -1032,8 +1041,31 @@ function (dojo, declare) {
             if ($(`winter_token-${token.id}`)) return $(`winter_token-${token.id}`);
     
             let obj = this.place('tplToken', token, location == null ? this.getTokenContainer(token) : location,'first'); 
+            let tooltipDesc = this.getTokenTooltip(token);
+            if (tooltipDesc != null) {
+                this.addCustomTooltip(obj.id, tooltipDesc);
+            }
             return obj;
         },
+        getTokenTooltip(token) {
+            let tokenDatas = token;
+            let title = "";
+            {
+                title = _("Counter");
+            }
+            //let div = this.tplToken(tokenDatas,'_tmp');
+            let player = this.getPlayerDatasByTokenColor(tokenDatas.type);
+            let player_name = this.coloredPlayerName(player ? player.name : '');
+            return [`<div class='winter_token_tooltip'>
+                    <div class="winter_h1">${title}</div>
+                    <hr/>
+                    <div class="winter_h3">${this.fsr(_("Player : ${name}"), {name: player_name})}</div>
+                    <div class="winter_h3">${
+                        (tokenDatas.row == null || tokenDatas.col == null ) ? "" :
+                        this.fsr(_("Coordinates : ${row}, ${col}"), {row: tokenDatas.row, col: tokenDatas.col})
+                    }</div>
+                </div>`];
+        }, 
     
         tplToken(token, prefix ='') {
             if(token.type == TOKEN_COUNTER_BLUE_LIGHT 
