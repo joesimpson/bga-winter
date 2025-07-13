@@ -104,6 +104,7 @@ trait PlayerTurnPlaceCardTrait
     $card->setDirection($dir);
 
     // Notify all players about the card played.
+    Notifications::playAtPosition($player,$row, $col);
     Notifications::cardPlayed($player,$card);
     
     Globals::setLastPlayedTokens([]);

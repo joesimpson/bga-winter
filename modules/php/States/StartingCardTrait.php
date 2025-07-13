@@ -76,6 +76,7 @@ trait StartingCardTrait
     $card->setDirection($dir);
 
     // Notify all players about the card played.
+    Notifications::playAtPosition($player,$row, $col);
     Notifications::cardPlayed($player,$card);
 
     // at the end of the action, move to the next state

@@ -121,6 +121,7 @@ trait PlayerTurnTrait
     $card = Cards::get($cardId);
     $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
     $split = Utils::isCardBetween2Lakes($boardCards, $card);
+    Notifications::playAtPosition($player,$card->getRow(), $card->getCol());
     $fromLocation = $card->coordName();
     $card->setRow(null);
     $card->setCol(null);
@@ -188,6 +189,7 @@ trait PlayerTurnTrait
     $card->setRow($row);
     $card->setCol($col);
     $card->setDirection($dir);
+    Notifications::playAtPosition($player,$row, $col);
     Notifications::cardMoved($player,$card,$fromLocation);
     
     //PLACE TOKENS on each border of this card when matching a NEW square
@@ -249,6 +251,7 @@ trait PlayerTurnTrait
     //ACTION EFFECT
     $card = Cards::get($cardId);
     $card->setLocation(CARD_LOCATION_HAND);
+    Notifications::playAtPosition($player,$card->getRow(), $card->getCol());
     $fromLocation = $card->coordName();
     $card->setRow(null);
     $card->setCol(null);
@@ -298,6 +301,7 @@ trait PlayerTurnTrait
     $token->setCol($col);
     $token->setLocation(TOKEN_LOCATION_BOARD);
 
+    Notifications::playAtPosition($player,$row, $col);
     Notifications::placeToken($player,$token);
 
     Globals::setLastPlayedTokens([$token->getId()]);
@@ -332,6 +336,7 @@ trait PlayerTurnTrait
 
     //ACTION EFFECT
     $token = Tokens::get($tokenId);
+    Notifications::playAtPosition($player,$token->getRow(), $token->getCol());
     $fromLocation = $token->coordName();
     $token->setRow(null);
     $token->setCol(null);

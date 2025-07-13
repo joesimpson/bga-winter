@@ -27,6 +27,11 @@ define([
     g_gamethemeurl + 'modules/js/Core/modal.js',
 ],
 function (dojo, declare) {
+
+    //from CSS
+    const CARD_WIDTH = 102;
+    const CARD_HEIGHT = 158;
+
     //COnstants copied from PHP file
     const PHASE_BEGINNING = 0;
     const PHASE_FREEZING = 1;
@@ -127,7 +132,7 @@ function (dojo, declare) {
             this.scrollmap.setupOnScreenArrows( 150 ); // this will hook buttons to onclick functions with 150px scroll step
             //dojo.connect( $('enlargedisplay'), 'onclick', this, 'onIncreaseDisplayHeight' );
 
-            this.scrollmap.scrollto(-1*102,-1*158);  //1*card_width,1*card_height
+            this.scrollmap.scrollto(-1*CARD_WIDTH,-1*CARD_HEIGHT);
 
             this.setupPlayers();
             this.setupInfoPanel();
@@ -400,6 +405,14 @@ function (dojo, declare) {
             
         },
 
+        notif_playAtPosition: async function(args) {
+            debug('notif_playAtPosition...', args);
+
+            let fromPlayer = args.player_id;
+            if(this.player_id == fromPlayer) return;
+            await this.scrollBoardTo(args.row,args.col);
+        },
+        
         notif_cardDrawn: async function(args) {
             debug('notif_cardDrawn...', args);
             this._counters['deckSize'].incValue(-1);
@@ -628,6 +641,14 @@ function (dojo, declare) {
                 };
                 this.onClick(`${spot.id}`, callbackSpotSelection);
             });
+        },
+
+        scrollBoardTo: async function(row, col) {
+            debug("scrollBoardTo()",row, col);
+            //each row/col takes half a card
+            let animDuration = 400;
+            this.scrollmap.scrollto(-col*CARD_WIDTH/2,-row*CARD_HEIGHT/2, animDuration);
+            await this.wait(animDuration *2);
         },
 
         ////////////////////////////////////////////////////////////

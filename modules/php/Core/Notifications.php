@@ -202,6 +202,15 @@ class Notifications
     ]);
   }
   
+  public static function playAtPosition(Player $player, int $row, int $col)
+  {
+    self::notifyAll('playAtPosition', '', [
+      'player' => $player,
+      'row' => $row,
+      'col' => $col,
+    ]);
+  }
+  
   public static function endTriggered(Player $player)
   {
     $msg = clienttranslate('Game end is triggered because ${player_name} has no more counters on the board');
