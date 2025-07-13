@@ -89,6 +89,9 @@ trait DebugTrait
 
   ////////////////////////////////////////////////////
   
+  function debug_GoToNextPlayer(){
+    $this->gamestate->jumpToState(ST_NEXT_TURN);
+  }
   function debug_GoToPlayerTurn(){
     $this->gamestate->jumpToState(ST_PLAYER_TURN);
   }

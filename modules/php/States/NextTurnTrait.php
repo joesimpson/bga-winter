@@ -32,14 +32,8 @@ trait NextTurnTrait
     }
 
     Globals::setupNewTurn();
-    $turn = Globals::getTurn();
-    if($turn==1){
-      $player = Players::get(Globals::getFirstPlayer());
-    }
-    else {
       $activePlayer = Players::getActive();
       $player = Players::getNextPlayerNotEliminated($activePlayer->getId());
-    }
     Players::changeActive($player->getId());
     $player->giveExtraTime();
     Players::setupNewTurn($player);
