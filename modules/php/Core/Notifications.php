@@ -43,10 +43,12 @@ class Notifications
    * @param Player $player
    * @param Card $card
    * @param string $fromLocation
+   * @param string $otherMessage (Optional) message to overwrite default
    */
-  public static function removeCard(Player $player, Card $card, string $fromLocation)
+  public static function removeCard(Player $player, Card $card, string $fromLocation, ?string $otherMessage = null)
   {
     $msg = clienttranslate('${player_name} removes a card at ${location}');
+    if(isset($otherMessage)) $msg = $otherMessage;
     self::notifyAll('removeCard', $msg, [
       'player' => $player,
       'location' => $fromLocation,
