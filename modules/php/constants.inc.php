@@ -62,10 +62,15 @@ const PREF_CONFIRM_DISABLED = 0;
 //const PREF_CONFIRM_TIMER = 1;
 const PREF_CONFIRM_ENABLED = 2;
 const PREF_CONFIRM_ENABLED_START = 3;
+
+const PREF_DRAW_CONFIRM = 103;
+const PREF_DRAW_CONFIRM_DISABLED = 0;
+const PREF_DRAW_CONFIRM_ENABLED = 2;
  
 const ALL_PREFERENCES = [
    PREF_UNDO_STYLE,
    PREF_CONFIRM,
+   PREF_DRAW_CONFIRM,
 ];
 /////////////////////////////////////////////////////////
 //          GAME STATES

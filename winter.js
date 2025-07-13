@@ -45,6 +45,8 @@ function (dojo, declare) {
 
     const PREF_UNDO_STYLE = 101;
     const PREF_CONFIRM = 102;
+    const PREF_DRAW_CONFIRM = 103;
+    const PREF_DRAW_CONFIRM_ENABLED = 2;
     
     const TOKEN_COUNTER_BLUE_LIGHT = 1;
     const TOKEN_COUNTER_BLUE_DARK = 2;
@@ -158,6 +160,9 @@ function (dojo, declare) {
         getSettingsConfig() {
             return {
 
+                drawConfirmMode: { 
+                    type: 'pref', 
+                    prefId: PREF_DRAW_CONFIRM },
                 confirmMode: { 
                     type: 'pref', 
                     prefId: PREF_CONFIRM },
@@ -254,8 +259,15 @@ function (dojo, declare) {
                     <i class="fa6 fa6-layer-group fa6-stack-2x winter_icon_draw_cards"></i>
                     <i class="fa6 fa6-hand-lizard fa6-stack-2x winter_icon_draw_hand"></i>
                 </span>`;
+                
                 this.addPrimaryActionButton("btnDrawCard", iconDraw +_("Draw"), (evt) => {
-                    this.performAction('actDraw', { });
+                    let prefConfirmDraw = this.getGameUserPreference(PREF_DRAW_CONFIRM) == PREF_DRAW_CONFIRM_ENABLED;
+                    if(prefConfirmDraw){
+                        this.confirmationDialog(_('Are you sure to draw a card ?'), () => {
+                            this.performAction('actDraw', { });
+                        });
+                    }
+                    else this.performAction('actDraw', { });
                 });
             }
             

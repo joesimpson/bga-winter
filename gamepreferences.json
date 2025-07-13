@@ -28,5 +28,18 @@
             }
         },
         "default": 3
+    },
+    "103": {
+        "name": "Confirmation before drawing a card",
+        "needReload": false,
+        "values": {
+            "2": {
+                "name": "Enabled"
+            },
+            "0": {
+                "name": "Disabled"
+            }
+        },
+        "default": 0
     }
 }

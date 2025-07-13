@@ -53,5 +53,15 @@ $game_preferences = [
     ],
     "default"=> PREF_CONFIRM_ENABLED_START,
   ],
+  
+  PREF_DRAW_CONFIRM => [
+    'name' => totranslate('Confirmation before drawing a card'),
+    'needReload' => false,
+    'values' => [
+      PREF_DRAW_CONFIRM_ENABLED => ['name' => totranslate('Enabled')],
+      PREF_DRAW_CONFIRM_DISABLED => ['name' => totranslate('Disabled')],
+    ],
+    "default"=> PREF_DRAW_CONFIRM_DISABLED,
+  ],
  
 ];
