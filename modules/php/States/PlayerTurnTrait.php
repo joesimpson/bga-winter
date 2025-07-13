@@ -39,9 +39,10 @@ trait PlayerTurnTrait
     $removableTokens = [];
     switch($phase){
       case PHASE_FREEZING:
-        $possibleActions = ['actDraw', 'actPlaceToken'];
+        $possibleActions = ['actDraw'];
         //$actionsMessage = clienttranslate('draw and play a card or place 1 counter');
         $spots = ($availableTokens ? Utils::listPlayableSpotsForNewToken($token_color) : []);
+        if(count($spots) > 0) $possibleActions[] = 'actPlaceToken';
         break;
       case PHASE_THAWING:
         $possibleActions = ['actMoveCard','actPrepareMoveCard','actRemoveCard', 'actRemoveToken'];
@@ -67,14 +68,37 @@ trait PlayerTurnTrait
     $this->addArgsForUndo($args);
     return $args;
   }
+  
+  public function stPlayerTurn(): void
+  {
+    $args = $this->argPlayerTurn();
+
+    if (count($args['pActions']) == 1 && count($args['previousSteps'])==0 ) {
+      //ONLY 1 possibleAction and no UNDO -> let's see if we can auto play
+      switch($args['pActions'][0]){
+        case 'actDraw': 
+          $this->actDraw(0,true);
+          return;
+        default: break;
+      }
+      return;
+    }
+
+  }
 
   /**
    * Player action of drawing a card in phase 1
    *
+     * @param bool $auto : (optional) is this action automatic ?
+     * 
    * @throws BgaUserException
    */
-  public function actDraw(#[IntParam(name: 'v')] int $version,): void
+  public function actDraw(#[IntParam(name: 'v')] int $version, bool $auto = false): void
   {
+    if (!$auto) {
+      Game::get()->checkVersion($version);
+    }
+
     $player = Players::getCurrent();
     $pId = $player->getId();
     $this->addStep();
@@ -103,6 +127,8 @@ trait PlayerTurnTrait
    */
   public function actRemoveCard(int $cardId,#[IntParam(name: 'v')] int $version,): void
   {
+    Game::get()->checkVersion($version);
+
     $player = Players::getCurrent();
     $pId = $player->getId();
     $this->addStep();
@@ -281,6 +307,8 @@ trait PlayerTurnTrait
    */
   public function actPlaceToken(int $row, int $col,#[IntParam(name: 'v')] int $version,): void
   {
+    Game::get()->checkVersion($version);
+
     $player = Players::getCurrent();
     $pId = $player->getId();
     $this->addStep();
@@ -320,6 +348,8 @@ trait PlayerTurnTrait
    */
   public function actRemoveToken(int $tokenId,#[IntParam(name: 'v')] int $version,): void
   {
+    Game::get()->checkVersion($version);
+    
     $player = Players::getCurrent();
     $pId = $player->getId();
     $this->addStep();

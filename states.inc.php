@@ -157,6 +157,7 @@ $machinestates = [
         ->descriptionmyturn(clienttranslate('${you} must play an action'))
         ->type(StateType::ACTIVE_PLAYER)
         ->args('argPlayerTurn')
+        ->action("stPlayerTurn")
         ->possibleactions([
             'actDraw', 
             'actPrepareMoveCard',
