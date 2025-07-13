@@ -84,7 +84,7 @@ abstract class Utils extends \APP_DbObject
      */
     public static function listPlayableSpotsForNewCard(?array $flyingCards = null ): array
     {
-        Game::get()->trace("listPlayableSpotsForNewCard()");
+        //Game::get()->trace("listPlayableSpotsForNewCard()");
         $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
 
         $usedCoordinates = $boardCards->filter(function ($card) {
@@ -113,7 +113,7 @@ abstract class Utils extends \APP_DbObject
         sort($lookingAtSpots);
 
         //$possible = array_diff($lookingAtSpots, $usedCoordinates);
-        Game::get()->trace("listPlayableSpotsForNewCard() for used ".json_encode($usedCoordinates)." and intersectUnavailable ".json_encode($intersectUnavailable)." result = ".json_encode($lookingAtSpots));
+        //Game::get()->trace("listPlayableSpotsForNewCard() for used ".json_encode($usedCoordinates)." and intersectUnavailable ".json_encode($intersectUnavailable)." result = ".json_encode($lookingAtSpots));
         //Game::get()->trace("listPlayableSpotsForNewCard() =>".json_encode($lookingAtSpots));
         
         return $lookingAtSpots;
@@ -138,7 +138,7 @@ abstract class Utils extends \APP_DbObject
     ): array
     {
         $cardId = $card->getId();
-        Game::get()->trace("listPlayableSpotsForNewCardAndTokens($cardId,$token_color)");
+        //Game::get()->trace("listPlayableSpotsForNewCardAndTokens($cardId,$token_color)");
         $targetsForCard = [];
         $spotsForCard = Utils::listPlayableSpotsForNewCard([$cardId]);
         foreach($spotsForCard as $coord){ 
@@ -158,7 +158,7 @@ abstract class Utils extends \APP_DbObject
 
         }
 
-        Game::get()->trace("listPlayableSpotsForNewCardAndTokens($cardId,$token_color) => ".json_encode($targetsForCard));
+        //Game::get()->trace("listPlayableSpotsForNewCardAndTokens($cardId,$token_color) => ".json_encode($targetsForCard));
         return $targetsForCard;
     }
     
@@ -289,7 +289,7 @@ abstract class Utils extends \APP_DbObject
      */
     public static function listPlayableSpotsForNewToken(int $color): array
     {
-        Game::get()->trace("listPlayableSpotsForNewToken($color)");
+        //Game::get()->trace("listPlayableSpotsForNewToken($color)");
 
         $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
         $spots = [];
@@ -315,7 +315,7 @@ abstract class Utils extends \APP_DbObject
             if(!in_array($squareBottomRightCorner,$existingTokensCoords)) $spots [] = $squareBottomRightCorner;
         }
 
-        Game::get()->trace("listPlayableSpotsForNewToken($color) for snowflakesGrid ".json_encode($snowflakesGrid)." and squareBottomRightCorners ".json_encode($squareBottomRightCorners)." => result = ".json_encode($spots));
+        //Game::get()->trace("listPlayableSpotsForNewToken($color) for snowflakesGrid ".json_encode($snowflakesGrid)." and squareBottomRightCorners ".json_encode($squareBottomRightCorners)." => result = ".json_encode($spots));
         return $spots;
     }
 
@@ -337,7 +337,7 @@ abstract class Utils extends \APP_DbObject
             if($type !== $snowflakeDatas['type']) return false;
         }
 
-        Game::get()->trace("isSnowflakesSquare($type, ".json_encode($targetSquare).") => TRUE");
+        //Game::get()->trace("isSnowflakesSquare($type, ".json_encode($targetSquare).") => TRUE");
         return true;
     } 
 
@@ -361,7 +361,7 @@ abstract class Utils extends \APP_DbObject
             return $token->coordArray();
         })->toArray();
         
-        Game::get()->trace("listRemovableCardsOnBoard() for existingTokensCoords ".json_encode($existingTokensCoords));
+        //Game::get()->trace("listRemovableCardsOnBoard() for existingTokensCoords ".json_encode($existingTokensCoords));
 
         //step 3 : LOOP Cards on Board 
         $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
@@ -371,7 +371,7 @@ abstract class Utils extends \APP_DbObject
             $col = $card->getCol();
             $intersectUnavailable = Utils::gridOverlappingTokensFromCard($row, $col);
 
-            Game::get()->trace("listRemovableCardsOnBoard() -> intersectUnavailable ($row, $col) = ".json_encode($intersectUnavailable));
+            //Game::get()->trace("listRemovableCardsOnBoard() -> intersectUnavailable ($row, $col) = ".json_encode($intersectUnavailable));
 
             //step 4 : filter cards with neighbouring tokens spots not from step 1
             //$tokensOnCard = array_diff($intersectUnavailable, $existingTokensCoords);
@@ -387,7 +387,7 @@ abstract class Utils extends \APP_DbObject
                 $list[] = $card->getId();
             }
         }
-        Game::get()->trace("listRemovableCardsOnBoard() -> result ".json_encode($list));
+        //Game::get()->trace("listRemovableCardsOnBoard() -> result ".json_encode($list));
 
         return $list;
     }
@@ -494,7 +494,7 @@ abstract class Utils extends \APP_DbObject
             if(count($targetsForCard)>0) $list[ $card->getId()]['targets'] = $targetsForCard;
             else unset($list[ $card->getId()]);
         }
-        Game::get()->trace("listMovableCardsOnBoard($token_color,$availableTokens) -> result ".json_encode($list));
+        //Game::get()->trace("listMovableCardsOnBoard($token_color,$availableTokens) -> result ".json_encode($list));
 
         return $list;
     }
@@ -534,7 +534,7 @@ abstract class Utils extends \APP_DbObject
             $cellsMarkers = GridUtils::getReachableCellsAtDistance($startingCell,$maxMoves, $moveCostCallback, $usedCoordinates);
             $cells = $cellsMarkers[0];
             if(count($cells) +1 < count($usedCoordinates)){
-                Game::get()->trace("isCardBetween2Lakes (".json_encode($card->coordArray()).") TRUE (".json_encode($startingCell)." ) : cells=".json_encode($cells)); //." /// : markers=".json_encode($cellsMarkers[1]));
+                //Game::get()->trace("isCardBetween2Lakes (".json_encode($card->coordArray()).") TRUE (".json_encode($startingCell)." ) : cells=".json_encode($cells)); //." /// : markers=".json_encode($cellsMarkers[1]));
                 return true;
             }
         }

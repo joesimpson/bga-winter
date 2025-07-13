@@ -86,7 +86,7 @@ class Players extends \Bga\Games\winter\Helpers\DB_Manager
    */
   public static function incPlayerScore($pId, $score)
   {
-    Game::get()->trace("incPlayerScore($pId)");
+    Game::get()->trace("incPlayerScore($pId, $score)");
 
     return self::DB()
       ->inc(['player_score' => $score])
