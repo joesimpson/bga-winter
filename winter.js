@@ -225,7 +225,11 @@ function (dojo, declare) {
             let movableCards = args.m_cards;
 
             if(possibleActions.includes('actDraw')){
-                this.addPrimaryActionButton("btnDrawCard", _("Draw"), (evt) => {
+                let iconDraw = `<span class="fa6-stack winter_icon_draw">
+                    <i class="fa6 fa6-layer-group fa6-stack-2x winter_icon_draw_cards"></i>
+                    <i class="fa6 fa6-hand-lizard fa6-stack-2x winter_icon_draw_hand"></i>
+                </span>`;
+                this.addPrimaryActionButton("btnDrawCard", iconDraw +_("Draw"), (evt) => {
                     this.performAction('actDraw', { });
                 });
             }

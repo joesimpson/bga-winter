@@ -4242,6 +4242,17 @@ body.notouch-device #help-mode-switch:hover {
   position: absolute;
 }
 
+#btnDrawCard .winter_icon_draw {
+  margin-right: 1em;
+  font-size: 0.7em;
+}
+#btnDrawCard .winter_icon_draw .winter_icon_draw_cards {
+  color: aqua;
+}
+#btnDrawCard .winter_icon_draw .winter_icon_draw_hand {
+  margin-left: 0.5em;
+}
+
 #btnRotateDir {
   background: #89a538;
   border: 1px solid #697f2b;
