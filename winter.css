@@ -27,7 +27,7 @@
   width: 2em;
   height: 2em;
 }
-.winter_icon_container .winter_icon.winter_icon_flake_color-1, .winter_icon_container .winter_icon.winter_icon_flake_color-2 {
+.winter_icon_container .winter_icon.winter_icon_flake_color-0, .winter_icon_container .winter_icon.winter_icon_flake_color-1, .winter_icon_container .winter_icon.winter_icon_flake_color-2 {
   border-radius: 10px;
   border-radius: 100%;
   background-image: url("img/icons.png");
@@ -36,11 +36,11 @@
   width: 40px;
   height: 40px;
 }
-.winter_icon_container .winter_icon.winter_icon_flake_color-1.winter_icon_flake_color-2, .winter_icon_container .winter_icon.winter_icon_flake_color-2.winter_icon_flake_color-2 {
+.winter_icon_container .winter_icon.winter_icon_flake_color-0.winter_icon_flake_color-2, .winter_icon_container .winter_icon.winter_icon_flake_color-1.winter_icon_flake_color-2, .winter_icon_container .winter_icon.winter_icon_flake_color-2.winter_icon_flake_color-2 {
   background-position-y: 0px;
   background-position-x: 0px;
 }
-.winter_icon_container .winter_icon.winter_icon_flake_color-1.winter_icon_flake_color-1, .winter_icon_container .winter_icon.winter_icon_flake_color-2.winter_icon_flake_color-1 {
+.winter_icon_container .winter_icon.winter_icon_flake_color-0.winter_icon_flake_color-1, .winter_icon_container .winter_icon.winter_icon_flake_color-1.winter_icon_flake_color-1, .winter_icon_container .winter_icon.winter_icon_flake_color-2.winter_icon_flake_color-1 {
   background-position-y: 0px;
   background-position-x: -40px;
 }
@@ -95,6 +95,9 @@
 .winter_panel .winter_player_infos .winter_player_resource .winter_reserve.tooltipable:hover {
   outline: 2px solid green;
   z-index: 2;
+}
+.winter_panel .winter_player_infos .winter_player_resource.counter_empty.winter_resource_tokens {
+  opacity: 0.3;
 }
 .winter_panel .winter_player_infos .winter_player_resource .winter_resource_tokens {
   font-size: 15px;

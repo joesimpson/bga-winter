@@ -68,7 +68,11 @@
                     z-index: 2;
                 }
             } 
-             
+            &.counter_empty{
+                &.winter_resource_tokens{
+                    opacity: 0.3;
+                }
+            }
             .winter_resource_tokens
             {
                 font-size: 15px;
