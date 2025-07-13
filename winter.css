@@ -17,6 +17,7 @@
   --winter_board_card_width: 102px;
   --winter_board_card_height: 158px;
   --winter_board_card_border: 1px;
+  --winter_map_height_ratio: 1;
 }
 
 .winter_icon_container {
@@ -3552,7 +3553,7 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  height: 600px;
+  height: calc(var(--winter_map_height) * 600px);
   outline: 2px dotted black;
   margin-right: 2px;
 }

@@ -164,9 +164,26 @@ function (dojo, declare) {
                 undoStyle: { 
                     type: 'pref', 
                     prefId: PREF_UNDO_STYLE },
+
+                boardHeight: {
+                    default: 100,
+                    name: _('Board height'),
+                    type: 'slider',
+                    sliderConfig: {
+                        step: 5,
+                        padding: 0,
+                        range: {
+                        min: [50],
+                        max: [150],
+                        },
+                    },
+                }, 
             };
         },
 
+        onChangeBoardHeightSetting(val) {
+           document.documentElement.style.setProperty('--winter_map_height', val/100);
+        },
         ///////////////////////////////////////////////////
         //     _____ _______    _______ ______  _____ 
         //    / ____|__   __|/\|__   __|  ____|/ ____|
