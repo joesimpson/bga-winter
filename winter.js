@@ -583,6 +583,9 @@ function (dojo, declare) {
         clearPossible() {
             this.inherited(arguments);
             //SPECIFIC GAME elements to clear : 
+            [...document.querySelectorAll('.winter_card')].forEach((elt) => { 
+                delete elt.dataset.lake;
+            });
         },
  
         // onIncreaseDisplayHeight: function(evt) {
