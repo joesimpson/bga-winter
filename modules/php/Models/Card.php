@@ -4,6 +4,7 @@ namespace Bga\Games\winter\Models;
 
 use Bga\Games\winter\Helpers\Collection;
 use Bga\Games\winter\Helpers\Utils;
+use Bga\Games\winter\Managers\Cards;
 
 /*
  * Card: all utility functions concerning a card
@@ -48,6 +49,7 @@ class Card extends \Bga\Games\winter\Helpers\DB_Model
   {
     $data = parent::getUiData();
     $data["dir"] = $this->getDirection();
+    $data["ncop"] = $this->nbCopies();
     //Hide snowflakes from UI json because it is useless for now
     unset($data["snowflakes"] );
     return $data;
@@ -129,6 +131,12 @@ class Card extends \Bga\Games\winter\Helpers\DB_Model
       ];
     }
     return $snowflakes;
+  } 
+
+  
+  public function nbCopies(): int
+  {
+    return Cards::getNumberOfCards($this->getType());
   } 
 
 }

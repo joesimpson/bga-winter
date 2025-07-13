@@ -76,7 +76,7 @@ class Cards extends \Bga\Games\winter\Helpers\Pieces
       $cards[] = [
         'location' => CARD_LOCATION_DECK,
         'type' => $type,
-        'nbr' => $card['nbr'],
+        'nbr' => Cards::getNumberOfCards($type),
       ];
     } 
 
@@ -97,58 +97,57 @@ class Cards extends \Bga\Games\winter\Helpers\Pieces
   /**
    * @return array of all the different types of Snowflakes Cards
    */
-  public static function getSnowflakesCardsTypes()
+  public static function getSnowflakesCardsTypes(): array
   {
     $f = function ($t) {
       return [
-        'nbr' => $t[0],
-        'snowflakes' => $t[1],
+        'snowflakes' => $t[0],
       ];
     };
     return [
-      1 => $f([ 1, [
+      1 => $f([ [
           new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,  1, 1),
           new Snowflake(TOKEN_COUNTER_BLUE_DARK,   1, 2),
           new Snowflake(TOKEN_COUNTER_BLUE_DARK,   2, 1),
           new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,  2, 2),
         ] ]), 
-      2 => $f([ 4, [
+      2 => $f([ [
           new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,  1, 1),
           new Snowflake(TOKEN_COUNTER_BLUE_DARK,   1, 2),
           new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,   2, 1),
           new Snowflake(TOKEN_COUNTER_BLUE_DARK,  2, 2),
         ] ]), 
-      3 => $f([ 2, [
+      3 => $f([ [
           new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,  1, 1),
           new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,   1, 2),
           new Snowflake(TOKEN_COUNTER_BLUE_DARK,   2, 1),
           new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,  2, 2),
         ] ]), 
-      4 => $f([ 2, [
+      4 => $f([ [
           new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,  1, 1),
           new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,   1, 2),
           new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,   2, 1),
           new Snowflake(TOKEN_COUNTER_BLUE_DARK,  2, 2),
         ] ]), 
-      5 => $f([ 1, [
+      5 => $f([ [
           new Snowflake(TOKEN_COUNTER_BLUE_DARK,  1, 1),
           new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,   1, 2),
           new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,   2, 1),
           new Snowflake(TOKEN_COUNTER_BLUE_DARK,  2, 2),
         ] ]), 
-      6 => $f([ 4, [
+      6 => $f([ [
           new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,  1, 1),
           new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,   1, 2),
           new Snowflake(TOKEN_COUNTER_BLUE_DARK,   2, 1),
           new Snowflake(TOKEN_COUNTER_BLUE_DARK,  2, 2),
         ] ]), 
-      7 => $f([ 2,  [
+      7 => $f([ [
           new Snowflake(TOKEN_COUNTER_BLUE_DARK,  1, 1),
           new Snowflake(TOKEN_COUNTER_BLUE_DARK,   1, 2),
           new Snowflake(TOKEN_COUNTER_BLUE_LIGHT,   2, 1),
           new Snowflake(TOKEN_COUNTER_BLUE_DARK,  2, 2),
         ] ]),  
-      8 => $f([ 2, [
+      8 => $f([ [
           new Snowflake(TOKEN_COUNTER_BLUE_DARK,  1, 1),
           new Snowflake(TOKEN_COUNTER_BLUE_DARK,   1, 2),
           new Snowflake(TOKEN_COUNTER_BLUE_DARK,   2, 1),
@@ -157,5 +156,24 @@ class Cards extends \Bga\Games\winter\Helpers\Pieces
       
     
     ];
+  }
+  
+  /**
+   * @param int $type : type of card
+   * @return int number of cards of this kind in the deck
+   */
+  public static function getNumberOfCards(int $type):int
+  {
+    switch($type){
+      case 1: return 1;
+      case 2: return 4;
+      case 3: return 2;
+      case 4: return 2;
+      case 5: return 1;
+      case 6: return 4;
+      case 7: return 2;
+      case 8: return 2;
+    }
+    return 0;
   }
 }

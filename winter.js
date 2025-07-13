@@ -938,6 +938,7 @@ function (dojo, declare) {
                     }</div>
                     ${div}
                     <div class="winter_h5">${this.fsr(_("type : #${value}"), {value: card.type})}</div>
+                    <div class="winter_h5">${this.fsr(_("copies in deck : ${value}"), {value: card.ncop})}</div>
                 </div>`];
         }, 
 
