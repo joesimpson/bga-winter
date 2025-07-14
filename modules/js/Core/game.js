@@ -983,7 +983,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
     /*
      * Overwrite to allow to more player coloration than player_name and player_name2
      */
-    format_string_recursive(log, args) {
+    bgaFormatText(log, args) {
       try {
         if (log && args) {
           //          if (args.msgYou && args.player_id == this.player_id) log = args.msgYou;
@@ -1002,7 +1002,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
         console.error(log, args, 'Exception thrown', e.stack);
       }
 
-      return this.inherited(arguments);
+      return { log, args };
     },
 
     place(tplMethodName, object, container, position = null) {

@@ -703,7 +703,7 @@ function (dojo, declare) {
             } catch (e) {
                 console.error(log,args,"Exception thrown", e.stack);
             }
-            return { log, args };
+            return this.inherited(arguments);
         },
 
         formatIcon(name, n = null) {
