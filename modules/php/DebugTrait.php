@@ -78,6 +78,9 @@ trait DebugTrait
     
     $this->addCheckpoint(ST_START_CARD);
     $this->gamestate->jumpToState(ST_START_CARD);
+    
+    $player = Players::getCurrent();
+    Notifications::playAtPosition($player,0,0);
     Game::get()->trace("debug_Setup - END ////////////////////////////////////////////////////");
   }
 
@@ -242,6 +245,7 @@ trait DebugTrait
   }
   
   function debug_isMovableCard(int $cardId, int $row, int $col,){
+    Game::get()->trace("debug_isMovableCard - START ////////////////////////////////////////////////////");
     $player = Players::getActive();
     $token_color = $player->getTokensColor();
     // $removableCards = Utils::listRemovableCardsOnBoard();
@@ -262,11 +266,31 @@ trait DebugTrait
       Notifications::message("isMovableCard with dir $dir ? ".json_encode($isMovableCard),['json' => $isMovableCard]);
     }
     ////////////////////---------------------------------------------------------------------
-
-
-
+    Game::get()->trace("debug_isMovableCard - END ////////////////////////////////////////////////////");
   }
 
+  //test before isMovable
+  //function debug_willBeSnowflakesSquare(int $cardId, string $squareJson,){
+  //  Game::get()->trace("debug_isSnowflakesSquare - START ////////////////////////////////////////////////////");
+  //  
+  //  $card = Cards::get($cardId);
+  //  $square = json_decode($squareJson);
+  //  Utils::isSnowflakesSquare()
+  //  Game::get()->trace("debug_isSnowflakesSquare - END ////////////////////////////////////////////////////");
+  //}
+
+  
+  function debug_PlaceCard(int $row, int $col){
+
+    $player = Players::getCurrent();
+    $card = Cards::getAll()->first();
+    $card->setLocation(CARD_LOCATION_BOARD);
+    $card->setRow($row);
+    $card->setCol($col);
+    Notifications::playAtPosition($player,$row,$col);
+    //Notifications::cardPlayed($player,$card);
+    Notifications::cardMoved($player,$card,'TEST');
+  }
   
   function debug_PlaceToken(int $row, int $col){
 
@@ -275,6 +299,7 @@ trait DebugTrait
     $token->setLocation(TOKEN_LOCATION_BOARD);
     $token->setRow($row);
     $token->setCol($col);
+    Notifications::playAtPosition($player,$row,$col);
     Notifications::placeToken($player,$token);
   }
 
@@ -367,4 +392,21 @@ trait DebugTrait
       $this->gamestate->jumpToState(ST_PLAYER_TURN_LAKE_CHOICE);
     }
   }
+
+  //test css limits defining rows/cols : -100 to 100 for now
+  function debug_CardsOn1Row(int $row, int $leftCol){
+
+    $player = Players::getCurrent();
+    $cards = Cards::getAll();
+    $col = $leftCol +1;
+    foreach($cards as $card){
+      $card->setLocation(CARD_LOCATION_BOARD);
+      $card->setRow($row);
+      $card->setCol($col);
+      Notifications::cardMoved($player,$card,'TEST');
+      $col+=2;
+    }
+    Notifications::playAtPosition($player,$row,$col);
+  }
+
 }

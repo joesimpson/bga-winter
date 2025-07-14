@@ -443,7 +443,9 @@ function (dojo, declare) {
         notif_cardPlayed: async function(args) {
             debug('notif_cardPlayed...', args);
             let pcard = args.card;
-            if (!$(`winter_card-${pcard.id}`)) this.addCard(pcard, this.getVisibleTitleContainer());
+            let divCard = this.addCard(pcard, this.getVisibleTitleContainer());
+            divCard.dataset.row = pcard.row;
+            divCard.dataset.col = pcard.col;
             await this.slide(`winter_card-${pcard.id}`, this.getCardContainer(pcard), { duration: 650,});
             
         },
@@ -931,14 +933,14 @@ function (dojo, declare) {
                     return card.row;
                 });
                 let cardCols = this.gamedatas.cards.filter((card) => card.col != null).map((card) => { 
-                    return card.row;
+                    return card.col;
                 });
                 let boardMinRow = Math.min(...cardRows);
                 let boardMaxRow = Math.max(...cardRows);
                 let boardMinCol = Math.min(...cardCols);
                 let boardMaxCol = Math.max(...cardCols);
-                let boardCenterRow = (boardMaxRow-boardMinRow)/2;
-                let boardCenterCol = (boardMaxCol-boardMinCol)/2;
+                let boardCenterRow = boardMinRow + (boardMaxRow-boardMinRow)/2;
+                let boardCenterCol = boardMinCol + (boardMaxCol-boardMinCol)/2;
                 await this.wait(350);//Wait for scrollmap creation, then scroll to specific position
                 await this.scrollBoardTo(boardCenterRow,boardCenterCol);
             }
@@ -946,7 +948,7 @@ function (dojo, declare) {
     
         addCard(card, location = null) {
             debug('addCard',card);
-            if ($('winter_card-' + card.id)) return;
+            if ($('winter_card-' + card.id)) return $('winter_card-' + card.id);
     
             let o = this.place('tplCard', card, location == null ? this.getCardContainer(card) : location);
             let tooltipDesc = this.getCardTooltip(card);
