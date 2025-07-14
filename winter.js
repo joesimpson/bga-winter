@@ -134,8 +134,6 @@ function (dojo, declare) {
             this.scrollmap.setupOnScreenArrows( 150 ); // this will hook buttons to onclick functions with 150px scroll step
             //dojo.connect( $('enlargedisplay'), 'onclick', this, 'onIncreaseDisplayHeight' );
 
-            this.scrollmap.scrollto(-1*CARD_WIDTH,-1*CARD_HEIGHT);
-
             this.setupPlayers();
             this.setupInfoPanel();
             this.setupCards(true);
@@ -903,7 +901,7 @@ function (dojo, declare) {
         //////////////////////////////////////////////////////////
 
         // This function is refreshUI compatible
-        setupCards(initScrollMap = false) {
+        setupCards: async function (initScrollMap = false) {
             debug("setupCards");
             //destroy previous cards
             document.querySelectorAll('.winter_card[id^="winter_card-"]').forEach((oCard) => {
@@ -941,7 +939,8 @@ function (dojo, declare) {
                 let boardMaxCol = Math.max(...cardCols);
                 let boardCenterRow = (boardMaxRow-boardMinRow)/2;
                 let boardCenterCol = (boardMaxCol-boardMinCol)/2;
-                this.scrollBoardTo(boardCenterRow,boardCenterCol);
+                await this.wait(350);//Wait for scrollmap creation, then scroll to specific position
+                await this.scrollBoardTo(boardCenterRow,boardCenterCol);
             }
         },
     
