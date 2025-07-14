@@ -61,6 +61,21 @@ class Notifications
    * @param Card $card
    * @param string $fromLocation
    */
+  public static function prepareMoveCard(Player $player, Card $card, string $fromLocation)
+  {
+    $msg = clienttranslate('${player_name} prepares to move a card from ${location}');
+    self::notifyAll('prepareMoveCard', $msg, [
+      'player' => $player,
+      'location' => $fromLocation,
+      'card' => $card->getUiData(),
+    ]);
+  }
+  
+  /**
+   * @param Player $player
+   * @param Card $card
+   * @param string $fromLocation
+   */
   public static function cardMoved(Player $player, Card $card, string $fromLocation)
   {
     $msg = clienttranslate('${player_name} moves a card from ${A} to ${B}');

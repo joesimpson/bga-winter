@@ -280,6 +280,14 @@ trait DebugTrait
   //}
 
   
+  function debug_BeforeDrawCard(){
+
+    $player = Players::getCurrent();
+    $card = Cards::getDrawnCard($player);
+    $card->setLocation(CARD_LOCATION_DECK);
+    $this->debug_UI();
+    $this->debug_GoToPlayerTurn();
+  }
   function debug_PlaceCard(int $row, int $col){
 
     $player = Players::getCurrent();

@@ -281,7 +281,7 @@ trait PlayerTurnTrait
     $fromLocation = $card->coordName();
     $card->setRow(null);
     $card->setCol(null);
-    Notifications::removeCard($player,$card, $fromLocation, clienttranslate('${player_name} prepares to move a card at ${location}'));
+    Notifications::prepareMoveCard($player,$card, $fromLocation);
 
     $moveWillSplit = $movableCards[$cardId]['split'];
 

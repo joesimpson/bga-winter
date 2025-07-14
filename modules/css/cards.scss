@@ -153,3 +153,12 @@ $card_height: var(--winter_board_card_height);
         //}
     }
 }
+
+
+#winter_cards_deck_container{
+    //HERE FOR ANIMATION 
+    .winter_card{
+        position: absolute;
+        top: 0px;
+    }
+}

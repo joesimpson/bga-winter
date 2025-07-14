@@ -41,7 +41,7 @@ class Cards extends \Bga\Games\winter\Helpers\Pieces
     return 
       self::getInLocation(CARD_LOCATION_BOARD)
       //->merge($privateCards)
-      //->merge(self::getInLocation(CARD_LOCATION_HAND))
+      ->merge(self::getInLocation(CARD_LOCATION_HAND))
       ->map(function ($card) {
         return $card->getUiData();
       })

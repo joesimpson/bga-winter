@@ -37,6 +37,7 @@ function (dojo, declare) {
     const PHASE_FREEZING = 1;
     const PHASE_THAWING = 2;
 
+    const CARD_LOCATION_HAND = 'hand';
     const CARD_LOCATION_BOARD = 'board';
     const TOKEN_LOCATION_BOARD = 'board';
     
@@ -91,10 +92,13 @@ function (dojo, declare) {
                 <div id="winter_game_container">
                     <div id="winter_overall_background"></div>
                     <div id="winter_main_zone">
-                        <div id="winter_cards_deck_container">
-                            <div class="winter_card_back">
-                                <div class="winter_deck_size" id="winter_deck_size">${gamedatas.deckSize}</div>
+                        <div id="winter_left_zone">
+                            <div id="winter_cards_deck_container">
+                                <div class="winter_card_back">
+                                    <div class="winter_deck_size" id="winter_deck_size">${gamedatas.deckSize}</div>
+                                </div>
                             </div>
+                            <div id="winter_cards_draw"></div>
                         </div>
                         <!-- BGA SCROLLMAP Component -->
                         <div id="winter_map_container">
@@ -443,7 +447,13 @@ function (dojo, declare) {
         
         notif_cardDrawn: async function(args) {
             debug('notif_cardDrawn...', args);
+            let pcard = args.card;
+            let deckContainer = $('winter_cards_deck_container');
+            let divCard = this.addCard(pcard, deckContainer);
             this._counters['deckSize'].incValue(-1);
+            await this.slide(divCard.id, this.getCardContainer(pcard), {
+                from: deckContainer,
+            });
         },
         
         notif_cardPlayed: async function(args) {
@@ -452,8 +462,10 @@ function (dojo, declare) {
             let divCard = this.addCard(pcard, this.getVisibleTitleContainer());
             divCard.dataset.row = pcard.row;
             divCard.dataset.col = pcard.col;
+            divCard.dataset.dir = pcard.dir;
             await this.slide(`winter_card-${pcard.id}`, this.getCardContainer(pcard), { duration: 650,});
-            
+            //update card tooltip
+            this.addCustomTooltip(divCard.id, this.getCardTooltip(pcard));
         },
 
         notif_cardMoved: async function(args) {
@@ -491,7 +503,21 @@ function (dojo, declare) {
                 await this.slide(`winter_card-${pcard.id}`, this.getVisibleTitleContainer(), {
                     destroy: true,
                     phantom: false,
-                 })
+                 });
+            }
+        },
+        notif_prepareMoveCard: async function(args) {
+            debug('notif_prepareMoveCard...', args);
+            let pcard = args.card;
+            let divIdCard = `winter_card-${pcard.id}`;
+            if ($(divIdCard)){
+                await this.slide(divIdCard, this.getCardContainer(pcard), {
+                 });
+                //Finally update  card datas :
+                $(divIdCard).dataset.row = null;
+                $(divIdCard).dataset.col = null;
+                 //UPDATE TOOLTIP
+                this.addCustomTooltip(divIdCard, this.getCardTooltip(pcard));
             }
         },
         notif_removeLakeGroup: async function(args) {
@@ -620,6 +646,8 @@ function (dojo, declare) {
                 document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
                     oCard.dataset.dir = this.chosenDir;
                 });
+                let divCard = $(`winter_card-${card.id}`);
+                if(divCard) divCard.dataset.dir = this.chosenDir;
             });
 
             Object.values(playableCoords).forEach( (playableCoord) => {
@@ -1014,6 +1042,9 @@ function (dojo, declare) {
         getCardContainer(card) { 
             if( CARD_LOCATION_BOARD == card.location) {
                 return $("winter_map_cards");//winter_map_scrollable_oversurface 
+            }
+            if( CARD_LOCATION_HAND == card.location) {
+                return $("winter_cards_draw");
             }
 
             console.error('Trying to get container of a card', card);
