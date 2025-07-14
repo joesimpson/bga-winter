@@ -4267,12 +4267,12 @@ body.notouch-device #help-mode-switch:hover {
   margin-left: 0.5em;
 }
 
-#btnRotateDir {
+#btnRotateDir, #btnScrollToPlaceToken {
   background: #89a538;
   border: 1px solid #697f2b;
   color: white;
 }
-#btnRotateDir .winter_icon_rotate {
+#btnRotateDir .winter_icon_rotate, #btnScrollToPlaceToken .winter_icon_rotate {
   margin-right: 0.3em;
 }
 

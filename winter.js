@@ -200,8 +200,6 @@ function (dojo, declare) {
 
         onLeavingState(stateName) {
             this.inherited(arguments);
-            this.empty('winter_map_card_places');
-            this.empty('winter_map_token_places');
         },
 
         onEnteringStateConfirmTurn(args) {
@@ -299,6 +297,14 @@ function (dojo, declare) {
                         this.performAction('actPlaceToken', { 'row': row, 'col': col });
                     };
                     this.onClick(`${spotDiv.id}`, callbackSpotSelection);
+
+
+                });
+                //Add a button to help locate these tokens spots :
+                this.nextToken = spots_for_tokens[0];
+                this.addPrimaryActionButton(`btnScrollToPlaceToken`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + _(`Locate next counter...`), () => {
+                    this.nextToken = spots_for_tokens [ (spots_for_tokens.indexOf(this.nextToken) + 1) % spots_for_tokens.length ];
+                    this.scrollBoardTo(this.nextToken[0], this.nextToken[1]);
                 });
             }
 
@@ -590,6 +596,8 @@ function (dojo, declare) {
         clearPossible() {
             this.inherited(arguments);
             //SPECIFIC GAME elements to clear : 
+            this.empty('winter_map_card_places');
+            this.empty('winter_map_token_places');
             [...document.querySelectorAll('.winter_card')].forEach((elt) => { 
                 delete elt.dataset.lake;
             });
