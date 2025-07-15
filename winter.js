@@ -48,6 +48,7 @@ function (dojo, declare) {
     const PREF_CONFIRM = 102;
     const PREF_DRAW_CONFIRM = 103;
     const PREF_DRAW_CONFIRM_ENABLED = 2;
+    const PREF_UI_DISPLAY_COORDINATES = 110;
     
     const TOKEN_COUNTER_BLUE_LIGHT = 1;
     const TOKEN_COUNTER_BLUE_DARK = 2;
@@ -185,6 +186,9 @@ function (dojo, declare) {
                         },
                     },
                 }, 
+                displayCoordinates: { 
+                    type: 'pref', 
+                    prefId: PREF_UI_DISPLAY_COORDINATES },
             };
         },
 
@@ -502,9 +506,11 @@ function (dojo, declare) {
                                 to: spotDest,
                 });
                 //Finally update  card datas :
-                $(divIdCard).dataset.row = pcard.row;
-                $(divIdCard).dataset.col = pcard.col;
-                $(divIdCard).dataset.dir = pcard.dir;
+                let divCard = $(divIdCard);
+                divCard.dataset.row = pcard.row;
+                divCard.dataset.col = pcard.col;
+                divCard.dataset.dir = pcard.dir;
+                divCard.getElementsByClassName("winter_card_location_label")[0].innerHTML = this.getCardLocationLabel(pcard);
                  
                 //update card tooltip
                 this.addCustomTooltip(divIdCard, this.getCardTooltip(pcard));
@@ -529,11 +535,15 @@ function (dojo, declare) {
             let pcard = args.card;
             let divIdCard = `winter_card-${pcard.id}`;
             if ($(divIdCard)){
+                pcard.row = null; 
+                pcard.col = null;
                 await this.slide(divIdCard, this.getCardContainer(pcard), {
                  });
                 //Finally update  card datas :
                 $(divIdCard).dataset.row = null;
                 $(divIdCard).dataset.col = null;
+                $(divIdCard).getElementsByClassName("winter_card_location_label")[0].innerHTML = this.getCardLocationLabel(pcard);
+                 
                  //UPDATE TOOLTIP
                 this.addCustomTooltip(divIdCard, this.getCardTooltip(pcard));
             }
@@ -1002,7 +1012,12 @@ function (dojo, declare) {
     
         addCard(card, location = null) {
             debug('addCard',card);
-            if ($('winter_card-' + card.id)) return $('winter_card-' + card.id);
+            let divCard = $('winter_card-' + card.id);
+            if (divCard){
+                let cardLocationLabelDiv = divCard.getElementsByClassName("winter_card_location_label")[0];
+                cardLocationLabelDiv.innerHTML = this.getCardLocationLabel(card);
+                return divCard;
+            }
     
             let o = this.place('tplCard', card, location == null ? this.getCardContainer(card) : location);
             let tooltipDesc = this.getCardTooltip(card);
@@ -1036,8 +1051,13 @@ function (dojo, declare) {
         tplCard(card, prefix ='') {
             return `<div class="winter_card" id="winter_card${prefix}-${card.id}" data-id="${card.id}" data-type="${card.type}" data-dir="${card.dir}" data-row="${card.row}" data-col="${card.col}">
                     <div class="winter_card_wrapper">
+                        <span class='winter_card_location_label'>${this.getCardLocationLabel(card)}</span>
                     </div>
                 </div>`;
+        },
+        getCardLocationLabel(card){
+            let card_location_label = (card.row == null || card.col == null ) ? "" : `[${card.row},${card.col}]`;
+            return card_location_label;
         },
 
         addSelectableCardSpot(card,row, column) {

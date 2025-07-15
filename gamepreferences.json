@@ -41,5 +41,19 @@
             }
         },
         "default": 0
+    },
+    "110": {
+        "name": "Display coordinates on board",
+        "needReload": false,
+        "values": {
+            "2": {
+                "name": "Enabled"
+            },
+            "0": {
+                "name": "Disabled"
+            }
+        },
+        "default": 0,
+        "attribute": "winter_display_coord"
     }
 }

@@ -64,4 +64,14 @@ $game_preferences = [
     "default"=> PREF_DRAW_CONFIRM_DISABLED,
   ],
  
+  PREF_UI_DISPLAY_COORDINATES => [
+    'name' => totranslate('Display coordinates on board'),
+    'needReload' => false,
+    'values' => [
+      PREF_UI_DISPLAY_COORDINATES_ENABLED => ['name' => totranslate('Enabled')],
+      PREF_UI_DISPLAY_COORDINATES_DISABLED => ['name' => totranslate('Disabled')],
+    ],
+    "default"=> PREF_UI_DISPLAY_COORDINATES_DISABLED,
+    'attribute' => 'winter_display_coord',
+  ],
 ];

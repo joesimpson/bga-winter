@@ -35,6 +35,9 @@ $card_height: var(--winter_board_card_height);
             top: 75%;
             left: 70%;
         }
+        .winter_card_wrapper{
+            transform: rotateZ(180deg);
+        }
     }
     
 
@@ -50,6 +53,20 @@ $card_height: var(--winter_board_card_height);
             width: 100%;
             color: black;
             font-size: 25px;
+        }
+    }
+
+    .winter_card_wrapper{
+        user-select: none;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        .winter_card_location_label{
+            position: absolute;
+            top: 45%;
+            text-align: center;
+            width: 100%;
+            visibility: hidden;
         }
     }
 
@@ -175,3 +192,25 @@ $card_height: var(--winter_board_card_height);
         top: 0px;
     }
 }
+
+body[data-winter_display_coord='0']{//PREF_UI_DISPLAY_COORDINATES_DISABLED
+    .winter_card_location_label {
+        visibility: hidden;
+    }
+}
+body[data-winter_display_coord='2']{//PREF_UI_DISPLAY_COORDINATES_ENABLED
+    #winter_map_container{//Display on board only
+        .winter_card_location_label {
+            visibility: visible;
+        }
+    }
+}
+
+//#winter_cards_draw{
+//    .winter_card{
+//        .winter_card_location_label {
+//            //Should not be displayed here with row and col null
+//            visibility: hidden;
+//        }
+//    }
+//}
