@@ -18,6 +18,7 @@
   --winter_board_card_height: 158px;
   --winter_board_card_border: 1px;
   --winter_map_height_ratio: 1;
+  --winter_map_arrows_size: 50px;
 }
 
 .winter_icon_container {
@@ -3651,33 +3652,34 @@ body[data-winter_display_coord="2"] #winter_map_container .winter_card_location_
   display: block;
   position: absolute;
   background-image: url("../../../img/common/arrows.png");
-  width: 32px;
-  height: 32px;
+  background-size: 200% 200%;
+  width: var(--winter_map_arrows_size);
+  height: var(--winter_map_arrows_size);
   z-index: 300;
 }
 
 .movetop {
   top: 0px;
   left: 50%;
-  background-position: 0px 32px;
+  background-position: 0% 100%;
 }
 
 .moveleft {
   top: 50%;
   left: 0px;
-  background-position: 32px 0px;
+  background-position: 100% 0%;
 }
 
 .moveright {
   top: 50%;
   right: 0px;
-  background-position: 0px 0px;
+  background-position: 0% 0%;
 }
 
 .movedown {
   bottom: 0px;
   left: 50%;
-  background-position: 32px 32px;
+  background-position: 100% 100%;
 }
 
 #winter_map_container #winter_map_cards {

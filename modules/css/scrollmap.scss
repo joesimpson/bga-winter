@@ -42,30 +42,31 @@
     display: block;
     position: absolute;
     background-image: url('../../../img/common/arrows.png');
-    width: 32px;
-    height: 32px;
+    background-size: 200% 200%;
+    width: var(--winter_map_arrows_size);
+    height: var(--winter_map_arrows_size);
     z-index: 300;
 }
 
 .movetop {
     top: 0px;
     left: 50%;
-    background-position: 0px 32px;
+    background-position: 0% 100%;
 }
 .moveleft {
     top: 50%;
     left: 0px;
-    background-position: 32px 0px;
+    background-position: 100% 0%;
 }
 .moveright {
     top: 50%;
     right: 0px;
-    background-position: 0px 0px;
+    background-position: 0% 0%;
 }
 .movedown {
     bottom: 0px;
     left: 50%;
-    background-position: 32px 32px;
+    background-position: 100% 100%;
 }
 
 

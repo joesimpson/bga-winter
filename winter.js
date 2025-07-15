@@ -181,8 +181,21 @@ function (dojo, declare) {
                         step: 5,
                         padding: 0,
                         range: {
-                        min: [50],
-                        max: [150],
+                            min: [50],
+                            max: [150],
+                        },
+                    },
+                }, 
+                boardArrowsSize: {
+                    default: 32,
+                    name: _('Board scroll arrows size'),
+                    type: 'slider',
+                    sliderConfig: {
+                        step: 2,
+                        padding: 0,
+                        range: {
+                            min: [32],
+                            max: [72],
                         },
                     },
                 }, 
@@ -194,6 +207,9 @@ function (dojo, declare) {
 
         onChangeBoardHeightSetting(val) {
            document.documentElement.style.setProperty('--winter_map_height', val/100);
+        },
+        onChangeBoardArrowsSizeSetting(val) {
+           document.documentElement.style.setProperty('--winter_map_arrows_size', val +`px`);
         },
         ///////////////////////////////////////////////////
         //     _____ _______    _______ ______  _____ 
