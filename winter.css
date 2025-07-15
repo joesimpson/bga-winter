@@ -1941,7 +1941,7 @@
 .winter_token_spot.selectable,
 .winter_token_counter.selectable {
   cursor: pointer;
-  box-shadow: 0px 0px 10px 10px green;
+  box-shadow: 0px 0px 7px 7px green;
   border-radius: 50%;
 }
 .winter_token_spot.selectable:hover,
@@ -1957,7 +1957,7 @@
   opacity: 0.5;
 }
 .winter_token_spot.selectable {
-  box-shadow: 0px 0px 10px 10px green;
+  box-shadow: 0px 0px 7px 7px green;
   border-radius: 50%;
   cursor: pointer;
 }
@@ -4289,7 +4289,9 @@ body.notouch-device #help-mode-switch:hover {
   border: 1px solid #697f2b;
   color: white;
 }
-#btnRotateDir .winter_icon_rotate, #btnScrollToPlaceToken .winter_icon_rotate {
+#btnRotateDir .winter_icon_rotate,
+#btnRotateDir .winter_icon_locate, #btnScrollToPlaceToken .winter_icon_rotate,
+#btnScrollToPlaceToken .winter_icon_locate {
   margin-right: 0.3em;
 }
 

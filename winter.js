@@ -316,7 +316,7 @@ function (dojo, declare) {
                 });
                 //Add a button to help locate these tokens spots :
                 this.nextToken = spots_for_tokens[0];
-                this.addSecondaryActionButton(`btnScrollToPlaceToken`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + _(`Locate next counter...`), () => {
+                this.addSecondaryActionButton(`btnScrollToPlaceToken`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i><i class="fa6 fa6-bullseye winter_icon_locate"></i>' + _(`Locate next counter...`), () => {
                     this.nextToken = spots_for_tokens [ (spots_for_tokens.indexOf(this.nextToken) + 1) % spots_for_tokens.length ];
                     this.scrollBoardTo(this.nextToken[0], this.nextToken[1]);
                 });
@@ -330,6 +330,14 @@ function (dojo, declare) {
                         this.performAction('actRemoveToken', { 'tokenId':tokenId });
                     };
                     this.onClick(`winter_token-${tokenId}`, callbackSpotSelection);
+                });
+                //Add a button to help locate these tokens spots :
+                this.nextTokenId = removableTokens[0];
+                this.addSecondaryActionButton(`btnScrollToPlaceToken`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i><i class="fa6 fa6-bullseye winter_icon_locate"></i>' + _(`Locate next counter...`), () => {
+                    this.nextTokenId = removableTokens [ (removableTokens.indexOf(this.nextTokenId) + 1) % removableTokens.length ];
+                    let nextToken = $(`winter_token-${this.nextTokenId}`);
+                    if(! nextToken) return;
+                    this.scrollBoardTo(nextToken.dataset.row, nextToken.dataset.col);
                 });
             }
 
