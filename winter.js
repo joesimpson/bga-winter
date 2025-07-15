@@ -261,9 +261,19 @@ function (dojo, declare) {
                 </span>`;
                 
                 let prefConfirmDraw = this.getGameUserPreference(PREF_DRAW_CONFIRM) == PREF_DRAW_CONFIRM_ENABLED;
-                this.addPrimaryActionButtonWithConfirm("btnDrawCard", iconDraw +_("Draw"), (evt) => {
+                let callbackDrawCard = (evt) => {
                     this.performAction('actDraw', { });
-                }, prefConfirmDraw ? _('Are you sure to draw a card ?') : null );
+                }; 
+                let confirmMsg = _('Are you sure to draw a card ?');
+                let callbackDrawCardWithConfirm = 
+                    prefConfirmDraw ?
+                    (evt) => {
+                        this.confirmationDialog(confirmMsg, callbackDrawCard);
+                    }
+                    : callbackDrawCard
+                    ;
+                this.addPrimaryActionButtonWithConfirm("btnDrawCard", iconDraw +_("Draw"), callbackDrawCard, prefConfirmDraw ? confirmMsg : null );
+                this.onClick(`winter_cards_deck_container`, callbackDrawCardWithConfirm );
             }
             
             //Manage various actions on same cards :
@@ -306,7 +316,7 @@ function (dojo, declare) {
                 });
                 //Add a button to help locate these tokens spots :
                 this.nextToken = spots_for_tokens[0];
-                this.addPrimaryActionButton(`btnScrollToPlaceToken`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + _(`Locate next counter...`), () => {
+                this.addSecondaryActionButton(`btnScrollToPlaceToken`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + _(`Locate next counter...`), () => {
                     this.nextToken = spots_for_tokens [ (spots_for_tokens.indexOf(this.nextToken) + 1) % spots_for_tokens.length ];
                     this.scrollBoardTo(this.nextToken[0], this.nextToken[1]);
                 });
@@ -641,7 +651,7 @@ function (dojo, declare) {
             
             let allPlayableDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
             this.chosenDir = allPlayableDirs[0];
-            this.addPrimaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + _(`Rotate card`), () => {
+            this.addSecondaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + _(`Rotate card`), () => {
                 this.chosenDir = allPlayableDirs [ (allPlayableDirs.indexOf(this.chosenDir) + 1) % allPlayableDirs.length ];
                 document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
                     oCard.dataset.dir = this.chosenDir;
@@ -680,7 +690,7 @@ function (dojo, declare) {
         displayCardSpotsSelectionForDir: function(serverAction, card, playableCoords, ) {
             let allPlayableDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
             this.chosenDir = card.dir;
-            this.addPrimaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + _(`Rotate card`), () => {
+            this.addSecondaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + _(`Rotate card`), () => {
                 this.chosenDir = allPlayableDirs [ (allPlayableDirs.indexOf(this.chosenDir) + 1) % allPlayableDirs.length ];
                 document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
                     oCard.dataset.dir = this.chosenDir;

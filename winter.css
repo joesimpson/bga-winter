@@ -1901,6 +1901,18 @@
 #winter_map_container .winter_card[data-col="100"] {
   left: calc(50 * var(--winter_board_card_width));
 }
+#winter_cards_deck_container.selectable {
+  cursor: pointer;
+  outline: 5px solid yellow;
+  border-radius: 3px;
+}
+#winter_cards_deck_container.selectable:hover {
+  transform: scale(1.1);
+  z-index: 2;
+}
+#winter_cards_deck_container.selectable.selected {
+  outline-color: rgb(0, 255, 64);
+}
 #winter_cards_deck_container .winter_card {
   position: absolute;
   top: 0px;

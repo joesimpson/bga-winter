@@ -156,6 +156,19 @@ $card_height: var(--winter_board_card_height);
 
 
 #winter_cards_deck_container{
+    &.selectable{
+        cursor: pointer;
+        outline: 5px solid yellow;
+        border-radius: 3px;
+
+        &:hover{
+            transform: scale(1.1);
+            z-index: 2;
+        }
+        &.selected{
+            outline-color: rgb(0, 255, 64);
+        }
+    }
     //HERE FOR ANIMATION 
     .winter_card{
         position: absolute;
