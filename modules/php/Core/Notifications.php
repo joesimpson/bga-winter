@@ -261,14 +261,14 @@ class Notifications
   protected static function notifyAll($name, $msg, $data)
   {
     self::updateArgs($data);
-    Game::get()->notifyAllPlayers($name, $msg, $data);
+    Game::get()->notify->all($name, $msg, $data);
   }
 
   protected static function notify($player, $name, $msg, $data)
   {
     $pId = is_int($player) ? $player : $player->getId();
     self::updateArgs($data);
-    Game::get()->notifyPlayer($pId, $name, $msg, $data);
+    Game::get()->notify->player($pId, $name, $msg, $data);
   }
 
   public static function message($txt, $args = [])
