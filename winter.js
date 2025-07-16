@@ -23,6 +23,7 @@ define([
     "ebg/core/gamegui",
     "ebg/counter",
     "ebg/scrollmap",
+    g_gamethemeurl + 'modules/js/scrollmapWithZoom/scrollmapWithZoom.js',
     g_gamethemeurl + 'modules/js/Core/game.js',
     g_gamethemeurl + 'modules/js/Core/modal.js',
 ],
@@ -122,22 +123,30 @@ function (dojo, declare) {
                     <div id="winter_players_table"></div>
                 </div>
             `);
-            /*
-                        <div id="winter_map_footer" class="whiteblock">
-                            <a href="#" id="enlargedisplay">↓  ${_("Enlarge display")}  ↓</a>
-                        </div>
-            */
 
-            //ScrollMAP
-            this.scrollmap = new ebg.scrollmap();
+            //BGA ScrollMAP module
+            //this.scrollmap = new ebg.scrollmap();
+            //yansnow78 ScrollMAP module :
+            this.scrollmap = new ebg.scrollmapWithZoom();
+            this.scrollmap.btnsOffsetY = CARD_HEIGHT + 'px';
+            this.scrollmap.maxZoom = 1.6;
+            this.scrollmap.minZoom = 0.4;
+            this.scrollmap.bAdaptHeightAuto = true;
+            this.scrollmap.btnsDivOnMap = false;
+            this.scrollmap.btnsDivPositionOutsideMap = ebg.scrollmapWithZoom.btnsDivPositionE.Top;
+            this.scrollmap.bAdaptHeightAutoCompensatePanelsHeight = true;
+            this.scrollmap.onReset = this.onResetScrollmap.bind(this);
+            this.scrollmap.scrollToCenter = this.scrollToCenter.bind(this);
             this.scrollmap.create( 
-                $('winter_map_container'),
-                $('winter_map_scrollable'),
-                $('winter_map_surface'),
-                $('winter_map_scrollable_oversurface') 
-            ); // use ids from template
-            this.scrollmap.setupOnScreenArrows( 150 ); // this will hook buttons to onclick functions with 150px scroll step
-            //dojo.connect( $('enlargedisplay'), 'onclick', this, 'onIncreaseDisplayHeight' );
+               $('winter_map_container'),
+               $('winter_map_scrollable'),
+               $('winter_map_surface'),
+               $('winter_map_scrollable_oversurface') 
+            );
+            this.scrollmap.setupOnScreenArrows( CARD_HEIGHT ); // this will hook buttons to onclick functions with 150px scroll step
+            this.scrollmap.zoom = 1;
+            this.scrollmap.minHeight = 450;
+            this.scrollmap.defaultHeight = 600;
 
             this.setupPlayers();
             this.setupInfoPanel();
@@ -173,6 +182,7 @@ function (dojo, declare) {
                     type: 'pref', 
                     prefId: PREF_UNDO_STYLE },
 
+                /* unused with scrollmapWithZoom
                 boardHeight: {
                     default: 100,
                     name: _('Board height'),
@@ -199,6 +209,7 @@ function (dojo, declare) {
                         },
                     },
                 }, 
+                */
                 displayCoordinates: { 
                     type: 'pref', 
                     prefId: PREF_UI_DISPLAY_COORDINATES },
@@ -672,14 +683,6 @@ function (dojo, declare) {
                 delete elt.dataset.lake;
             });
         },
- 
-        // onIncreaseDisplayHeight: function(evt) {
-        //     debug('Event: onIncreaseDisplayHeight');
-        //     evt.preventDefault();
-        	
-        //     let cur_h = toint(dojo.style( $('winter_map_container'), 'height'));
-        //     dojo.style($('winter_map_container'), 'height', (cur_h + 300) + 'px');
-        // },
 
         displayCardSpotsSelection: function(serverAction, card, playableCoords, ) {
             
@@ -756,6 +759,50 @@ function (dojo, declare) {
             let animDuration = 400;
             this.scrollmap.scrollto(-col*CARD_WIDTH/2,-row*CARD_HEIGHT/2, animDuration);
             await this.wait(animDuration *2);
+        },
+        
+        /**
+         * Scroll to center of cards placed on map, this center may be different than the starting 0,0 because we can move cards
+         */
+        scrollBoardToCardsBarycenter: async function() {
+            debug("scrollBoardToCardsBarycenter()",);
+            //LOOK AT cards datas :
+            //let cardRows = this.gamedatas.cards.filter((card) => card.row != null).map((card) => { 
+            //    return card.row;
+            //});
+            //let cardCols = this.gamedatas.cards.filter((card) => card.col != null).map((card) => { 
+            //    return card.col;
+            //});
+
+            //V2 : LOOK AT cards on map , to avoid updating datas everytime
+            let cardsOnMap = [...$("winter_map_container").querySelectorAll('.winter_card')];
+            let cardRows = cardsOnMap.filter((cardDiv) => cardDiv.dataset.row != null).map((cardDiv) => { 
+                return cardDiv.dataset.row;
+            });
+            let cardCols = cardsOnMap.filter((cardDiv) => cardDiv.dataset.col != null).map((cardDiv) => { 
+                return cardDiv.dataset.col;
+            });
+
+            let boardMinRow = Math.min(...cardRows);
+            let boardMaxRow = Math.max(...cardRows);
+            let boardMinCol = Math.min(...cardCols);
+            let boardMaxCol = Math.max(...cardCols);
+            let boardCenterRow = boardMinRow + (boardMaxRow-boardMinRow)/2;
+            let boardCenterCol = boardMinCol + (boardMaxCol-boardMinCol)/2;
+            await this.scrollBoardTo(boardCenterRow,boardCenterCol);
+        },
+        
+        //Scrollmap module overrite :
+        onResetScrollmap: function () {
+            debug("onResetScrollmap()",);
+            //this.scrollmap.reset();
+            this.inherited(arguments);
+            this.scrollBoardToCardsBarycenter();
+        },
+        scrollToCenter: function () {
+            debug("scrollToCenter()",);
+            this.inherited(arguments);
+            this.scrollBoardToCardsBarycenter();
         },
 
         ////////////////////////////////////////////////////////////
@@ -1009,20 +1056,8 @@ function (dojo, declare) {
                 $(`winter_card-${cardId}`).classList.add("lastPlayed");
             });
             if(initScrollMap){
-                let cardRows = this.gamedatas.cards.filter((card) => card.row != null).map((card) => { 
-                    return card.row;
-                });
-                let cardCols = this.gamedatas.cards.filter((card) => card.col != null).map((card) => { 
-                    return card.col;
-                });
-                let boardMinRow = Math.min(...cardRows);
-                let boardMaxRow = Math.max(...cardRows);
-                let boardMinCol = Math.min(...cardCols);
-                let boardMaxCol = Math.max(...cardCols);
-                let boardCenterRow = boardMinRow + (boardMaxRow-boardMinRow)/2;
-                let boardCenterCol = boardMinCol + (boardMaxCol-boardMinCol)/2;
                 await this.wait(350);//Wait for scrollmap creation, then scroll to specific position
-                await this.scrollBoardTo(boardCenterRow,boardCenterCol);
+                await this.scrollBoardToCardsBarycenter();
             }
         },
     
