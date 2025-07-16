@@ -29,17 +29,7 @@ trait PlayerTurnLakeChoiceTrait
         $player = Players::getActive();
         $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
         $lakes = Utils::listBoardLakes($boardCards);
-        $biggestLakes = [];
-        $maxSize = 0;
-        foreach($lakes as $lakeId => $lake){
-            if(count($lake) > $maxSize){
-                $maxSize = count($lake);
-                $biggestLakes = [$lakeId];
-            }
-            else if(count($lake) == $maxSize){
-                $biggestLakes[] = $lakeId;
-            }
-        }
+        $biggestLakes = array_keys(Utils::filterBiggestLakes($boardCards, $lakes));
 
         $args = [
             'lakes' => $lakes,

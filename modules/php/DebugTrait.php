@@ -240,7 +240,8 @@ trait DebugTrait
 
   function debug_spotsForNewCard(){
 
-    $playableCoords = Utils::listPlayableSpotsForNewCard();
+    $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
+    $playableCoords = Utils::listPlayableSpotsForNewCard($boardCards);
     Notifications::message("playableCoords ? ".json_encode($playableCoords),['json' => $playableCoords]);
   }
   
@@ -326,10 +327,11 @@ trait DebugTrait
     Notifications::message("gridComputeSnowflakesGrid : ".json_encode($snowflakesGrid),['json' => $snowflakesGrid]);
   }
 
-  function debug_listLakes(){
+  //Display list of lakes 
+  function debug_listLakes(?int $cardId){
 
     $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
-    $lakes = Utils::listBoardLakes($boardCards);
+    $lakes = Utils::listBoardLakesAroundCard($boardCards, $cardId);
     Notifications::message("lakes : ".json_encode($lakes),['json' => $lakes]);
   }
 
@@ -399,6 +401,75 @@ trait DebugTrait
     if(!$preview){
       $this->gamestate->jumpToState(ST_PLAYER_TURN_LAKE_CHOICE);
     }
+  }
+  
+  //Objective : test that DARK BLUE can select a card to move to an unknown destination that would be revealed after a lake melts (because a card of that lake may be 1 row / 1 col ahead of another lake)
+  function debug_lakeGivesSpotsForMove(bool $noChoice,){
+    Game::get()->trace("debug_lakeGivesSpotsForMove - START ////////////////////////////////////////////////////");
+    Notifications::message("debug_lakeGivesSpotsForMove ////////////////////////////////////////////////////");
+    $player = Players::getCurrent();
+    Tokens::moveAllInLocation(TOKEN_LOCATION_BOARD,TOKEN_LOCATION_HAND);
+    Cards::moveAllInLocation(CARD_LOCATION_HAND,CARD_LOCATION_DECK);
+    Cards::moveAllInLocation(CARD_LOCATION_BOARD,CARD_LOCATION_DECK);
+    Cards::moveAllInLocation(CARD_LOCATION_DISCARD,CARD_LOCATION_DECK);
+
+    $coords = [ //array of [row, col, dir, card_type]
+        [0, 2, CARD_DIRECTION_UP,   4], 
+        [0, 4, CARD_DIRECTION_DOWN,   8],
+        [1, 0, CARD_DIRECTION_DOWN,   3],
+        [3, 0, CARD_DIRECTION_DOWN,   6],
+        [3, 2, CARD_DIRECTION_UP,   8],   //<== that central card cannot be moved before a lake melts
+        [5, 2, CARD_DIRECTION_DOWN,   6],
+        [3, 4, CARD_DIRECTION_DOWN,   6],
+        [3, 6, CARD_DIRECTION_DOWN,   4], 
+        [3, 8, CARD_DIRECTION_UP,   5], 
+        [1, 7, CARD_DIRECTION_DOWN,   2], 
+      ];
+    $tokensCoord = [
+      [3,1,  TOKEN_COUNTER_BLUE_DARK],  
+      [3,8,  TOKEN_COUNTER_BLUE_LIGHT],  
+    ];
+
+    if($noChoice){
+      $coords = [ //array of [row, col, dir, card_type]
+        [0, 2, CARD_DIRECTION_UP,   4], 
+        [0, 4, CARD_DIRECTION_DOWN,   8],
+        [1, 0, CARD_DIRECTION_DOWN,   3],
+        [3, 0, CARD_DIRECTION_DOWN,   6],
+        [3, 2, CARD_DIRECTION_UP,   8],   //<== that central card cannot be moved EVEN after biggest lake melts
+        [5, 3, CARD_DIRECTION_DOWN,   5],
+        [3, 4, CARD_DIRECTION_UP,   6],
+        [3, 6, CARD_DIRECTION_DOWN,   4], 
+        [3, 8, CARD_DIRECTION_UP,   1], 
+        [1, 7, CARD_DIRECTION_DOWN,   3], 
+      ];
+    }
+
+    $cards = Cards::getAll(); 
+    foreach($coords as $coord){
+      $cardType = $coord[3];
+      $card = $cards->filter(function ($card) use($cardType){
+          return $cardType == $card->getType() && CARD_LOCATION_DECK == $card->getLocation() ;
+        })->first();
+      $card->setRow($coord[0]);
+      $card->setCol($coord[1]);
+      $card->setDirection($coord[2]);
+      $card->setLocation(CARD_LOCATION_BOARD);
+    }
+    $tokens = Tokens::getAll();
+    foreach($tokensCoord as $coord){
+      $tokenType = $coord[2];
+      $token = $tokens->filter(function ($token) use($tokenType){
+          return $tokenType == $token->getType() && TOKEN_LOCATION_HAND == $token->getLocation() ;
+        })->first();
+      $token->setLocation(TOKEN_LOCATION_BOARD);
+      $token->setRow($coord[0]);
+      $token->setCol($coord[1]);
+    }
+
+    $this->debug_UI();
+
+    $this->gamestate->jumpToState(ST_PLAYER_TURN);
   }
 
   //test css limits defining rows/cols : -100 to 100 for now

@@ -35,7 +35,8 @@ trait PlayerTurnPlaceCardTrait
     
     switch($phase){
       case PHASE_FREEZING:
-        $spots = Utils::listPlayableSpotsForNewCard();
+        $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
+        $spots = Utils::listPlayableSpotsForNewCard($boardCards);
         foreach($spots as $coord ){
           $playableCoords[] = [ 'row' => $coord[0], 'col' => $coord[1], 'dirs' => [ CARD_DIRECTION_UP, CARD_DIRECTION_DOWN] ];
         }

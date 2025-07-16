@@ -83,10 +83,11 @@ abstract class Utils extends \APP_DbObject
      *      [ -2,-1 ],
      *  ]
      */
-    public static function listPlayableSpotsForNewCard(?array $flyingCards = null ): array
+    public static function listPlayableSpotsForNewCard( 
+        Collection $boardCards, ?array $flyingCards = null 
+    ): array
     {
         //Game::get()->trace("listPlayableSpotsForNewCard()");
-        $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
 
         $usedCoordinates = $boardCards->filter(function ($card) {
             return !isset($flyingCards) || !in_array($card->getId(),$flyingCards);
@@ -141,7 +142,7 @@ abstract class Utils extends \APP_DbObject
         $cardId = $card->getId();
         //Game::get()->trace("listPlayableSpotsForNewCardAndTokens($cardId,$token_color)");
         $targetsForCard = [];
-        $spotsForCard = Utils::listPlayableSpotsForNewCard([$cardId]);
+        $spotsForCard = Utils::listPlayableSpotsForNewCard($boardCards,[$cardId]);
 
         $cardCoordBeforeMove = Globals::getBeforeMoveRowCol();
         foreach($spotsForCard as $coord){ 
@@ -490,12 +491,34 @@ abstract class Utils extends \APP_DbObject
         $removableCards = Cards::getMany($removableCardsIds);
         foreach($removableCards as $card){ 
             
+            $targetsForCard = [];
+
             //STEP 2.5 : Does moving imply dividing the board into 2 lakes ?
-            $list[ $card->getId()]['split'] = Utils::isCardBetween2Lakes($boardCards, $card);
+            $lakesAroundCard = Utils::listBoardLakesAroundCard($boardCards, $card->getId());
+            //$list[ $card->getId()]['split'] = Utils::isCardBetween2Lakes($boardCards, $card);
+            $list[ $card->getId()]['split'] = (count($lakesAroundCard) > 1);
 
             //STEP 3 : can we move the card to a place where we can add this color token(s) ?
-            
-            $targetsForCard = Utils::listPlayableSpotsForNewCardAndTokens($card, $token_color, $boardCards, $boardTokens);
+            if($list[ $card->getId()]['split']){
+                //Step 3.2 : check each future lake to find a new spot if those cards are removed
+                $biggestLakes = Utils::filterBiggestLakes($boardCards, $lakesAroundCard);
+                //Notifications::message("lakes from  ".$card->getId()." ->".json_encode($lakesAroundCard),['json' => $lakesAroundCard]);
+                foreach($lakesAroundCard as $lakeid => $lakeAroundCard){
+                    if(1 == count($biggestLakes) && $lakeid == array_keys($biggestLakes) [0]) {
+                        //don't ignore a solo big lake
+                        continue;
+                    }
+                    $boardCardsFiltered = $boardCards->filter(function($card) use($lakeAroundCard) { return !in_array($card->getId(),$lakeAroundCard);});
+                    $targetsForCardWithoutLake = Utils::listPlayableSpotsForNewCardAndTokens($card, $token_color, $boardCardsFiltered, $boardTokens);
+                    $targetsForCard = array_merge($targetsForCard, $targetsForCardWithoutLake);
+                    //Notifications::message("targetsForCardWithoutLake : ".$card->getId()." ->".json_encode($targetsForCardWithoutLake),['json' => $targetsForCardWithoutLake]);
+                }
+                //Notifications::message("targetsForCard : ".$card->getId()." ->".json_encode($targetsForCard),['json' => $targetsForCard]);
+            }
+            else {
+                //Notifications::message("CARD DOesn'T SPLIT : ".json_encode($card->getId()),['json' => $card->getId()]);
+                $targetsForCard = Utils::listPlayableSpotsForNewCardAndTokens($card, $token_color, $boardCards, $boardTokens);
+            }
 
             if(count($targetsForCard)>0) $list[ $card->getId()]['targets'] = $targetsForCard;
             else unset($list[ $card->getId()]);
@@ -517,35 +540,9 @@ abstract class Utils extends \APP_DbObject
         Card $card,
         ): bool
     { 
-
-        $usedCoordinates = $boardCards->filter(function ($c) use ($card) {
-            return $c->getId() != $card->getId() ;
-        })->map(function ($c) {
-            return $c->coordArray();
-        })->toArray();
-
-        $maxMoves = count($usedCoordinates);
-        $moveCostCallback = function ($source, $target, $d) use ($usedCoordinates) {
-            $spot = [$target['y'], $target['x']];
-            if(!in_array($spot, $usedCoordinates)) return 10000;//not valid position: we cannot move through empty spot
-            return 1;
-        };
-        //STEP 1 : Loop each board card coord A
-        foreach($usedCoordinates as $coord){
-
-            //STEP 2 : Loop each Other board card coord B
-            //If no path between A and B thus there is a hole
-
-            $startingCell = [ 'x' => $coord[1], 'y' => $coord[0], ];
-            $cellsMarkers = GridUtils::getReachableCellsAtDistance($startingCell,$maxMoves, $moveCostCallback, $usedCoordinates);
-            $cells = $cellsMarkers[0];
-            if(count($cells) +1 < count($usedCoordinates)){
-                //Game::get()->trace("isCardBetween2Lakes (".json_encode($card->coordArray()).") TRUE (".json_encode($startingCell)." ) : cells=".json_encode($cells)); //." /// : markers=".json_encode($cellsMarkers[1]));
-                return true;
-            }
-        }
-
-        return false;
+        
+        $lakes = Utils::listBoardLakesAroundCard($boardCards, $card->getId());
+        return count($lakes) > 1;
     }
 
     
@@ -611,5 +608,53 @@ abstract class Utils extends \APP_DbObject
             }
         }
         return $lakes;
+    }
+
+    
+    /**
+     * @param Collection $boardCards : cards placed on Board (already read from DB)
+     * @param int $cardId : a card we could remove to create a separation between lakes
+     * 
+     * @return array of array of cards ids grouped by lake 
+     * 
+     * Example :
+     *  [ 
+     *      1=> [ 10,11,12,13,],
+     *      2=> [ 20,21,22,23,24],
+     *      3=> [ 75,84],
+     *      4=> [ 100],
+     *  ]
+     * 
+     */
+    public static function listBoardLakesAroundCard(
+        Collection $boardCards,
+        int $cardId,
+        ): array
+    { 
+        $boardCardsFiltered = $boardCards->filter(function($card) use($cardId) { return $cardId != $card->getId();});
+        return Utils::listBoardLakes($boardCardsFiltered);
+    }
+
+    /**
+     * @return array only the biggest lakes 
+     */
+    public static function filterBiggestLakes(
+        Collection $boardCards,
+        array $lakes,
+    ): array
+    { 
+        $lakes = Utils::listBoardLakes($boardCards);
+        $biggestLakes = [];
+        $maxSize = 0;
+        foreach($lakes as $lakeId => $lake){
+            if(count($lake) > $maxSize){
+                $maxSize = count($lake);
+                $biggestLakes[$lakeId] = $lake;
+            }
+            else if(count($lake) == $maxSize){
+                $biggestLakes[$lakeId] = $lake;
+            }
+        }
+        return $biggestLakes;
     }
 }
