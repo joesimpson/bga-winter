@@ -134,6 +134,7 @@ trait PlayerTurnPlaceCardTrait
         throw new UnexpectedException(115,"No tokens to place on this card");
       }
 
+      Globals::setBeforeMoveRowCol(null);
       Globals::setLastPlayedTokens($newTokens->map(function ($token) {
           return $token->getId();
         })->toArray());

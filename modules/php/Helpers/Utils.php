@@ -1,6 +1,7 @@
 <?php
 namespace Bga\Games\winter\Helpers;
 
+use Bga\Games\winter\Core\Globals;
 use Bga\Games\winter\Core\Notifications;
 use Bga\Games\winter\Core\Stats;
 use Bga\Games\winter\Game;
@@ -141,10 +142,15 @@ abstract class Utils extends \APP_DbObject
         //Game::get()->trace("listPlayableSpotsForNewCardAndTokens($cardId,$token_color)");
         $targetsForCard = [];
         $spotsForCard = Utils::listPlayableSpotsForNewCard([$cardId]);
+
+        $cardCoordBeforeMove = Globals::getBeforeMoveRowCol();
         foreach($spotsForCard as $coord){ 
             //Check ALL possible DIRS
             $allDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
             $playableDirs = [];
+
+            //We cannot move a card to its previous place
+            if(isset($cardCoordBeforeMove) && $coord == $cardCoordBeforeMove) continue;
 
             $cardRow = $coord[0];
             $cardCol = $coord[1];

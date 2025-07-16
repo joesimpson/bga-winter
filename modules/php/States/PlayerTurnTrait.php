@@ -277,6 +277,7 @@ trait PlayerTurnTrait
     //ACTION EFFECT
     $card = Cards::get($cardId);
     $card->setLocation(CARD_LOCATION_HAND);
+    Globals::setBeforeMoveRowCol([$card->getRow(), $card->getCol()]);
     Notifications::playAtPosition($player,$card->getRow(), $card->getCol());
     $fromLocation = $card->coordName();
     $card->setRow(null);

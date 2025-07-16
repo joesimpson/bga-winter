@@ -26,6 +26,8 @@ class Globals extends \Bga\Games\winter\Helpers\DB_Manager
     'lastPlayedTokens' => 'obj',
     //Array of cards ids
     'lastPlayedCards' => 'obj',
+    //array {row: yyy, col: xxx}
+    'beforeMoveRowCol' => 'obj',
 
     //For Undo log module
     'choices' => 'int',
@@ -49,6 +51,7 @@ class Globals extends \Bga\Games\winter\Helpers\DB_Manager
     self::setPhase(PHASE_BEGINNING);
     self::setLastPlayedTokens([]);
     self::setLastPlayedCards([]);
+    self::setBeforeMoveRowCol(null);
 
     foreach($players as $pId => $player){
 
