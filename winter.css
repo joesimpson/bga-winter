@@ -293,8 +293,8 @@
   width: 100%;
 }
 .winter_card_tooltip .winter_card {
-  width: calc(var(--winter_board_card_width) * 2);
-  height: calc(var(--winter_board_card_height) * 2);
+  width: calc(var(--winter_board_card_width) * 1.5);
+  height: calc(var(--winter_board_card_height) * 1.5);
 }
 
 .winter_card_spot {

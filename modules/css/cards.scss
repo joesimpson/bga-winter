@@ -119,8 +119,8 @@ $card_height: var(--winter_board_card_height);
         width: 100%;
     }
     .winter_card{
-        width: calc($card_width * 2);
-        height: calc($card_height * 2);
+        width: calc($card_width * 1.5);
+        height: calc($card_height * 1.5);
     }
 }
 
