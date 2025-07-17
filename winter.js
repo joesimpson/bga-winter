@@ -864,7 +864,7 @@ function (dojo, declare) {
                 [PHASE_FREEZING,        this.fsr(_('Freezing'),{})],
                 [PHASE_THAWING,         this.fsr(_('Thawing'),{})],
             ]);
-            return this.fsr(  ("Phase ${number} : ${name}") , { number: phase, name: phasesMap.get(phase) } );
+            return this.fsr(  _("Phase ${number} : ${name}") , { number: phase, name: phasesMap.get(phase) } );
         },
         ////////////////////////////////////////
         //  ____  _
