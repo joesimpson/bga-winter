@@ -31,7 +31,7 @@ class Stats extends \Bga\Games\winter\Helpers\DB_Manager
     self::$setter($pId,$value);
   }
   /** Inc wrapper whith a 1 default increment */
-  public static function inc($name, $player = null, $value = 1)
+  public static function inc($name, $player = null, int $value = 1)
   {
     $pId = is_null($player) ? null : (is_int($player) ? $player : $player->getId());
     $incrementerName = "inc".ucfirst($name);

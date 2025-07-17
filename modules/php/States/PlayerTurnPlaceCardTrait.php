@@ -130,6 +130,7 @@ trait PlayerTurnPlaceCardTrait
         $token->setCol($spot[1]);
         $token->setLocation(TOKEN_LOCATION_BOARD);
         $newTokens->append( $token);
+        Stats::inc("remainingCounters",$player,+1);
         Notifications::placeToken($player,$token);
       }
 

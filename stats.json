@@ -27,6 +27,11 @@
         "name": "Played color",
         "type": "int"
       }
+      ,"remainingCounters": {
+        "id": 15,
+        "name": "Remaining counters on board",
+        "type": "int"
+      }
       ,"actions_draw": {
         "id": 20,
         "name": "Played actions 'Draw card'",

@@ -233,6 +233,7 @@ trait PlayerTurnTrait
         $token->setCol($spot[1]);
         $token->setLocation(TOKEN_LOCATION_BOARD);
         $newTokens->append( $token);
+        Stats::inc("remainingCounters",$player,+1);
         Notifications::placeToken($player,$token);
     }
 
@@ -330,6 +331,8 @@ trait PlayerTurnTrait
     $token->setCol($col);
     $token->setLocation(TOKEN_LOCATION_BOARD);
 
+    Stats::inc("remainingCounters",$player,+1);
+
     Notifications::playAtPosition($player,$row, $col);
     Notifications::placeToken($player,$token);
 
@@ -373,6 +376,8 @@ trait PlayerTurnTrait
     $token->setCol(null);
     $token->setLocation(TOKEN_LOCATION_HAND);
 
+    //According to rules that token is own by this player
+    Stats::inc("remainingCounters",$player,-1);
     Notifications::removeToken($player,$token, $fromLocation);
 
     Globals::setLastPlayedTokens([]);

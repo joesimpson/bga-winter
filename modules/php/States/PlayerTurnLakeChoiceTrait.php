@@ -5,6 +5,7 @@ namespace Bga\Games\winter\States;
 use Bga\GameFramework\Actions\Types\IntParam;
 use Bga\Games\winter\Core\Globals;
 use Bga\Games\winter\Core\Notifications;
+use Bga\Games\winter\Core\Stats;
 use Bga\Games\winter\Exceptions\UnexpectedException;
 use Bga\Games\winter\Game;
 use Bga\Games\winter\Helpers\Collection;
@@ -120,6 +121,8 @@ trait PlayerTurnLakeChoiceTrait
                         $token->setRow(null);
                         $token->setCol(null);
                         $token->setLocation(TOKEN_LOCATION_HAND);
+                        
+                        Stats::inc("remainingCounters",$token->getPId(),-1);
                         //Notifications::removeToken($player,$token, $fromLocation);
                         $removedTokens->append($token);
                     }
