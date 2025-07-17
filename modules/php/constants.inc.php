@@ -79,6 +79,7 @@ const ALL_PREFERENCES = [
    PREF_UNDO_STYLE,
    PREF_CONFIRM,
    PREF_DRAW_CONFIRM,
+   PREF_UI_DISPLAY_COORDINATES,
 ];
 /////////////////////////////////////////////////////////
 //          GAME STATES

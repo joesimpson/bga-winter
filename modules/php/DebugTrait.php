@@ -316,15 +316,24 @@ trait DebugTrait
 
     $player = Players::getCurrent();
     $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
-
+    $card = Cards::get($cardId);
+    
+    $tokensSpots = Utils::gridOverlappingTokensFromCard($row, $col);
+    Notifications::message("tokensSpots : ".json_encode($tokensSpots),['json' => $tokensSpots]);
     $tempCardLocations = [
         $cardId => [
             'row' => $row, 
             'col' => $col, 
             'dir' => $dir,
+            'o' => $card,
         ]];
     $snowflakesGrid = Utils::gridComputeSnowflakesGrid($boardCards, $tempCardLocations); 
     Notifications::message("gridComputeSnowflakesGrid : ".json_encode($snowflakesGrid),['json' => $snowflakesGrid]);
+
+    $spot = $tokensSpots[0];//depends on test
+    $targetSquare = Utils::computeTargetSquareBottomRight($spot);
+    $isSquare = Utils::isSnowflakesSquare($player->getTokensColor(), $targetSquare, $snowflakesGrid);
+    Notifications::message("isSquare first spot ? : ".json_encode($isSquare),['targetSquare'=>$targetSquare]);
   }
 
   //Display list of lakes 

@@ -244,11 +244,12 @@ abstract class Utils extends \APP_DbObject
         }
         //Look at cards which are no more on board :
         foreach($tempCardLocations as $cardId => $tempCardDatas){
-            if(!array_key_exists($cardId, $boardCards->getIds())){
+            if(!in_array($cardId, $boardCards->getIds())){
                 $card = $tempCardDatas['o'];
                 $cardRow = $tempCardDatas['row'];
                 $cardCol = $tempCardDatas['col'];
                 $snowflakes = $card->getOrientedSnowflakes( $tempCardDatas['dir']);
+                //Notifications::message("SEARCH $cardId not in : ".json_encode($boardCards->getIds()),['json' => $boardCards->getIds(), 'sn'=> $snowflakes]);
             }
             foreach( $snowflakes as $snowflake){
                 $snowflakeCoords = $snowflake->coordArrayFromBase($cardRow, $cardCol);
