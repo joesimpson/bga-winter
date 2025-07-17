@@ -88,7 +88,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
 
     unsetModeInstantaneous() {
       this.inherited(arguments);
-      this.updateLayout();
+      //this.updateLayout();
     },
 
     /*

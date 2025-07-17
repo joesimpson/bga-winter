@@ -404,7 +404,7 @@ trait DebugTrait
   }
   
   //Objective : test that DARK BLUE can select a card to move to an unknown destination that would be revealed after a lake melts (because a card of that lake may be 1 row / 1 col ahead of another lake)
-  function debug_lakeGivesSpotsForMove(bool $noChoice,){
+  function debug_lakeGivesSpotsForMove(int $testCase){
     Game::get()->trace("debug_lakeGivesSpotsForMove - START ////////////////////////////////////////////////////");
     Notifications::message("debug_lakeGivesSpotsForMove ////////////////////////////////////////////////////");
     $player = Players::getCurrent();
@@ -413,36 +413,75 @@ trait DebugTrait
     Cards::moveAllInLocation(CARD_LOCATION_BOARD,CARD_LOCATION_DECK);
     Cards::moveAllInLocation(CARD_LOCATION_DISCARD,CARD_LOCATION_DECK);
 
-    $coords = [ //array of [row, col, dir, card_type]
-        [0, 2, CARD_DIRECTION_UP,   4], 
-        [0, 4, CARD_DIRECTION_DOWN,   8],
-        [1, 0, CARD_DIRECTION_DOWN,   3],
-        [3, 0, CARD_DIRECTION_DOWN,   6],
-        [3, 2, CARD_DIRECTION_UP,   8],   //<== that central card cannot be moved before a lake melts
-        [5, 2, CARD_DIRECTION_DOWN,   6],
-        [3, 4, CARD_DIRECTION_DOWN,   6],
-        [3, 6, CARD_DIRECTION_DOWN,   4], 
-        [3, 8, CARD_DIRECTION_UP,   5], 
-        [1, 7, CARD_DIRECTION_DOWN,   2], 
-      ];
-    $tokensCoord = [
-      [3,1,  TOKEN_COUNTER_BLUE_DARK],  
-      [3,8,  TOKEN_COUNTER_BLUE_LIGHT],  
-    ];
-
-    if($noChoice){
-      $coords = [ //array of [row, col, dir, card_type]
-        [0, 2, CARD_DIRECTION_UP,   4], 
-        [0, 4, CARD_DIRECTION_DOWN,   8],
-        [1, 0, CARD_DIRECTION_DOWN,   3],
-        [3, 0, CARD_DIRECTION_DOWN,   6],
-        [3, 2, CARD_DIRECTION_UP,   8],   //<== that central card cannot be moved EVEN after biggest lake melts
-        [5, 3, CARD_DIRECTION_DOWN,   5],
-        [3, 4, CARD_DIRECTION_UP,   6],
-        [3, 6, CARD_DIRECTION_DOWN,   4], 
-        [3, 8, CARD_DIRECTION_UP,   1], 
-        [1, 7, CARD_DIRECTION_DOWN,   3], 
-      ];
+    switch ($testCase)
+    {
+      case 1: //NO LAKE CHOICE
+        $coords = [ //array of [row, col, dir, card_type]
+          [0, 2, CARD_DIRECTION_UP,   4], 
+          [0, 4, CARD_DIRECTION_DOWN,   8],
+          [1, 0, CARD_DIRECTION_DOWN,   3],
+          [3, 0, CARD_DIRECTION_DOWN,   6],
+          [3, 2, CARD_DIRECTION_UP,   8],   //<== that central card cannot be moved EVEN after biggest lake melts
+          [5, 3, CARD_DIRECTION_DOWN,   5],
+          [3, 4, CARD_DIRECTION_UP,   6],
+          [3, 6, CARD_DIRECTION_DOWN,   4], 
+          [3, 8, CARD_DIRECTION_UP,   1], 
+          [1, 7, CARD_DIRECTION_DOWN,   3], 
+        ];
+        $tokensCoord = [
+          [3,1,  TOKEN_COUNTER_BLUE_DARK],  
+          [3,8,  TOKEN_COUNTER_BLUE_LIGHT],  
+        ];
+        break;
+      case 2:
+        //Test from a bug when live testing
+        $coords = [ //array of [row, col, dir, card_type]
+            [-2, -22, CARD_DIRECTION_UP,   5], 
+            [-2, -20, CARD_DIRECTION_DOWN,   2],
+            [-3, -18, CARD_DIRECTION_UP,   7],
+            [-2, -16, CARD_DIRECTION_UP,   1],
+            [-3, -14, CARD_DIRECTION_UP,   4],  
+            [-3, -12, CARD_DIRECTION_UP,   3],  
+            [-1, -12, CARD_DIRECTION_UP,   8],
+            [-3, -10, CARD_DIRECTION_DOWN,   3],
+            [-3, -8, CARD_DIRECTION_DOWN,   4], 
+            [-3, -6, CARD_DIRECTION_UP,   2],  //<== that central card SHOULD be moved even BEFORE lake melts
+            [-1, -7, CARD_DIRECTION_UP,   6], 
+            [1, -7, CARD_DIRECTION_UP,   7], 
+            [-3, -4, CARD_DIRECTION_DOWN,   2], 
+            [-3, -2, CARD_DIRECTION_UP,   2], 
+            [-1, -3, CARD_DIRECTION_UP,   6], 
+            [-4, 0, CARD_DIRECTION_DOWN,   8], 
+            [-2, 0, CARD_DIRECTION_DOWN,   6], 
+            [0, 0, CARD_DIRECTION_UP,   6], 
+          ];
+        $tokensCoord = [
+          [-2,0,  TOKEN_COUNTER_BLUE_DARK],  
+          [0,1,  TOKEN_COUNTER_BLUE_LIGHT], 
+          [-2,1,  TOKEN_COUNTER_BLUE_DARK],  
+          [-1,-2,  TOKEN_COUNTER_BLUE_LIGHT],  
+          [-2,-2,  TOKEN_COUNTER_BLUE_LIGHT],  
+          [1,-6,  TOKEN_COUNTER_BLUE_DARK], 
+        ];
+        break;
+      default:
+        $coords = [ //array of [row, col, dir, card_type]
+            [0, 2, CARD_DIRECTION_UP,   4], 
+            [0, 4, CARD_DIRECTION_DOWN,   8],
+            [1, 0, CARD_DIRECTION_DOWN,   3],
+            [3, 0, CARD_DIRECTION_DOWN,   6],
+            [3, 2, CARD_DIRECTION_UP,   8],   //<== that central card cannot be moved before a lake melts
+            [5, 2, CARD_DIRECTION_DOWN,   6],
+            [3, 4, CARD_DIRECTION_DOWN,   6],
+            [3, 6, CARD_DIRECTION_DOWN,   4], 
+            [3, 8, CARD_DIRECTION_UP,   5], 
+            [1, 7, CARD_DIRECTION_DOWN,   2], 
+          ];
+        $tokensCoord = [
+          [3,1,  TOKEN_COUNTER_BLUE_DARK],  
+          [3,8,  TOKEN_COUNTER_BLUE_LIGHT],  
+        ];
+        break;
     }
 
     $cards = Cards::getAll(); 
@@ -467,6 +506,7 @@ trait DebugTrait
       $token->setCol($coord[1]);
     }
 
+    Globals::setPhase(PHASE_THAWING);
     $this->debug_UI();
 
     $this->gamestate->jumpToState(ST_PLAYER_TURN);
