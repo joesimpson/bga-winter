@@ -33,10 +33,12 @@ trait ColorChoiceTrait
    *
    * @throws BgaUserException
    */
-  public function actChooseColor(int $color, #[IntParam(name: 'v')] int $version,): void
+  public function actChooseColor(int $color, #[IntParam(name: 'v')] int $version, bool $auto = false): void
   {
-    Game::get()->checkVersion($version);
-    self::trace("actCollectDraw($color)");
+    if (!$auto) {
+      Game::get()->checkVersion($version);
+    }
+    self::trace("actChooseColor($color,$auto)");
 
     $player = Players::getCurrent();
     $pId = $player->getId();

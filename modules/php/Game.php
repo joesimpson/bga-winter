@@ -19,6 +19,7 @@ declare(strict_types=1);
 namespace Bga\Games\winter;
 
 use Bga\Games\winter\Core\Globals;
+use Bga\Games\winter\Core\Notifications;
 use Bga\Games\winter\Core\Preferences;
 use Bga\Games\winter\Exceptions\UserException;
 use Bga\Games\winter\Managers\Cards;
@@ -207,9 +208,31 @@ class Game extends \Bga\GameFramework\Table
     protected function zombieTurn(array $state, int $active_player): void
     {
         $state_name = $state["name"];
+        Game::get()->trace("zombieTurn($active_player) : state ".json_encode($state));
 
         if ($state["type"] === "activeplayer") {
             switch ($state_name) {
+                case 'startingCard':
+                    //Avoid future technical issues if we keep the card drawn in hand !
+                    $this->actPlayStartingCard(CARD_DIRECTION_UP,0,2,0,true);
+                    return;
+                case 'placeCard':
+                    //Avoid future technical issues if we keep the card drawn in hand !
+                    $coord = $state['args']['playableCoords'][0];
+                    $this->actPlaceCard($coord['dirs'][0],$coord['row'],$coord['col'],0,true);
+                    return;
+                case 'colorChoice':
+                    //The next player will need to have colors already chosen
+                    $this->actChooseColor(TOKEN_COUNTER_BLUE_DARK,0,true);
+                    //The action already changes state
+                    //$this->gamestate->nextState("zombiePass");
+                    return;
+                case 'lakeChoice':
+                    //The next player will need to play on 1 lake only
+                    $this->actLake(1, 0, true);
+                    //The action already changes state
+                    //$this->gamestate->nextState("zombiePass");
+                    return;
                 default:
                 {
                     $this->gamestate->nextState("zombiePass");

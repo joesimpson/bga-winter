@@ -108,7 +108,6 @@ $machinestates = [
         ->transitions([
             //'next' => ST_SECOND_PLAYER, 
             'next' => ST_CONFIRM_TURN,
-            'zombiePass' => ST_SECOND_PLAYER,
         ])
         ->build(),
 
@@ -134,7 +133,6 @@ $machinestates = [
         ])
         ->transitions([
             'next' => ST_PLAYER_TURN, 
-            'zombiePass' => ST_PLAYER_TURN,
         ])
         ->build(),
 
@@ -172,6 +170,7 @@ $machinestates = [
             'prepareMove' => ST_PLAYER_TURN_PLACE_CARD, 
             'lakeChoice' => ST_PLAYER_TURN_LAKE_CHOICE, 
             'next' => ST_CONFIRM_TURN,
+            'zombiePass' => ST_CONFIRM_TURN,
         ])
         ->build(),
 
@@ -188,6 +187,7 @@ $machinestates = [
         ->transitions([
             'playCard' => ST_CONFIRM_TURN, 
             'pass' => ST_CONFIRM_TURN,
+            'zombiePass' => ST_CONFIRM_TURN,
         ])
         ->build(),
 

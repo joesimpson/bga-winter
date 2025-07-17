@@ -45,10 +45,12 @@ trait StartingCardTrait
    *
    * @throws BgaUserException
    */
-  public function actPlayStartingCard(int $dir, int $row, int $col, #[IntParam(name: 'v')] int $version,): void
+  public function actPlayStartingCard(int $dir, int $row, int $col, #[IntParam(name: 'v')] int $version,
+    bool $auto = false
+  ): void
   {
-    Game::get()->checkVersion($version);
-    self::trace("actPlayStartingCard($dir,$row, $col)");
+    if(!$auto) Game::get()->checkVersion($version);
+    self::trace("actPlayStartingCard($dir,$row, $col,$auto)");
 
     $player = Players::getCurrent();
     $pId = $player->getId();

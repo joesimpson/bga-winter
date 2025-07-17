@@ -53,15 +53,14 @@ trait ConfirmUndoTrait
             || $prefConfirm == PREF_CONFIRM_DISABLED 
             || $prefConfirm == PREF_CONFIRM_ENABLED_START && PHASE_BEGINNING != $phase 
         ) {//AUTO CONFIRM
-            $version = $this->gamestate->table_globals[BGA_GAMESTATE_GAMEVERSION];
-            $this->actConfirmTurn($version,true);
+            $this->actConfirmTurn(0,true);
         }
     }
 
-    public function actConfirmTurn(#[IntParam(name: 'v')] int $version, $auto = false)
+    public function actConfirmTurn(#[IntParam(name: 'v')] int $version, bool $auto = false)
     {
-        Game::get()->checkVersion($version);
         if (!$auto) {
+            Game::get()->checkVersion($version);
             //self::checkAction('actConfirmTurn');
         }
 

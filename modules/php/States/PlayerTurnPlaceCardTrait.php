@@ -73,9 +73,11 @@ trait PlayerTurnPlaceCardTrait
    *
    * @throws BgaUserException
    */
-  public function actPlaceCard(int $dir,int $row, int $col, #[IntParam(name: 'v')] int $version,): void
+  public function actPlaceCard(int $dir,int $row, int $col, #[IntParam(name: 'v')] int $version,
+    bool $auto = false
+  ): void
   {
-    Game::get()->checkVersion($version);
+    if (!$auto) Game::get()->checkVersion($version);
     self::trace("actPlaceCard($dir,$row, $col,)");
 
     $player = Players::getCurrent();
