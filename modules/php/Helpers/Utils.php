@@ -222,6 +222,17 @@ abstract class Utils extends \APP_DbObject
     public static function gridComputeSnowflakesGrid(Collection $boardCards, array $tempCardLocations = []): array
     {
         $snowflakesGrid = [];
+        $addSnowflakesInGrid = function ( &$snowflakesGrid,$snowflakes,$cardRow, $cardCol) {
+            foreach( $snowflakes as $snowflake){
+                $snowflakeCoords = $snowflake->coordArrayFromBase($cardRow, $cardCol);
+                $snowflakeCoordsLabel = $snowflake->coordNameFromBase($cardRow, $cardCol);
+
+                $snowflakesGrid[$snowflakeCoordsLabel] = [ 
+                    'coords' => $snowflakeCoords, 
+                    'type' => $snowflake->type,
+                ];
+            };
+        };
         foreach($boardCards as $cardId => $card){
             $snowflakes = $card->getOrientedSnowflakes();
             $cardRow = $card->getRow();
@@ -231,15 +242,7 @@ abstract class Utils extends \APP_DbObject
                 $cardCol = $tempCardLocations[$cardId]['col'];
                 $snowflakes = $card->getOrientedSnowflakes( $tempCardLocations[$cardId]['dir']);
             }
-            foreach( $snowflakes as $snowflake){
-                $snowflakeCoords = $snowflake->coordArrayFromBase($cardRow, $cardCol);
-                $snowflakeCoordsLabel = $snowflake->coordNameFromBase($cardRow, $cardCol);
-
-                $snowflakesGrid[$snowflakeCoordsLabel] = [ 
-                    'coords' => $snowflakeCoords, 
-                    'type' => $snowflake->type,
-                ];
-            }
+            $addSnowflakesInGrid($snowflakesGrid,$snowflakes,$cardRow, $cardCol);
 
         }
         //Look at cards which are no more on board :
@@ -251,15 +254,7 @@ abstract class Utils extends \APP_DbObject
                 $snowflakes = $card->getOrientedSnowflakes( $tempCardDatas['dir']);
                 //Notifications::message("SEARCH $cardId not in : ".json_encode($boardCards->getIds()),['json' => $boardCards->getIds(), 'sn'=> $snowflakes]);
             }
-            foreach( $snowflakes as $snowflake){
-                $snowflakeCoords = $snowflake->coordArrayFromBase($cardRow, $cardCol);
-                $snowflakeCoordsLabel = $snowflake->coordNameFromBase($cardRow, $cardCol);
-
-                $snowflakesGrid[$snowflakeCoordsLabel] = [ 
-                    'coords' => $snowflakeCoords, 
-                    'type' => $snowflake->type,
-                ];
-            }
+            $addSnowflakesInGrid($snowflakesGrid,$snowflakes,$cardRow, $cardCol);
         }
         //Sort array and keep associtive keys
         asort($snowflakesGrid);
