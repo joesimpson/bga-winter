@@ -39,10 +39,10 @@ trait ScoringTrait
       $totalScore = 0;
 
       if(NB_COUNTER_COPIES == $player->getNbTokensInHand()){//LOOSER
-        $totalScore = 0;
+        $totalScore = SCORE_LOOSER;
       }
       else {//WINNER
-        $totalScore = 1;
+        $totalScore = SCORE_WINNER;
         Notifications::addPoints($player,$totalScore,clienttranslate('${player_name} scores ${n} points for winning the game !') );
       }
 

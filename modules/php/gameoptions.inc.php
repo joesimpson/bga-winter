@@ -55,7 +55,7 @@ $game_preferences = [
   ],
   
   PREF_DRAW_CONFIRM => [
-    'name' => totranslate('Confirmation before drawing a card'),
+    'name' => totranslate('Warning before drawing a card'),
     'needReload' => false,
     'values' => [
       PREF_DRAW_CONFIRM_ENABLED => ['name' => totranslate('Enabled')],

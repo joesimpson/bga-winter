@@ -30,7 +30,7 @@
         "default": 3
     },
     "103": {
-        "name": "Confirmation before drawing a card",
+        "name": "Warning before drawing a card",
         "needReload": false,
         "values": {
             "2": {
