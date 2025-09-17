@@ -173,6 +173,10 @@ $card_height: var(--winter_board_card_height);
 
 
 #winter_cards_deck_container{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    
     &.selectable{
         cursor: pointer;
         outline: 5px solid yellow;

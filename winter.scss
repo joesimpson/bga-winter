@@ -36,6 +36,19 @@
     column-gap: 5px;
     opacity: 1;
   
+    #winter_left_zone{
+        width: calc(2 * var(--winter_board_card_width));
+
+        #winter_config_holder{
+            max-width: 100%;
+            margin: 1px;
+        }
+        #winter_cards_draw{
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+    }
 }
 
 .winter_nodisplay{

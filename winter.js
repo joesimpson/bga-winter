@@ -95,6 +95,7 @@ function (dojo, declare) {
                     <div id="winter_overall_background"></div>
                     <div id="winter_main_zone">
                         <div id="winter_left_zone">
+                            <div id="winter_config_holder"></div>
                             <div id="winter_cards_deck_container">
                                 <div class="winter_card_back">
                                     <div class="winter_deck_size" id="winter_deck_size">${gamedatas.deckSize}</div>
@@ -920,11 +921,12 @@ function (dojo, declare) {
         setupInfoPanel() {
             debug("setupInfoPanel");
                     
-            dojo.place(this.tplConfigPlayerBoard(), 'player_boards', 'first');
+            //dojo.place(this.tplConfigPlayerBoard(), 'player_boards', 'first');
+            dojo.place(this.tplConfigPlayerBoard(), 'winter_config_holder', 'first');
             
             let chk = $('help-mode-chk');
             dojo.connect(chk, 'onchange', () => this.toggleHelpMode(chk.checked));
-            this.addTooltip('help-mode-switch', '', _('Toggle help/safe mode.'));
+            this.addTooltip('help-mode-switch', '', _('Toggle help/safe mode'));
   
             this._settingsModal = new customgame.modal('showSettings', {
                 class: 'winter_popin',
@@ -942,7 +944,7 @@ function (dojo, declare) {
         tplConfigPlayerBoard() {
             let phase = this.gamedatas.phase;
             return `
-            <div class='player-board' id="player_board_config">
+            <div class='player-board-config' id="player_board_config">
                 <div id="player_config" class="player_board_content">
                 <div class="player_config_row" id="turn_counter_wrapper">
                     <span id='winter_counter_phase'>${this.formatPhaseName(phase)}</span>

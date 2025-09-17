@@ -1,6 +1,6 @@
 /**
  * Player panel settings
- * AUTHOR : © Tisaac
+ * AUTHOR : © Tisaac + update after BGA guideline to remove it from right panel
  */
 #player_board_config {
     position: relative;
@@ -8,6 +8,11 @@
     order: 0;
     grid-row-start: 1;
     grid-column: 1;
+
+    background-color: #ebd5bd;
+    border-radius: 8px;
+    box-shadow: 0 3px 8px #0000004d;
+    padding: 5px 3px;
 }
 
 #player_config {
@@ -15,7 +20,7 @@
         display: flex;
         justify-content: space-around;
         align-items: center;
-        padding: 6px 0px;
+        //padding: 6px 0px;
         border-bottom: 1px solid #80502e;
         &:last-child {
             border-bottom: none;
@@ -35,10 +40,15 @@
         font-family: "Bernard MT Condensed";
         color: black;
         display: block;
+
+        overflow: clip;
+        text-overflow: ellipsis;
     }
 
-    #pin-panel-switch,
     #help-mode-switch {
+        padding-right: 5px;
+        border-right: 1px solid black;
+
         .checkbox {
             display: none;
         }
@@ -83,6 +93,7 @@
         //}
     }
     #show-settings {
+        margin-left: 5px;
         height: 40px;
         width: 50px;
         display: flex;
