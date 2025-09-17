@@ -1,5 +1,5 @@
 /*
-ScrollmapWithZoom 1.42.2 : Improved version of scrollmap used in multiple bga game
+ScrollmapWithZoom 1.45.1 : Improved version of scrollmap used in multiple bga game
 https://github.com/yansnow78/bga_scrollmap.git
 
 # improvements
@@ -200,6 +200,8 @@ var ScrollmapWithZoomNS;
                 return;
             if (!this._bIncrHeightBtnVisible) {
                 this.hideEnlargeReduceButtons();
+            } else {
+                this.showEnlargeReduceButtons();
             }
         }
         get bIncrHeightBtnIsShort() {
@@ -250,7 +252,7 @@ var ScrollmapWithZoomNS;
             this._longPressScroll = value;
         }
         constructor() {
-            this.version = '1.42.2';
+            this.version = '1.45.1';
             /**
              * board properties
              */
@@ -280,6 +282,7 @@ var ScrollmapWithZoomNS;
             this.zoomPinchDelta = 0.005;
             this.zoomWheelDelta = 0.001;
             this.zoomDelta = 0.2;
+            this.bRestoreZoom = true;
             /**
              * scrolling properties
              */
@@ -310,6 +313,7 @@ var ScrollmapWithZoomNS;
             this.bSaveHeight = true;
             this.bAdaptHeightAutoCompensateChatIcon = true;
             this.bAdaptHeightAutoCompensatePanelsHeight = false;
+            this.bAdaptHeightAutoCompensateDivsAbove = true;
             this.adaptHeightCorr = 0;
             this.bEnableKeysArrows = true;
             this.bEnableKeysPlusMinus = true;
@@ -412,8 +416,10 @@ var ScrollmapWithZoomNS;
             this._onpointermove_handler = this._onPointerMove.bind(this);
             this._onpointerup_handler = this._onPointerUp.bind(this);
             this._onpointerup_handled = false;
+            this._onpointemove_handled = false;
             this._suppressCLickEvent_handler = this._suppressCLickEvent.bind(this);
             this._touchInteracting = false;
+            this._createDone = false;
             this._setupDone = false;
             this._zoomFitCalledDuringSetup = false;
             this._adaptHeightDone = false;
@@ -446,6 +452,8 @@ var ScrollmapWithZoomNS;
             // get LABEL_REDUCE_DISPLAY: string = _("Reduce"): string {
             //     return _("Reduce")`;
             // }
+            this._loaded_x = null;
+            this._loaded_y = null;
             this._xPrev = null;
             this._yPrev = null;
             this._xPrevMid = null;
@@ -1143,10 +1151,15 @@ var ScrollmapWithZoomNS;
                 if (this.incrHeightGlobalKey == incrHeightGlobalKey)
                     this.setDisplayHeight(new_height, false);
             }, true);
+            dojo.aspect.after(ScrollmapWithZoom, "resetHeight", (new_height, incrHeightGlobalKey) => {
+                if (this.incrHeightGlobalKey == incrHeightGlobalKey && this.bAdaptHeightAuto)
+                    this._onResetHeight(null, false);
+            }, true);
             if (ScrollmapWithZoom.bEnableKeys && this.bEnableKeysArrows) {
                 let warning_arrowkeys = _('press the arrow keys with ctrl key to scroll the board');
                 this.container_div.setAttribute("warning_arrowkeys", warning_arrowkeys);
             }
+            this._createDone = true;
             SWZ.debug("ebg.ScrollmapWithZoom create end");
         }
         createCompletely(container_div, page = null, create_extra = null, bEnlargeReduceButtonsInsideMap = true) {
@@ -1269,6 +1282,18 @@ var ScrollmapWithZoomNS;
                                 <label for="bAutoCompensateChatIcon">${_("Take into account chat icon")}</label>
                             </div>
                             <div>
+                                <input type="checkbox" id="bRestoreScrollPosition" value="true">
+                                <label for="bRestoreScrollPosition">${_("Restore scroll position")}</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="bRestoreZoom" value="true">
+                                <label for="bRestoreZoom">${_("Restore zoom level")}</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" id="bShowHeightControls" value="true">
+                                <label for="bShowHeightControls">${_("Show height controls")}</label>
+                            </div>
+                            <div>
                                 <input type="checkbox" id="bUseOldTouchAndMouseEvent" value="true">
                                 <label for="bUseOldTouchAndMouseEvent">${_("Use old touch and mouse events")}</label>
                             </div>
@@ -1368,6 +1393,9 @@ var ScrollmapWithZoomNS;
                 inputs.namedItem("bTakeIntoAccountPanelsHeight").parentElement.style.display = "none";
                 inputs.namedItem("bAutoCompensateChatIcon").parentElement.style.display = "none";
             }
+            inputs.namedItem("bRestoreScrollPosition").checked = this.bRestoreScrollPosition;
+            inputs.namedItem("bRestoreZoom").checked = this.bRestoreZoom;
+            inputs.namedItem("bShowHeightControls").checked = this.bIncrHeightBtnVisible;
             inputs.namedItem("bUseOldTouchAndMouseEvent").checked = this.scrollingOptions.bUseOldTouchAndMouseEvent;
         }
         _submitForm() {
@@ -1427,6 +1455,21 @@ var ScrollmapWithZoomNS;
                 ScrollmapWithZoom._optionsChanged.bAutoCompensateChatIcon = bAutoCompensateChatIcon;
                 addHeightNeeded = true;
             }
+            var bRestoreScrollPosition = inputs.namedItem("bRestoreScrollPosition").checked;
+            if (this.bRestoreScrollPosition != bRestoreScrollPosition) {
+                this.bRestoreScrollPosition = bRestoreScrollPosition;
+                ScrollmapWithZoom._optionsChanged.bRestoreScrollPosition = bRestoreScrollPosition;
+            }
+            var bRestoreZoom = inputs.namedItem("bRestoreZoom").checked;
+            if (this.bRestoreZoom != bRestoreZoom) {
+                this.bRestoreZoom = bRestoreZoom;
+                ScrollmapWithZoom._optionsChanged.bRestoreZoom = bRestoreZoom;
+            }
+            var bShowHeightControls = inputs.namedItem("bShowHeightControls").checked;
+            if (this.bIncrHeightBtnVisible != bShowHeightControls) {
+                this.bIncrHeightBtnVisible = bShowHeightControls;
+                ScrollmapWithZoom._optionsChanged.bShowHeightControls = bShowHeightControls;
+            }
             var bUseOldTouchAndMouseEvent = inputs.namedItem("bUseOldTouchAndMouseEvent").checked;
             if (this.scrollingOptions.bUseOldTouchAndMouseEvent != bUseOldTouchAndMouseEvent) {
                 this.scrollingOptions.bUseOldTouchAndMouseEvent = bUseOldTouchAndMouseEvent;
@@ -1465,10 +1508,17 @@ var ScrollmapWithZoomNS;
                     document.body.clientHeight || window.innerHeight;
                 var container_pos = gameui.getBoundingClientRectIncludeZoom(this.container_div);
                 var other_elements_height = this.adaptHeightCorr * gameui.calcCurrentCSSZoom($('page-content')) + container_pos.y + window.scrollY;
+                var pageContentCoord;
+                if (!this.bAdaptHeightAutoCompensateDivsAbove) {
+                    if (!pageContentCoord)
+                        pageContentCoord = gameui.getBoundingClientRectIncludeZoom($("page-content"));
+                    other_elements_height -= container_pos.y - pageContentCoord.y;
+                }
                 if (!this.bAdaptHeightAutoCompensatePanelsHeight && dojo.hasClass('ebd-body', 'mobile_version')) {
                     var page_title = $("page-title");
                     var pageTitleCoord = gameui.getBoundingClientRectIncludeZoom(page_title);
-                    var pageContentCoord = gameui.getBoundingClientRectIncludeZoom($("page-content"));
+                    if (!pageContentCoord)
+                        pageContentCoord = gameui.getBoundingClientRectIncludeZoom($("page-content"));
                     other_elements_height -= pageContentCoord.y + window.scrollY;
                     other_elements_height += pageTitleCoord.height;
                 }
@@ -1537,7 +1587,9 @@ var ScrollmapWithZoomNS;
                     }
                 }
                 document.body.style.setProperty("--page_zoom", pageZoom.toString());
-                this._setupDone = true;
+                setTimeout(() => {
+                    this._setupDone = true;
+                }, 100);
             });
         }
         _clearOldSettings() {
@@ -1561,40 +1613,7 @@ var ScrollmapWithZoomNS;
         }
         _loadSettings() {
             let scrolled = false;
-            let settingsStr = appLocalStorage.getItem(this._localStorageKey);
-            if (settingsStr == null) {
-                settingsStr = appLocalStorage.getItem(this._localStorageOldKey);
-                if (settingsStr != null) {
-                    appLocalStorage.setItem(this._localStorageKey, settingsStr);
-                    appLocalStorage.removeItem(this._localStorageOldKey);
-                }
-            }
-            if (settingsStr != null) {
-                let settings = JSON.parse(settingsStr);
-                SWZ.debug("_loadSettings", settings.board_x, settings.board_y);
-                var height = this.getDisplayHeight();
-                if (settings.height != null && this.bSaveHeight) {
-                    this.setDisplayHeight(settings.height);
-                }
-                if (settings.height_changed != null) {
-                    this._bHeightChanged = settings.height_changed;
-                }
-                if (settings.zoom != null) {
-                    this.setMapZoom(settings.zoom);
-                }
-                if (this.bRestoreScrollPosition && settings.board_x != null && settings.board_y != null) {
-                    this._scrolled = true;
-                    this._scrollto(settings.board_x, settings.board_y, 0, 0);
-                    scrolled = true;
-                }
-                if ((this.bAdaptHeightAuto && !this._bHeightChanged) || !this.bIncrHeightBtnVisible)
-                    this.setDisplayHeight(height);
-                if (this._bHeightChanged) {
-                    this._enableButton(this._btnResetHeight);
-                } else
-                    this._disableButton(this._btnResetHeight);
-            }
-            settingsStr = appLocalStorage.getItem(ScrollmapWithZoom.localStorageGameKey);
+            let settingsStr = appLocalStorage.getItem(ScrollmapWithZoom.localStorageGameKey);
             if (settingsStr != null) {
                 let settings = JSON.parse(settingsStr);
                 if (settings.optionsChanged != undefined) {
@@ -1633,23 +1652,66 @@ var ScrollmapWithZoomNS;
                         this.scrollingOptions.bUseOldTouchAndMouseEvent = optionsChanged.bUseOldTouchAndMouseEvent;
                         this._pointersInit();
                     }
+                    if (optionsChanged.bRestoreScrollPosition != null) {
+                        this.bRestoreScrollPosition = optionsChanged.bRestoreScrollPosition;
+                    }
+                    if (optionsChanged.bRestoreZoom != null) {
+                        this.bRestoreZoom = optionsChanged.bRestoreZoom;
+                    }
+                    if (optionsChanged.bShowHeightControls != null) {
+                        this.bIncrHeightBtnVisible = optionsChanged.bShowHeightControls;
+                    }
                     if (adaptHeightNeeded)
                         this.adaptHeight();
                 }
             }
+            settingsStr = appLocalStorage.getItem(this._localStorageKey);
+            if (settingsStr == null) {
+                settingsStr = appLocalStorage.getItem(this._localStorageOldKey);
+                if (settingsStr != null) {
+                    appLocalStorage.setItem(this._localStorageKey, settingsStr);
+                    appLocalStorage.removeItem(this._localStorageOldKey);
+                }
+            }
+            if (settingsStr != null) {
+                let settings = JSON.parse(settingsStr);
+                SWZ.debug("_loadSettings", settings.board_x, settings.board_y);
+                this._loaded_x = settings.board_x;
+                this._loaded_y = settings.board_y;
+                var height = this.getDisplayHeight();
+                if (settings.height != null && this.bSaveHeight) {
+                    this.setDisplayHeight(settings.height);
+                }
+                if (settings.height_changed != null) {
+                    this._bHeightChanged = settings.height_changed;
+                }
+                if (this.bRestoreZoom && settings.zoom != null) {
+                    this.setMapZoom(settings.zoom);
+                }
+                if (this.bRestoreScrollPosition && settings.board_x != null && settings.board_y != null) {
+                    this._scrollto(settings.board_x, settings.board_y, 0, 0);
+                    scrolled = true;
+                }
+                if ((this.bAdaptHeightAuto && !this._bHeightChanged) || !this.bIncrHeightBtnVisible)
+                    this.setDisplayHeight(height);
+                if (this._bHeightChanged) {
+                    this._enableButton(this._btnResetHeight);
+                } else
+                    this._disableButton(this._btnResetHeight);
+            }
             return scrolled;
         }
         saveSettings() {
-            SWZ.debug("saveSettings");
             let settings = {
                 time: Date.now(),
                 zoom: this.zoom,
-                board_x: this._scrolled ? this.board_x : null,
-                board_y: this._scrolled ? this.board_y : null,
+                board_x: this._scrolled ? this.board_x : this._loaded_x,
+                board_y: this._scrolled ? this.board_y : this._loaded_y,
                 height: this.getDisplayHeight(),
                 height_changed: this._bHeightChanged,
                 btns_visible: this._bBtnsVisible,
             };
+            SWZ.debug("saveSettings", settings.board_x, settings.board_y);
             appLocalStorage.setItem(this._localStorageKey, JSON.stringify(settings));
         }
         static _saveGameSettings() {
@@ -1853,7 +1915,14 @@ var ScrollmapWithZoomNS;
                 } else {
                     if (this._gestureStart) {
                         this._gestureStart = false;
-                        this._touchInteracting = true;
+                        if (!this._touchInteracting) {
+                            this._touchInteracting = true;
+                            const touches = Array.from(e.touches);
+                            touches.forEach(touch => {
+                                if (!this.container_div.contains(touch.target))
+                                    this._touchInteracting = false;
+                            });
+                        }
                         e.preventDefault();
                         //this._firstTouchMove = false;
                         // var touchesMiddle = this._getTouchesMiddle(e);
@@ -1902,23 +1971,29 @@ var ScrollmapWithZoomNS;
             // ev.preventDefault();
             if (!this.bEnableScrolling && !(this._bEnableZooming && this.zoomingOptions.pinchZooming))
                 return;
-            if ((ev.pointerType == "mouse") && (ev.button != 0)) //for mouse only accept left button
+            if ((ev instanceof MouseEvent) && (ev.button != 0)) //for mouse only accept left button
                 return;
+            this._updatePointers(ev);
             if (this._onpointerup_handled == false) {
                 this._onpointerup_handled = true;
                 if (window.PointerEvent && !this.scrollingOptions.bUseOldTouchAndMouseEvent) {
-                    document.addEventListener("pointermove", this._onpointermove_handler /* , this._passiveEventListener */ );
                     document.addEventListener("pointerup", this._onpointerup_handler, this._passiveEventListener);
                     document.addEventListener("pointercancel", this._onpointerup_handler, this._passiveEventListener);
                 } else {
-                    document.addEventListener("mousemove", this._onpointermove_handler /*,  this._passiveEventListener */ );
-                    document.addEventListener("touchmove", this._onpointermove_handler /*, this._passiveEventListener */ );
                     document.addEventListener("mouseup", this._onpointerup_handler, this._passiveEventListener);
                     document.addEventListener("touchend", this._onpointerup_handler, this._passiveEventListener);
                     document.addEventListener("touchcancel", this._onpointerup_handler, this._passiveEventListener);
                 }
             }
-            this._updatePointers(ev);
+            if (!this._onpointemove_handled) {
+                this._onpointemove_handled = true;
+                if (window.PointerEvent && !this.scrollingOptions.bUseOldTouchAndMouseEvent) {
+                    document.addEventListener("pointermove", this._onpointermove_handler /* , this._passiveEventListener */ );
+                } else {
+                    document.addEventListener("mousemove", this._onpointermove_handler /*,  this._passiveEventListener */ );
+                    document.addEventListener("touchmove", this._onpointermove_handler /*, this._passiveEventListener */ );
+                }
+            }
         }
         _onPointerMove(ev) {
             // SWZ.debug("pointer move");
@@ -1950,7 +2025,7 @@ var ScrollmapWithZoomNS;
                 // }
             }
             // If two _pointers are move, check for pinch gestures
-            else if (this._pointers.size === 2) {
+            else if (this._pointers.size === 2 && this._touchInteracting) {
                 // Calculate the distance between the two _pointers
                 const it = this._pointers.values();
                 const ev1 = it.next().value;
@@ -1997,6 +2072,7 @@ var ScrollmapWithZoomNS;
             // If no pointer left, stop drag or zoom the map
             if (this._pointers.size === 0) {
                 this._onpointerup_handled = false;
+                this._onpointemove_handled = false;
                 //if (window.PointerEvent && !this.scrollingOptions.bUseOldTouchAndMouseEvent) {
                 document.removeEventListener("pointermove", this._onpointermove_handler /* , this._passiveEventListener */ );
                 document.removeEventListener("pointerup", this._onpointerup_handler, this._passiveEventListener);
@@ -2105,7 +2181,7 @@ var ScrollmapWithZoomNS;
         _scrollto(x, y, duration, delay, setStartPositionIfNeeded) {
             if (this._setupDone)
                 this._scrolled = true;
-            else if (setStartPositionIfNeeded)
+            else if (setStartPositionIfNeeded && this._createDone)
                 this.startPosition = { x: -x / this.zoom, y: -y / this.zoom };
             // SWZ.debug("scrollto", this.board_x, this.board_y);
             if (duration == null) {
@@ -2188,6 +2264,10 @@ var ScrollmapWithZoomNS;
         // By default, take all elements in movable_scrollmap
         //  you can also specify (optional) a custom CSS query to get all concerned DOM elements
         scrollToCenter(custom_css_query, duration, delay, x_extra_l = null, x_extra_r = null, y_extra_u = null, y_extra_d = null) {
+            if (this.defaultPosition) {
+                this.scrollto(-this.defaultPosition.x, -this.defaultPosition.y, duration);
+                return;
+            }
             if (this._x_extra_l != null && x_extra_l == null) {
                 x_extra_l = this._x_extra_l;
                 x_extra_r = this._x_extra_r;
@@ -2217,10 +2297,7 @@ var ScrollmapWithZoomNS;
                 this.setMapZoom(this.defaultZoom);
             if (this._resetMode == ScrollmapWithZoom.ResetMode.ScrollAndZoomFit)
                 this.zoomToFit();
-            if (this.defaultPosition)
-                this.scrollto(-this.defaultPosition.x, -this.defaultPosition.y, duration);
-            else
-                this.scrollToCenter(null, duration);
+            this.scrollToCenter(null, duration);
         }
         _isRectInside(outerRect, innerRect) {
             return !(innerRect.left < outerRect.left ||
@@ -3023,6 +3100,7 @@ var ScrollmapWithZoomNS;
                 this.minHeight = minHeight;
         }
         showEnlargeReduceButtons() {
+            this._bIncrHeightBtnVisible = true;
             var btnsProps = this._getEnlargeReduceButtonsProps(this._bEnlargeReduceButtonsInsideMap);
             this._showButton(this._btnIncreaseHeight, btnsProps.idSuffix, btnsProps.display);
             this._showButton(this._btnDecreaseHeight, btnsProps.idSuffix, btnsProps.display);
@@ -3038,13 +3116,14 @@ var ScrollmapWithZoomNS;
             this._showButton(this._bMaxHeight ? this._btnResetHeight : this._btnMaximizeHeight);
         }
         hideEnlargeReduceButtons() {
+            this._bIncrHeightBtnVisible = false;
             var btnsProps = this._getEnlargeReduceButtonsProps(this._bEnlargeReduceButtonsInsideMap);
             this._hideButton(this._btnIncreaseHeight, btnsProps.idSuffix);
             this._hideButton(this._btnDecreaseHeight, btnsProps.idSuffix);
             this._hideButton(this._btnResetHeight);
             this._hideButton(this._btnMaximizeHeight);
         }
-        _onResetHeight(evt) {
+        _onResetHeight(evt, dispatch = true) {
             this._bMaxHeight = false;
             this._bHeightChanged = false;
             if (this.bAdaptHeightAuto)
@@ -3053,6 +3132,11 @@ var ScrollmapWithZoomNS;
                 this.setDisplayHeight(this.defaultHeight);
             this._disableButton(this._btnResetHeight);
             this._enableButton(this._btnMaximizeHeight);
+            if (this.bIncrHeightGlobally) {
+                if (dispatch) {
+                    ScrollmapWithZoom.resetHeight(this.incrHeightGlobalKey);
+                }
+            }
         }
         _onMaximizeHeight(evt) {
             this._bMaxHeight = this.changeDisplayHeight(5000);
@@ -3080,7 +3164,7 @@ var ScrollmapWithZoomNS;
             var current_height = this.getDisplayHeight();
             var maxHeight = screen_height - this._titleHeight;
             new_height = Math.min(Math.max(new_height, this._minHeight), maxHeight);
-            if (this.bIncrHeightKeepInPos && this._setupDone)
+            if (this.bIncrHeightKeepInPos && gameui.isLoadingComplete)
                 this.board_y += (current_height - new_height) / 2;
             this.container_div.style.setProperty("--scrollmap_height", new_height + 'px');
             this.container_div.style.height = 'var(--scrollmap_height)';
@@ -3108,6 +3192,7 @@ var ScrollmapWithZoomNS;
             return (new_height == maxHeight);
         }
         static updateHeight(new_height, incrHeightGlobalKey) {}
+        static resetHeight(incrHeightGlobalKey) {}
         getDisplayHeight() {
             return parseFloat(window.getComputedStyle(this.container_div).height);
         }
