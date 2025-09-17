@@ -2,7 +2,17 @@ type ElementOrId = Element | string;
 
 declare const define: Function;
 
-declare const ebg: any;
+declare const ebg: {
+  core: {
+    gamegui: any;
+  }
+  counter: {
+    new (): Counter;
+  };
+  popindialog: {
+    new (): PopinDialog;
+  };
+};
 
 declare const dojo: Dojo;
 
@@ -41,14 +51,23 @@ declare function _(str: string): string;
  */
 declare function $(text: ElementOrId): HTMLElement;
 
+/**
+ * Loads a versionned BGA game lib.
+ * 
+ * @param name the name of the lib, usually prefixed by `bga-`
+ * @param version the version, either taking the last available version `1.x` or a fixed version `1.0.0`
+ */
+declare function getLibUrl(name: string, version: string): string;
+
 interface Gamestate {
-  active_player?: string;
-  args: any;
-  id: string;
-  name: string;
-  description?: string;
-  descriptionmyturn?: string;
-  private_state?: Gamestate;
+    active_player?: string;
+    args: any;
+    id: string;
+    name: string;
+    type: string;
+    description?: string;
+    descriptionmyturn?: string;
+    private_state?: Gamestate;
 }
 
 interface Gamedatas<P = Player> {
@@ -102,16 +121,16 @@ declare class StatusBar {
    * Set the title displayed on the status bar. Il will automatically apply styling on `${you}`, `${actplayer}`, or any variable passed in args (for example, entering state args).
    * 
    * @param {string} title the title to set
-   * @param {any[]} args the optional args to use in format_string_recursive to format the title
+   * @param {Object} args the optional args to use in format_string_recursive to format the title
    */
-  setTitle(title: string, args?: any[]): void;
+  setTitle(title: string, args?: any): void;
 
   /**
    * Add a button to the status bar.
    * 
    * @param {string} label the button text
    * @param {Function} callback the function to trigger when clicked
-   * @param {Object} params the optional parameters, by default { color: 'primary', id: null, classes: '', destination: document.getElementById('generalactions'), title: undefined, disabled: false, tooltip: undefined, confirm: undefined }. 
+   * @param {Object} params the optional parameters, by default { color: 'primary', id: null, classes: '', destination: document.getElementById('generalactions'), title: undefined, disabled: false, tooltip: undefined, confirm: undefined, autoclick: false }. 
    *   `color` can be primary (default) (blue), secondary (gray), alert (red)
    *   `id` is the id to set. If null/undefined, the button will not have an id, but you can still manipulate it by storing the reference to the DOM Element returned by the function
    *   `classes` can be a string or an array, so `'disabled blinking'` and `['disabled', 'blinking']` are both possible.
@@ -120,10 +139,21 @@ declare class StatusBar {
    *   `disabled` boolean to make the button disabled. Will prevent the callback to be executed
    *   `tooltip` the tooltip of the button
    *   `confirm` the confirm message to display before triggering the callback, if set.
+   *   `autoclick` if the button should be auto clicked after a small delay (for Confirmation buttons).
    * 
    * @returns the button DOM element
    */
-  addActionButton(label: string, callback: Function, params?: any): HTMLButtonElement;
+  addActionButton(label: string, callback: Function, params?: {
+    color?: 'primary' | 'secondary' | 'alert';
+    id?: string;
+    classes?: string | string[];
+    destination?: HTMLElement;
+    title?: string;
+    disabled?: boolean;
+    tooltip?: string;
+    confirm?: string | (() => string | undefined | null); 
+    autoclick?: boolean;
+  }): HTMLButtonElement;
 
   /**
    * Remove all buttons on the status bar
@@ -295,7 +325,9 @@ declare class GameGui<G = Gamedatas> {
    * @param {Object} params the call parameters, by default { replaceByYou: false }.
    * @return {string} the formatted player name
    */
-  getFormattedPlayerName(playerId: number, params: any): string;
+  getFormattedPlayerName(playerId: number, params?: {
+    replaceByYou?: boolean;
+  }): string;
 
   /**
    * This function allows to update the current page title and turn description according to the game state arguments. 
@@ -389,7 +421,16 @@ declare class GameGui<G = Gamedatas> {
    * 
    * @param {Object} params the call parameters, by default { prefix: 'notif_', minDuration: 500, minDurationNoText: 1, logger: null, ignoreNotifications: [], onStart: undefined, onEnd: undefined, }.
    */
-  bgaSetupPromiseNotifications(params?: any): void;
+  bgaSetupPromiseNotifications(params?: {
+    prefix?: string;
+    minDuration?: number;
+    minDurationNoText?: number;
+    handlers?: Object[];
+    logger?: Function;
+    ignoreNotifications?: string[];
+    onStart?: (notifName: string, msg: string, args: any) => any;
+    onEnd?: (notifName: string, msg: string, args: any) => any;
+  }): void;
 
   /**
    * Play a dojo animation and returns a promise resolved when it ends.
@@ -421,7 +462,11 @@ declare class GameGui<G = Gamedatas> {
    * @param {Object} params the call parameters, by default { lock: true, checkAction: true, checkPossibleActions: false }. Must be overriden to disable interface lock, or to disable checkAction.
    * @returns Promise of the ajax call, or undefined if there is no call (prevented by checkAction/checkPossibleActions)
    */
-  bgaPerformAction(action: string, args?: any, params?: any): Promise<any>;
+  bgaPerformAction(action: string, args?: any, params?: {
+    lock?: boolean;
+    checkAction?: boolean;
+    checkPossibleActions?: boolean; 
+  }): Promise<any>;
 
   /**
    * Return the Game Area div (for all displayed game components).
@@ -611,6 +656,37 @@ declare class GameGui<G = Gamedatas> {
    */
   showBubble(anchor_id: string, text: string, delay?: number, duration?: number, custom_class?: string): void;
 
+  /**
+   * Mark the player panel as disabled (by darkening the background).
+   * 
+   * @param {number} player_id the player to disable
+   */
+  disablePlayerPanel(player_id: number): void;
+
+  /**
+   * Mark the player panel as enabled.
+   * 
+   * @param {number} player_id the player to enable
+   */
+  enablePlayerPanel(player_id: number): void;
+
+  /**
+   * Mark all player panels as enabled.
+   */
+  enableAllPlayerPanels(): void;
+
+  /**
+   * Add a player panel for an automata.
+   *
+   * @param {number} id the automata id, used to setup scoreCtrl and getPlayerPanelElement. 0 or negative value is recommended, to avoid conflict with real player ids.
+   * @param {string} name the name of the automata
+   * @param {Object} params an object with optional params: color (default black), iconClass (default unset) to set a background image (32px x 32px), score (default undefined)
+   */
+  addAutomataPlayerPanel(id: number, name: string, params: {
+      color?: string;
+      iconClass?: string;
+      score?: number;
+  }): void;
 }
 
 declare interface Notif<T = any> {
@@ -624,53 +700,146 @@ declare interface Notif<T = any> {
 }
 
 declare class Counter {
-  speed: number;
+  constructor();
 
-  create(target: ElementOrId): void; //  associate counter with existing target DOM element
-  getValue(): number; //  return current value
-  incValue(by: number): number; //  increment value by "by" and animate from previous value
-  setValue(value: number): void; //  set value, no animation
-  toValue(value: number): void; // set value with animation
-  disable(): void; // Sets value to "-"
+  /**
+   * Associate the counter with an existing HTML element.
+   * 
+   * @param {HTMLElement | string} target the HTML Element that will display the counter
+   */
+  create(target: ElementOrId): void;
+
+  /**
+   * Return the current value.
+   * 
+   * @returns the current value
+   */
+  getValue(): number;
+
+  /**
+   * Increment the value and animate from the previous value.
+   * 
+   * @param {number} increment the increment to add to current value
+   * @returns the new value
+   */
+  incValue(by: number): number;
+  
+  /**
+   * Set the value (no animation).
+   * 
+   * @param {number} value the new value
+   */
+  setValue(value: number): void;
+
+  /**
+   * Set the value, with animation.
+   * 
+   * @param {number} value the new value
+   */
+  toValue(value: number): void;
+
+  /**
+   * Sets the value to "-". 
+   * 
+   * Note it just changes display value once, it does not actually disable it, i.e. if you set it again, it will be shown again.
+   */
+  disable(): void;
+}
+
+declare class PopinDialog {
+  /**
+   * Create the popin on the DOM.
+   * 
+   * @param {string} id popin id
+   */
+  create(id: string): void;
+
+  /**
+   * Remove the popin.
+   */
+  destroy(): void;
+
+  /**
+   * Replace the close callback (top right corner 'close' icon) by a custom one.
+   * 
+   * @param {Function} callback the new callback
+   */
+  replaceCloseCallback(callback: Function): void;
+  
+  /**
+   * Hide the close button.
+   */
+  hideCloseIcon(): void;
+
+  /**
+   * Set the popin title.
+   * 
+   * @param {string} title the title
+   */
+  setTitle(title: string): void;
+
+  /**
+   * Set the popin max width.
+   * 
+   * @param {number} maxwidth the max width, in px
+   */
+  setMaxWidth(maxwidth: number): void;
+  
+  /**
+   * Set the content of the popin.
+   * 
+   * @param {string} html the popin content
+   */
+  setContent(html: string): void;
+
+  /**
+   * Show the popin.
+   */
+  show(): void;
+  
+  /**
+   * Hide the popin.
+   */
+  hide(): void;
 }
 
 declare interface StockItems {
-  id: string;
-  type: number;
-  loc?: string;
+    id: string;
+    type: number;
+    loc?: string;
 }
 
 declare interface StockItemType {
-  weight: number;
-  image: string;
-  image_position: number;
+    weight: number;
+    image: string;
+    image_position: number;
 }
 
 declare class Stock {
-  items: StockItems[];
-  item_type: { [cardUniqueId: number]: StockItemType };
-  selectionClass: string;
-  container_div: HTMLDivElement;
-  control_name: string; // the container_div id
-  centerItems: boolean;
-  image_items_per_row: number;
+    items: StockItems[];
+    item_type: { [cardUniqueId: number]: StockItemType };
+    selectionClass: string;
+    container_div: HTMLDivElement;
+    control_name: string; // the container_div id
+    centerItems: boolean;
+    image_items_per_row: number;
 
-  create(game: GameGui, container_div: HTMLDivElement, cardwidth: number, cardheight: number): void;
-  setSelectionMode(selectionMode: number): void; 
-  updateDisplay(from?: string): void;
-  setSelectionAppearance(appearance: string): void;
-  addToStock(cardUniqueId: number): void;
-  addToStockWithId(cardUniqueId: number, cardId: string, from?: string): void;
-  addItemType(cardUniqueId: number, cardWeight: number, cardsurl: string, imagePosition: number): void;	
-  getSelectedItems(): any[];
-  unselectAll(): void;
-  removeAll(): void;
-  removeFromStockById(id: string, to?: string): void;
-  removeAllTo(to: string): void;
-  unselectItem(id: string): void;
-  setOverlap(horizontal_percent: number, vertical_percent: number): void;
-  onItemCreate(itemDiv: HTMLElement, itemType, itemDivId: string): any; 
-  onChangeSelection(control_name: string, item_id?: string ): any;
+    create(game: GameGui, container_div: HTMLDivElement, cardwidth: number, cardheight: number): void;
+    setSelectionMode(selectionMode: number): void; 
+    updateDisplay(from?: string): void;
+    setSelectionAppearance(appearance: string): void;
+    addToStock(cardUniqueId: number): void;
+    addToStockWithId(cardUniqueId: number, cardId: string, from?: string): void;
+    addItemType(cardUniqueId: number, cardWeight: number, cardsurl: string, imagePosition: number): void;	
+    getSelectedItems(): any[];
+    unselectAll(): void;
+    removeAll(): void;
+    removeFromStockById(id: string, to?: string): void;
+    removeAllTo(to: string): void;
+    unselectItem(id: string): void;
+    setOverlap(horizontal_percent: number, vertical_percent: number): void;
+    onItemCreate(itemDiv: HTMLElement, itemType, itemDivId: string): any; 
+    onChangeSelection(control_name: string, item_id?: string ): any;
 }
 
 declare class DojoAnimation {
@@ -678,32 +847,23 @@ declare class DojoAnimation {
 }
 
 interface Dojo {
-  place: (html: string, nodeId: string, action?: string) => void;
-  style: Function;
-  hitch: Function;
-  hasClass: (nodeId: string, className: string) => boolean;
-  addClass: (nodeId: string, className: string) => void;
-  removeClass: (nodeId: string, className?: string) => void;
-  toggleClass: (nodeId: string, className: string, forceValue?: boolean) => void;
-  connect: Function;
-  disconnect: Function;
-  query: Function;
-  subscribe: Function;
-  string: any;
-  fx: any;
-  marginBox: Function;
-  fadeIn: Function;
-  trim: Function;
-  stopEvent: (evt) => void;
-  destroy: (nodeId: string) => void;
-  forEach: Function;
+    place: (html: string, nodeId: string, action?: string) => void;
+    style: Function;
+    hitch: Function;
+    hasClass: (nodeId: string, className: string) => boolean;
+    addClass: (nodeId: string, className: string) => void;
+    removeClass: (nodeId: string, className?: string) => void;
+    toggleClass: (nodeId: string, className: string, forceValue?: boolean) => void;
+    connect: Function;
+    disconnect: Function;
+    query: Function;
+    subscribe: Function;
+    string: any;
+    fx: any;
+    marginBox: Function;
+    fadeIn: Function;
+    trim: Function;
+    stopEvent: (evt) => void;
+    destroy: (nodeId: string) => void;
+    forEach: Function;
 }
-
-/**
- * Load a JS lib.
- * This function should be used in the main `define` of the game.
- * 
- * @param name name of the lib
- * @param version version, can be flexible '1.x' or a fixed version '1.0.0'
- */
-declare function getLibUrl(name: string, version: string): string;
