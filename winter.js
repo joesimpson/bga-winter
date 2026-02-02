@@ -25,7 +25,6 @@ define([
     "ebg/scrollmap",
     g_gamethemeurl + 'modules/js/scrollmapWithZoom/scrollmapWithZoom.js',
     g_gamethemeurl + 'modules/js/Core/game.js',
-    g_gamethemeurl + 'modules/js/Core/modal.js',
 ],
 function (dojo, declare) {
 
@@ -950,11 +949,11 @@ function (dojo, declare) {
                     
             //dojo.place(this.tplConfigPlayerBoard(), 'player_boards', 'first');
             dojo.place(this.tplConfigPlayerBoard(), 'winter_config_holder', 'first');
-            
+            /*
             let chk = $('help-mode-chk');
             dojo.connect(chk, 'onchange', () => this.toggleHelpMode(chk.checked));
             //this.addTooltip('help-mode-switch', '', _('Toggle help/safe mode'));
-  
+            
             this._settingsModal = new customgame.modal('showSettings', {
                 class: 'winter_popin',
                 closeIcon: 'fa-times',
@@ -966,6 +965,7 @@ function (dojo, declare) {
                     <div id="settings-controls-container"></div>
                 </div>`,
             });
+            */
         },
 
         tplConfigPlayerBoard() {

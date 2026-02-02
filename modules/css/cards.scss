@@ -233,12 +233,12 @@ $card_height: var(--winter_board_card_height);
     }
 }
 
-body[data-winter_display_coord='0']{//PREF_UI_DISPLAY_COORDINATES_DISABLED
+html.winter_display_coord_off{//PREF_UI_DISPLAY_COORDINATES_DISABLED
     .winter_card_location_label {
         visibility: hidden;
     }
 }
-body[data-winter_display_coord='2']{//PREF_UI_DISPLAY_COORDINATES_ENABLED
+html.winter_display_coord_on{//PREF_UI_DISPLAY_COORDINATES_ENABLED
     #winter_map_container{//Display on board only
         .winter_card_location_label {
             visibility: visible;

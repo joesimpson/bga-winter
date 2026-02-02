@@ -21,7 +21,6 @@
 @import "modules/css/meeples";
 @import "modules/css/scrollmap";
 @import "modules/css/settings";
-@import "modules/css/nouislider";
 /**
     PREFIX FOR THIS GAME PROJECT : "winter" because game name is short enough :)
 */
@@ -38,14 +37,14 @@
     z-index: -10;
 }
 
-body[data-winter_background_style='1']{//PREF_BACKGROUND_BLUE
+html.winter_background_blue{//PREF_BACKGROUND_BLUE
     #winter_overall_background
     {
         background-image:url("img/background/blue_theme.jpg");
         opacity: 0.9;
     }
 }
-body[data-winter_background_style='2']{//PREF_BACKGROUND_BGA
+html.winter_background_none{//PREF_BACKGROUND_BGA
     #winter_overall_background
     {
         visibility: hidden;
@@ -158,14 +157,14 @@ body[data-winter_background_style='2']{//PREF_BACKGROUND_BGA
     }
 }
 
-body[data-winter_undo_style='1']{//PREF_UNDO_STYLE_TEXT
+html.winter_undo_style_text{//PREF_UNDO_STYLE_TEXT
     #btnIconUndoLastStep, 
     #btnIconRestartTurn
     {
         display: none !important;
     }
 }
-body[data-winter_undo_style='2']{//PREF_UNDO_STYLE_ICON
+html.winter_undo_style_icon{//PREF_UNDO_STYLE_ICON
     #btnTextUndoLastStep,
     #btnTextRestartTurn
     {

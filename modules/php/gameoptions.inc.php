@@ -32,17 +32,15 @@ $game_options = [
 
 $game_preferences = [
  
-  PREF_UNDO_STYLE => [
-    'name' => totranslate('Undo buttons style'),
+  PREF_DRAW_CONFIRM => [
+    'name' => totranslate('Warning before drawing a card'),
     'needReload' => false,
     'values' => [
-      PREF_UNDO_STYLE_TEXT => [ 'name' => totranslate('Text') ],
-      PREF_UNDO_STYLE_ICON => [ 'name' => totranslate('Icon')],
+      PREF_DRAW_CONFIRM_ENABLED => ['name' => totranslate('Enabled')],
+      PREF_DRAW_CONFIRM_DISABLED => ['name' => totranslate('Disabled')],
     ],
-    "default"=> PREF_UNDO_STYLE_ICON,
-    'attribute' => 'winter_undo_style',
+    "default"=> PREF_DRAW_CONFIRM_DISABLED,
   ],
-
   PREF_CONFIRM => [
     'name' => totranslate('Ask for turn confirmation'),
     'needReload' => false,
@@ -53,36 +51,38 @@ $game_preferences = [
     ],
     "default"=> PREF_CONFIRM_ENABLED_START,
   ],
-  
-  PREF_DRAW_CONFIRM => [
-    'name' => totranslate('Warning before drawing a card'),
+
+  PREF_UNDO_STYLE => [
+    'name' => totranslate('Undo buttons style'),
     'needReload' => false,
     'values' => [
-      PREF_DRAW_CONFIRM_ENABLED => ['name' => totranslate('Enabled')],
-      PREF_DRAW_CONFIRM_DISABLED => ['name' => totranslate('Disabled')],
+      PREF_UNDO_STYLE_TEXT => [ 'name' => totranslate('Text'), "cssPref"=> "winter_undo_style_text",],
+      PREF_UNDO_STYLE_ICON => [ 'name' => totranslate('Icon'), "cssPref"=> "winter_undo_style_icon",],
     ],
-    "default"=> PREF_DRAW_CONFIRM_DISABLED,
+    "default"=> PREF_UNDO_STYLE_ICON,
+    'attribute' => 'winter_undo_style',
   ],
  
+  PREF_BACKGROUND => [
+    'name' => totranslate('Background'),
+    'needReload' => false,
+    'values' => [
+      PREF_BACKGROUND_BLUE=> [ 'name' => totranslate('Blue Theme'), "cssPref"=> "winter_background_blue"],
+      PREF_BACKGROUND_BGA => [ 'name' => totranslate('BGA standard'), "cssPref"=> "winter_background_none"],
+    ],
+    "default"=> PREF_BACKGROUND_BLUE,
+    'attribute' => 'winter_background_style',
+  ],
+
   PREF_UI_DISPLAY_COORDINATES => [
     'name' => totranslate('Display coordinates on board'),
     'needReload' => false,
     'values' => [
-      PREF_UI_DISPLAY_COORDINATES_ENABLED => ['name' => totranslate('Enabled')],
-      PREF_UI_DISPLAY_COORDINATES_DISABLED => ['name' => totranslate('Disabled')],
+      PREF_UI_DISPLAY_COORDINATES_ENABLED => ['name' => totranslate('Enabled'), "cssPref"=> "winter_display_coord_on"],
+      PREF_UI_DISPLAY_COORDINATES_DISABLED => ['name' => totranslate('Disabled'), "cssPref"=> "winter_display_coord_off"],
     ],
     "default"=> PREF_UI_DISPLAY_COORDINATES_DISABLED,
     'attribute' => 'winter_display_coord',
   ],
   
-  PREF_BACKGROUND => [
-    'name' => totranslate('Background'),
-    'needReload' => false,
-    'values' => [
-      PREF_BACKGROUND_BLUE=> [ 'name' => 'Blue Theme'],
-      PREF_BACKGROUND_BGA => [ 'name' => 'BGA standard' ],
-    ],
-    "default"=> PREF_BACKGROUND_BLUE,
-    'attribute' => 'winter_background_style',
-  ],
 ];

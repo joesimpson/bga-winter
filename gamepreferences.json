@@ -1,17 +1,16 @@
 {
-    "101": {
-        "name": "Undo buttons style",
+    "103": {
+        "name": "Warning before drawing a card",
         "needReload": false,
         "values": {
-            "1": {
-                "name": "Text"
-            },
             "2": {
-                "name": "Icon"
+                "name": "Enabled"
+            },
+            "0": {
+                "name": "Disabled"
             }
         },
-        "default": 2,
-        "attribute": "winter_undo_style"
+        "default": 0
     },
     "102": {
         "name": "Ask for turn confirmation",
@@ -29,45 +28,52 @@
         },
         "default": 3
     },
-    "103": {
-        "name": "Warning before drawing a card",
+    "101": {
+        "name": "Undo buttons style",
         "needReload": false,
         "values": {
-            "2": {
-                "name": "Enabled"
+            "1": {
+                "name": "Text",
+                "cssPref": "winter_undo_style_text"
             },
-            "0": {
-                "name": "Disabled"
+            "2": {
+                "name": "Icon",
+                "cssPref": "winter_undo_style_icon"
             }
         },
-        "default": 0
-    },
-    "110": {
-        "name": "Display coordinates on board",
-        "needReload": false,
-        "values": {
-            "2": {
-                "name": "Enabled"
-            },
-            "0": {
-                "name": "Disabled"
-            }
-        },
-        "default": 0,
-        "attribute": "winter_display_coord"
+        "default": 2,
+        "attribute": "winter_undo_style"
     },
     "111": {
         "name": "Background",
         "needReload": false,
         "values": {
             "1": {
-                "name": "Blue Theme"
+                "name": "Blue Theme",
+                "cssPref": "winter_background_blue"
             },
             "2": {
-                "name": "BGA standard"
+                "name": "BGA standard",
+                "cssPref": "winter_background_none"
             }
         },
         "default": 1,
         "attribute": "winter_background_style"
+    },
+    "110": {
+        "name": "Display coordinates on board",
+        "needReload": false,
+        "values": {
+            "2": {
+                "name": "Enabled",
+                "cssPref": "winter_display_coord_on"
+            },
+            "0": {
+                "name": "Disabled",
+                "cssPref": "winter_display_coord_off"
+            }
+        },
+        "default": 0,
+        "attribute": "winter_display_coord"
     }
 }
