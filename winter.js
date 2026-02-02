@@ -1158,7 +1158,7 @@ function (dojo, declare) {
         tplCardSpot(datas) {
             return `<div class="winter_card_spot" id="winter_card_spot_${datas.row}_${datas.column}" data-type="${datas.card.type}" data-row="${datas.row}" data-col="${datas.column}"
                 data-dir="${datas.card.dir ? datas.card.dir : CARD_DIRECTION_UP}" data-dirs="${datas.card.playableDirs}"
-            >
+            > <div class="winter_card_spot_background" data-type="${datas.card.type}" ></div>
                 </div>`;
         },
     
