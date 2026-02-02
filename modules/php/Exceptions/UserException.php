@@ -9,7 +9,7 @@ class UserException extends \BgaUserException
     public function __construct($code,$str)
     {
         $this->code = $code;
-        parent::__construct(Game::get()->translate($str));
+        parent::__construct($str);
     }
 }
 ?>
