@@ -136,7 +136,7 @@ trait DebugTrait
   function debug_Zombie(){
     $player = Players::getActive();
     $playerId = $player->getId();
-    $state = Game::get()->gamestate->state();
+    $state = Game::get()->gamestate->getCurrentMainState()->toArray();
     Game::get()->zombieTurn($state,$playerId);
   }
   
