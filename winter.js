@@ -1025,7 +1025,7 @@ function (dojo, declare) {
             //update player color :
             this.gamedatas.players[pid].color = color;
             this.gamedatas.players[pid].color_back = (color == "ffffff") ? "bbbbbb" : null;
-            let divSidePanel = $(`overall_player_board_${pid}`);
+            let divSidePanel = this.bga.playerPanels.getElement(pid).parentNode.parentNode.parentNode;
             divSidePanel.dataset.color = color;
             let divName = divSidePanel.querySelector(`#player_name_${pid}`).querySelector(`a:first-child` );
             divName.style.color = ` #${color}`;
