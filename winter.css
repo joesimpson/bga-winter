@@ -1962,6 +1962,7 @@
   justify-content: center;
   align-items: center;
   display: flex;
+  width: calc(1.1 * var(--winter_board_card_width));
 }
 #winter_cards_deck_container.selectable {
   cursor: pointer;
@@ -4027,6 +4028,10 @@ html.winter_background_none #winter_overall_background {
 }
 #winter_main_zone #winter_left_zone {
   width: calc(2 * var(--winter_board_card_width));
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 #winter_main_zone #winter_left_zone #winter_config_holder {
   max-width: 100%;

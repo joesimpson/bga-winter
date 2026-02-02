@@ -63,6 +63,10 @@ html.winter_background_none{//PREF_BACKGROUND_BGA
   
     #winter_left_zone{
         width: calc(2 * var(--winter_board_card_width));
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
 
         #winter_config_holder{
             max-width: 100%;

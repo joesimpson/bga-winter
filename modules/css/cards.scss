@@ -212,6 +212,7 @@ $card_height: var(--winter_board_card_height);
     justify-content: center;
     align-items: center;
     display: flex;
+    width: calc(1.1 * var(--winter_board_card_width));
     
     &.selectable{
         cursor: pointer;
