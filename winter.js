@@ -465,7 +465,7 @@ function (dojo, declare) {
     
             this.forEachPlayer((player) => {
                 let pId = player.id;
-                this.scoreCtrl[pId].toValue(player.score);
+                this.bga.playerPanels.getScoreCounter(pId).toValue(player.score);
                 this._counters[pId].nbtokens.toValue(player.nbtokens.hand);
             });
             this._counters['deckSize'].toValue(args.datas.deckSize);
@@ -670,7 +670,7 @@ function (dojo, declare) {
             debug('notif_addPoints : new score', args);
             let pId = args.player_id;
             let points = args.n;
-            this.scoreCtrl[pId].incValue(points);
+            this.bga.playerPanels.getScoreCounter(pId).incValue(points);
             await this.wait(100);
         },
         ///////////////////////////////////////////////////

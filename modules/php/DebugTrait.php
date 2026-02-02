@@ -576,4 +576,9 @@ trait DebugTrait
     Notifications::playAtPosition($player,$row,$col);
   }
 
+  function debug_addPoints(int $n = 5){
+
+    $player = Players::getCurrent();
+    Notifications::addPoints($player,$n, ("TEST Score +$n"));
+  }
 }
