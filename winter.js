@@ -268,7 +268,7 @@ function (dojo, declare) {
             let colors = args.playableColors;
             Object.values(colors).forEach( (color) => {
                 let buttonId = `btnChooseColor_${color}`;
-                let iconColor = this.formatIcon('flake_color-'+color);
+                let iconColor = this.formatIcon('flake_color-'+color, this.formatColorName(color));
                 let buttonText = this.fsr(  ("${color}") , { color: iconColor } );
                 let callbackColorSelection = (evt) => {
                     this.selectedColor = color;
@@ -825,7 +825,7 @@ function (dojo, declare) {
                     let token_color = 'token_color';
                     let token_color_type = 'token_color_type';
                     if(token_color in args && token_color_type in args) {
-                        args.token_color = this.formatIcon("flake_color-"+args.token_color_type);
+                        args.token_color = this.formatIcon("flake_color-"+args.token_color_type, this.formatColorName(args.token_color_type));
                         args.token_color_type = "";
                     }
 
@@ -836,11 +836,19 @@ function (dojo, declare) {
             return this.inherited(arguments);
         },
 
-        formatIcon(name, n = null) {
+        formatColorName(color){
+            switch(color){
+                case TOKEN_COUNTER_BLUE_LIGHT: return _("light blue");
+                case TOKEN_COUNTER_BLUE_DARK: return _("dark blue");
+            }
+            return '';
+        },
+
+        formatIcon(name, altText,n = null) {
             let type = name;
             let text = n == null ? '' : `<span class='winter_icon_qty' data-value="${n}">${n}</span>`;
             return `<div class="winter_icon_container winter_icon_container_${type}">
-                <div class="winter_icon winter_icon_${type}">${text}</div>
+                <div class="winter_icon winter_icon_${type}" alt="${altText}" title="${altText}">${text}</div>
                 </div>`;
         },
         formatIconWithMultiImages(name, nbSubIcons = null, filterSubIconType = null, n = null) {
@@ -881,13 +889,16 @@ function (dojo, declare) {
             let nPlayers = 0;
             this.forEachPlayer((player) => {
                 let isCurrent = player.id == this.player_id;
+                let colorName = this.formatColorName(player.t_color);
                 //let divPanel = `player_panel_content_${player.color}`;
                 //this.place('tplPlayerPanel', player, divPanel, 'after');
                 let panel = this.getPlayerPanelElement(player.id); 
                 panel.insertAdjacentHTML('beforeend', this.tplPlayerPanel(player) );
                 panel.querySelectorAll(".winter_icon_tokens").forEach((icon) => {
                     icon.dataset.type = player.t_color;
-                    icon.classList.add("winter_icon_flake_color-"+player.t_color)
+                    icon.classList.add("winter_icon_flake_color-"+player.t_color);
+                    icon.setAttribute("title",colorName);
+                    icon.setAttribute("alt",colorName);
                 });
                 
 
@@ -974,7 +985,7 @@ function (dojo, declare) {
             <div class="winter_first_player_holder"></div>
             <div class='winter_player_infos'>
                 <div class='winter_player_resource_line'>
-                    ${this.tplResourceCounter(player, 'tokens')}
+                    ${this.tplResourceCounter(player, 'tokens', this.formatColorName(player.t_color))}
                 </div>
             </div>
             </div>`;
@@ -982,13 +993,13 @@ function (dojo, declare) {
         /**
          * Use this tpl for any counters that represent qty of tokens
          */
-        tplResourceCounter(player, res, nbSubIcons = null, totalValue = null) {
+        tplResourceCounter(player, res, altText, nbSubIcons = null, totalValue = null) {
             let totalText = totalValue ==null ? '' : `<span id='winter_counter_${player.id}_${res}_total' class='winter_resource_${res}_total'>${totalValue}</span> `;
             return `
             <div class='winter_player_resource winter_resource_${res}'>
                 <span id='winter_counter_${player.id}_${res}' 
-                class='winter_resource_${res}'></span>${totalText}${ nbSubIcons!=null ? this.formatIconWithMultiImages(res, nbSubIcons) : this.formatIcon(res, null)}
-                <div class='winter_reserve' id='winter_reserve_${player.id}_${res}'></div>
+                class='winter_resource_${res}'></span>${totalText}${ nbSubIcons!=null ? this.formatIconWithMultiImages(res, nbSubIcons) : this.formatIcon(res,altText, null)}
+                <div class='winter_reserve' id='winter_reserve_${player.id}_${res}' alt="${altText}" title="${altText}"></div>
             </div>
             `;
         },
@@ -1013,13 +1024,18 @@ function (dojo, declare) {
             
             //Update player panel icon
             this.gamedatas.players[pid].t_color = color_type;
+            let colorName = this.formatColorName(color_type);
             divSidePanel.querySelectorAll(".winter_icon_tokens").forEach((icon) => {
                 icon.dataset.type = color_type;
                 Array.from(icon.classList).filter(element => element.startsWith("winter_icon_flake_color")).forEach(function(oldClass) {
                     icon.classList.remove(oldClass);
                 });
                 icon.classList.add("winter_icon_flake_color-"+color_type);
+                icon.setAttribute("title",colorName);
+                icon.setAttribute("alt",colorName);
             });
+            document.getElementById(`winter_reserve_${pid}_tokens`).setAttribute("title",colorName);
+            document.getElementById(`winter_reserve_${pid}_tokens`).setAttribute("alt",colorName);
 
         },
 
