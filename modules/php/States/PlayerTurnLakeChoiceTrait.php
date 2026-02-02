@@ -86,7 +86,7 @@ trait PlayerTurnLakeChoiceTrait
         }
         self::trace("actLake($lakeIndex,)");
 
-        $player = Players::getCurrent();
+        $player = Players::getActive();
         $pId = $player->getId();
         if (!$auto) {
             $this->addStep();

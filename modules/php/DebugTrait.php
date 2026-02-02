@@ -91,14 +91,58 @@ trait DebugTrait
     $query->delete()->run();
   }
 
+  
   ////////////////////////////////////////////////////
   
-  function debug_GoToNextPlayer(){
-    $this->gamestate->jumpToState(ST_NEXT_TURN);
+  /**
+   * Example of debug function.
+   * Here, jump to a state you want to test (by default, jump to next player state)
+   * You can trigger it on Studio using the Debug button on the right of the top bar.
+   */
+  public function debug_goToState(int $state = ST_START_CARD) {
+      $this->gamestate->jumpToState($state);
   }
-  function debug_GoToPlayerTurn(){
-    $this->gamestate->jumpToState(ST_PLAYER_TURN);
+
+  /**
+   * Another example of debug function, to easily test the zombie code.
+   */
+  public function debug_playOneMove() {
+      $this->debug->playUntil(fn(int $count) => $count == 1);
   }
+
+  /**
+   * TEST ZOMBIE BOT UNTIL END
+   */
+  public function debug_playToEnd() {
+    $security =0;
+    $end = false;
+    $this->debug_ClearLogs();
+    $isEndSQL = "SELECT count(*) FROM `gamelog` where gamelog_notification like '%endTriggered%'"; 
+      
+    while (!$end && $security < 25) {
+      $security++;
+      //$this->debug_playOneMove();
+      foreach($this->gamestate->getActivePlayerList() as $playerId) {
+          $playerId = (int)$playerId;
+          $this->zombieTurn($this->gamestate->getCurrentState($playerId)->toArray(), $playerId);
+      }
+      
+      $res = (int) $this->getUniqueValueFromDB($isEndSQL) ;
+      $end = ($res > 0);
+    }
+  }
+  
+  function debug_Zombie(){
+    $player = Players::getActive();
+    $playerId = $player->getId();
+    $state = Game::get()->gamestate->state();
+    Game::get()->zombieTurn($state,$playerId);
+  }
+  
+  ////////////////////////////////////////////////////
+  
+  ////////////////////////////////////////////////////
+   
   function debug_GoToPhase(int $phase){
     Globals::setPhase($phase);
     Notifications::newPhase($phase);
@@ -186,13 +230,6 @@ trait DebugTrait
     foreach($players as $player) $player->setScore(0);
     $this->debug_UI();
     $this->gamestate->jumpToState(ST_END_SCORING);
-  }
-
-  function debug_Zombie(){
-    $player = Players::getActive();
-    $playerId = $player->getId();
-    $state = Game::get()->gamestate->state();
-    Game::get()->zombieTurn($state,$playerId);
   }
 
   function debug_RealTime(): void {

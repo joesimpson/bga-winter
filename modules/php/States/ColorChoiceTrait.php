@@ -40,7 +40,7 @@ trait ColorChoiceTrait
     }
     self::trace("actChooseColor($color,$auto)");
 
-    $player = Players::getCurrent();
+    $player = Players::getActive();
     $pId = $player->getId();
     $this->addStep();
 

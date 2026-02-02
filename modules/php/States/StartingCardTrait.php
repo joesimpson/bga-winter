@@ -52,7 +52,7 @@ trait StartingCardTrait
     if(!$auto) Game::get()->checkVersion($version);
     self::trace("actPlayStartingCard($dir,$row, $col,$auto)");
 
-    $player = Players::getCurrent();
+    $player = Players::getActive();
     $pId = $player->getId();
     $this->addStep();
 

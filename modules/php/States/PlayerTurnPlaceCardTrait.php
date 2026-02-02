@@ -79,8 +79,8 @@ trait PlayerTurnPlaceCardTrait
   {
     if (!$auto) Game::get()->checkVersion($version);
     self::trace("actPlaceCard($dir,$row, $col,)");
-
-    $player = Players::getCurrent();
+    
+    $player = Players::getActive();
     $pId = $player->getId();
     $this->addStep();
     

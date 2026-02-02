@@ -218,12 +218,16 @@ class Game extends \Bga\GameFramework\Table
                     return;
                 case 'placeCard':
                     //Avoid future technical issues if we keep the card drawn in hand !
-                    $coord = $state['args']['playableCoords'][0];
+                    $stateArgs = $this->argPlaceCard();
+                    $playableCoords = $stateArgs['playableCoords'];
+                    $coord = $playableCoords[array_rand($playableCoords)];
                     $this->actPlaceCard($coord['dirs'][0],$coord['row'],$coord['col'],0,true);
                     return;
                 case 'colorChoice':
                     //The next player will need to have colors already chosen
-                    $this->actChooseColor(TOKEN_COUNTER_BLUE_DARK,0,true);
+                    $colors = $this->argColorChoice()['playableColors'];
+                    $color = $colors[array_rand($colors)];
+                    $this->actChooseColor($color,0,true);
                     //The action already changes state
                     //$this->gamestate->nextState("zombiePass");
                     return;
@@ -233,6 +237,15 @@ class Game extends \Bga\GameFramework\Table
                     //The action already changes state
                     //$this->gamestate->nextState("zombiePass");
                     return;
+                case 'playerTurn':
+                    $args = $this->argPlayerTurn();
+                    $playableTokens = $args['spots_for_tokens'];
+                    if(count($playableTokens) > 0){
+                        $spot = $playableTokens[array_rand($playableTokens)];
+                        $this->actPlaceToken($spot[0],$spot[1], 0, true);
+                        return;
+                    }
+                    //else use default
                 default:
                 {
                     $this->gamestate->nextState("zombiePass");

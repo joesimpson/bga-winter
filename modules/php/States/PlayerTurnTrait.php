@@ -99,7 +99,7 @@ trait PlayerTurnTrait
       Game::get()->checkVersion($version);
     }
 
-    $player = Players::getCurrent();
+    $player = Players::getActive();
     $pId = $player->getId();
     $this->addStep();
 
@@ -129,7 +129,7 @@ trait PlayerTurnTrait
   {
     Game::get()->checkVersion($version);
 
-    $player = Players::getCurrent();
+    $player = Players::getActive();
     $pId = $player->getId();
     $this->addStep();
 
@@ -179,7 +179,7 @@ trait PlayerTurnTrait
     Game::get()->checkVersion($version);
     self::trace("actMoveCard($cardId, $dir,$row, $col,)");
 
-    $player = Players::getCurrent();
+    $player = Players::getActive();
     $pId = $player->getId();
     $this->addStep();
     
@@ -260,7 +260,7 @@ trait PlayerTurnTrait
     Game::get()->checkVersion($version);
     self::trace("actPrepareMoveCard($cardId, )");
 
-    $player = Players::getCurrent();
+    $player = Players::getActive();
     $pId = $player->getId();
     $this->addStep();
     
@@ -307,11 +307,11 @@ trait PlayerTurnTrait
    *
    * @throws BgaUserException
    */
-  public function actPlaceToken(int $row, int $col,#[IntParam(name: 'v')] int $version,): void
+  public function actPlaceToken(int $row, int $col,#[IntParam(name: 'v')] int $version, bool $auto = false,): void
   {
-    Game::get()->checkVersion($version);
+    if (!$auto) Game::get()->checkVersion($version);
 
-    $player = Players::getCurrent();
+    $player = Players::getActive();
     $pId = $player->getId();
     $this->addStep();
 
@@ -354,7 +354,7 @@ trait PlayerTurnTrait
   {
     Game::get()->checkVersion($version);
     
-    $player = Players::getCurrent();
+    $player = Players::getActive();
     $pId = $player->getId();
     $this->addStep();
 

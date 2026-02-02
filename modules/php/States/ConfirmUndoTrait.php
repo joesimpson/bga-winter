@@ -64,7 +64,7 @@ trait ConfirmUndoTrait
             //self::checkAction('actConfirmTurn');
         }
 
-        $player = Players::getCurrent();
+        $player = Players::getActive();
         $pId = $player->getId(); 
 
         $phase = Globals::getPhase();
@@ -80,7 +80,7 @@ trait ConfirmUndoTrait
     public function actRestart(#[IntParam(name: 'v')] int $version)
     {
         Game::get()->checkVersion($version);
-        $player = Players::getCurrent();
+        $player = Players::getActive();
         $pId = $player->getId();
         if (Globals::getChoices($pId) < 1) {
             throw new UnexpectedException(404,'No choice to undo. You may need to reload the page.');
@@ -92,7 +92,7 @@ trait ConfirmUndoTrait
     public function actUndoToStep(int $stepId, #[IntParam(name: 'v')] int $version): void
     {
         Game::get()->checkVersion($version);
-        $player = Players::getCurrent();
+        $player = Players::getActive();
         $pId = $player->getId();
         $steps = Log::getUndoableSteps($pId);
         if(!in_array($stepId,$steps)){
