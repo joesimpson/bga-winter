@@ -3805,6 +3805,12 @@ body[data-winter_display_coord="2"] #winter_map_container .winter_card_location_
 #player_config #show-settings:hover .fa-primary {
   transform: rotate(180deg);
 }
+#player_config #winter_config_settings, #player_config #help-mode-switch, #player_config #show-settings {
+  display: none;
+}
+#player_config .player_config_row {
+  border-bottom: 0 !important;
+}
 
 body.notouch-device #help-mode-switch:hover {
   outline: 2px solid green;

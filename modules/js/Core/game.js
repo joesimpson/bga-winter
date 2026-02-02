@@ -589,6 +589,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
      ******* SETTINGS ********
      ************************/
     setupSettings() {
+      /* REMOVED : BGA Guideline : keep settings in BGA Hamburger menu
       dojo.connect($('show-settings'), 'onclick', () => this.toggleSettings());
       this.addTooltip('show-settings', '', _('Display some settings about the game.'));
       let container = $('settings-controls-container');
@@ -677,6 +678,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
         }
         this.changeSetting(settingName, value);
       });
+      */
     },
 
     changeSetting(settingName, value) {

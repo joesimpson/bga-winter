@@ -121,6 +121,13 @@
             transform: rotate(180deg);
         }
     }
+
+    //REMOVED : BGA Guideline : keep settings in BGA Hamburger menu
+    #winter_config_settings, #help-mode-switch, #show-settings{ display: none;}
+    .player_config_row{
+        border-bottom: 0 !important;
+    }
+
 }
 body.notouch-device{ 
     #help-mode-switch { 

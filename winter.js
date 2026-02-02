@@ -926,7 +926,7 @@ function (dojo, declare) {
             
             let chk = $('help-mode-chk');
             dojo.connect(chk, 'onchange', () => this.toggleHelpMode(chk.checked));
-            this.addTooltip('help-mode-switch', '', _('Toggle help/safe mode'));
+            //this.addTooltip('help-mode-switch', '', _('Toggle help/safe mode'));
   
             this._settingsModal = new customgame.modal('showSettings', {
                 class: 'winter_popin',
@@ -949,7 +949,7 @@ function (dojo, declare) {
                 <div class="player_config_row" id="turn_counter_wrapper">
                     <span id='winter_counter_phase'>${this.formatPhaseName(phase)}</span>
                 </div>
-                <div class="player_config_row">
+                <div class="player_config_row" id="winter_config_settings">
                     <div id="help-mode-switch">
                         <input type="checkbox" class="checkbox" id="help-mode-chk" />
                         <label class="label" for="help-mode-chk">
