@@ -4346,9 +4346,11 @@ body.notouch-device #help-mode-switch:hover {
 }
 
 #btnRotateDir, #btnScrollToPlaceToken {
+  /* BGA guideline : no custom color :( 
   background: #89a538;
   border: 1px solid #697f2b;
   color: white;
+  */
 }
 #btnRotateDir .winter_icon_rotate,
 #btnRotateDir .winter_icon_locate, #btnScrollToPlaceToken .winter_icon_rotate,
