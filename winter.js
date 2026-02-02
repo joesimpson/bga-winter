@@ -305,7 +305,9 @@ function (dojo, declare) {
                     : callbackDrawCard
                     ;
                 this.addPrimaryActionButtonWithConfirm("btnDrawCard", iconDraw +_("Draw"), _("Draw"), callbackDrawCard, prefConfirmDraw ? confirmMsg : null );
-                this.onClick(`winter_cards_deck_container`, callbackDrawCardWithConfirm );
+                let deckContainer = $('winter_cards_deck_container');
+                this.onClick(deckContainer.id, callbackDrawCardWithConfirm );
+                deckContainer.setAttribute("title",_("Draw"));
             }
             
             //Manage various actions on same cards :
@@ -328,6 +330,7 @@ function (dojo, declare) {
                     });
                 };
                 this.onClick(`${div.id}`, callbackCardSelection);
+                div.setAttribute("title",_("Select that card"));
             });
             
             if(possibleActions.includes('actPlaceToken')){
@@ -343,6 +346,7 @@ function (dojo, declare) {
                         this.performAction('actPlaceToken', { 'row': row, 'col': col });
                     };
                     this.onClick(`${spotDiv.id}`, callbackSpotSelection);
+                    spotDiv.setAttribute("title",_("Place counter here"));
 
 
                 });
@@ -362,7 +366,9 @@ function (dojo, declare) {
                     let callbackSpotSelection = (evt) => {
                         this.performAction('actRemoveToken', { 'tokenId':tokenId });
                     };
-                    this.onClick(`winter_token-${tokenId}`, callbackSpotSelection);
+                    let divToken = $(`winter_token-${tokenId}`);
+                    this.onClick(`${divToken.id}`, callbackSpotSelection);
+                    divToken.setAttribute("title",_("Remove this counter"));
                 });
                 //Add a button to help locate these tokens spots :
                 this.nextTokenId = removableTokens[0];
@@ -426,6 +432,7 @@ function (dojo, declare) {
                         this.performAction('actLake', { 'lakeIndex': lake_id });
                     };
                     this.onClick(`${div.id}`, callbackCardSelection);
+                    div.setAttribute("title",_("Keep this group of cards"));
                 });
             });
 
@@ -684,7 +691,10 @@ function (dojo, declare) {
             this.empty('winter_map_token_places');
             [...document.querySelectorAll('.winter_card')].forEach((elt) => { 
                 delete elt.dataset.lake;
+                elt.removeAttribute("title");//title hint depends on current action
             });
+            let deckContainer = $('winter_cards_deck_container');
+            deckContainer.removeAttribute("title");
         },
 
         displayCardSpotsSelection: function(serverAction, card, playableCoords, ) {
@@ -719,6 +729,7 @@ function (dojo, declare) {
                     this.performAction(serverAction, { dir: this.chosenDir, row: row,  col: col});
                 };
                 this.onClick(`${spot.id}`, callbackSpotSelection);
+                spot.setAttribute("title",_("Place card here"));
             });
         },
 
@@ -732,7 +743,7 @@ function (dojo, declare) {
             let allPlayableDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
             this.chosenDir = card.dir;
             let buttonText = _(`Rotate card`);
-            this.addSecondaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + buttonText, () => {
+            this.addSecondaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + buttonText,buttonText, () => {
                 this.chosenDir = allPlayableDirs [ (allPlayableDirs.indexOf(this.chosenDir) + 1) % allPlayableDirs.length ];
                 document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
                     oCard.dataset.dir = this.chosenDir;
@@ -755,6 +766,7 @@ function (dojo, declare) {
                     //}
                 };
                 this.onClick(`${spot.id}`, callbackSpotSelection);
+                spot.setAttribute("title",_("Place card here"));
             });
         },
 

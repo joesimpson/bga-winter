@@ -1337,7 +1337,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
         text = _('Cancel');
       }
 
-      this.addSecondaryActionButton('btnCancel', text, () => this.clearClientState());
+      this.addSecondaryActionButton('btnCancel', text,text, () => this.clearClientState());
     },
 
     clearClientState() {
@@ -1390,7 +1390,7 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
 
         if ($('btnCancelChoice')) $('btnCancelChoice').remove();
         if (selectedElements.length  > 0) {
-          this.addSecondaryActionButton('btnCancelChoice', _('Cancel selection'), () => {
+          this.addSecondaryActionButton('btnCancelChoice', _('Cancel selection'), _('Cancel selection'), () => {
             selectedElements = [];
             updateStatus();
           });

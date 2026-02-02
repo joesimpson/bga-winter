@@ -43,6 +43,7 @@ trait DebugTrait
   ////////////////////////////////////////////////////
 
   function debug_Setup(){
+    $player = Players::getCurrent();
     Game::get()->trace("debug_Setup - START ////////////////////////////////////////////////////");
     $this->debug_ClearLogs();
     Log::disable();
@@ -76,11 +77,11 @@ trait DebugTrait
       Notifications::newPlayerColor($playerData,$expectedColor);
     }
     
+    Notifications::playAtPosition($player,0,0);
+
     $this->addCheckpoint(ST_START_CARD);
     $this->gamestate->jumpToState(ST_START_CARD);
     
-    $player = Players::getCurrent();
-    Notifications::playAtPosition($player,0,0);
     Game::get()->trace("debug_Setup - END ////////////////////////////////////////////////////");
   }
 
@@ -413,7 +414,7 @@ trait DebugTrait
   }
   
   //Objective : test that DARK BLUE can select a card to move to an unknown destination that would be revealed after a lake melts (because a card of that lake may be 1 row / 1 col ahead of another lake)
-  function debug_lakeGivesSpotsForMove(int $testCase){
+  function debug_lakeGivesSpotsForMove(int $testCase=0){
     Game::get()->trace("debug_lakeGivesSpotsForMove - START ////////////////////////////////////////////////////");
     Notifications::message("debug_lakeGivesSpotsForMove ////////////////////////////////////////////////////");
     $player = Players::getCurrent();
