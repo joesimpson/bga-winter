@@ -184,7 +184,7 @@ class Game extends \Bga\GameFramework\Table
         $result["lastPlayed"] = Globals::getLastPlayedDatas();
         $result["tokens"] = Tokens::getUiData($current_player_id);
         $result["prefs"] = Preferences::getUiData($current_player_id);
-        $result["version"] = intval($this->gamestate->table_globals[BGA_GAMESTATE_GAMEVERSION]);
+        $result["version"] = intval($this->bga->tableOptions->get(BGA_GAMESTATE_GAMEVERSION));
 
         return $result;
     }
@@ -271,7 +271,8 @@ class Game extends \Bga\GameFramework\Table
     */
     public function checkVersion(int $clientVersion)
     {
-        if ($clientVersion != intval($this->gamestate->table_globals[BGA_GAMESTATE_GAMEVERSION])) {
+        $gameVersion = $this->bga->tableOptions->get(BGA_GAMESTATE_GAMEVERSION);
+        if ($clientVersion != intval($gameVersion)) {
             throw new UserException(555,'!!!checkVersion');
         }
     }
