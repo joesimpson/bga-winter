@@ -26,6 +26,32 @@
     PREFIX FOR THIS GAME PROJECT : "winter" because game name is short enough :)
 */
  
+#winter_overall_background{
+    background-position: 0%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    left: 0;
+    position: fixed;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -10;
+}
+
+body[data-winter_background_style='1']{//PREF_BACKGROUND_BLUE
+    #winter_overall_background
+    {
+        background-image:url("img/background/blue_theme.jpg");
+        opacity: 0.9;
+    }
+}
+body[data-winter_background_style='2']{//PREF_BACKGROUND_BGA
+    #winter_overall_background
+    {
+        visibility: hidden;
+    }
+}
+
 #winter_main_zone{
     
     display: flex;

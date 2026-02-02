@@ -74,4 +74,15 @@ $game_preferences = [
     "default"=> PREF_UI_DISPLAY_COORDINATES_DISABLED,
     'attribute' => 'winter_display_coord',
   ],
+  
+  PREF_BACKGROUND => [
+    'name' => totranslate('Background'),
+    'needReload' => false,
+    'values' => [
+      PREF_BACKGROUND_BLUE=> [ 'name' => 'Blue Theme'],
+      PREF_BACKGROUND_BGA => [ 'name' => 'BGA standard' ],
+    ],
+    "default"=> PREF_BACKGROUND_BLUE,
+    'attribute' => 'winter_background_style',
+  ],
 ];

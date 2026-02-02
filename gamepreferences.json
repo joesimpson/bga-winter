@@ -55,5 +55,19 @@
         },
         "default": 0,
         "attribute": "winter_display_coord"
+    },
+    "111": {
+        "name": "Background",
+        "needReload": false,
+        "values": {
+            "1": {
+                "name": "Blue Theme"
+            },
+            "2": {
+                "name": "BGA standard"
+            }
+        },
+        "default": 1,
+        "attribute": "winter_background_style"
     }
 }
