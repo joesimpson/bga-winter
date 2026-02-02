@@ -244,8 +244,8 @@ function (dojo, declare) {
                 <i class="fa6 fa6-circle fa6-stack-2x"></i>
                 <i class="fa6 fa6-check fa6-stack-1x winter_icon_check"></i>
             </span>`;
-            let confirmText = iconConfirm + _('Confirm');
-            this.addPrimaryActionButton('btnConfirmTurn', confirmText, () => {
+            let confirmText = _('Confirm');
+            this.addPrimaryActionButton('btnConfirmTurn', iconConfirm +confirmText, confirmText, () => {
                     this.performAction('actConfirmTurn');
                 }, 'restartAction');
         },
@@ -304,7 +304,7 @@ function (dojo, declare) {
                     }
                     : callbackDrawCard
                     ;
-                this.addPrimaryActionButtonWithConfirm("btnDrawCard", iconDraw +_("Draw"), callbackDrawCard, prefConfirmDraw ? confirmMsg : null );
+                this.addPrimaryActionButtonWithConfirm("btnDrawCard", iconDraw +_("Draw"), _("Draw"), callbackDrawCard, prefConfirmDraw ? confirmMsg : null );
                 this.onClick(`winter_cards_deck_container`, callbackDrawCardWithConfirm );
             }
             
@@ -348,7 +348,8 @@ function (dojo, declare) {
                 });
                 //Add a button to help locate these tokens spots :
                 this.nextToken = spots_for_tokens[0];
-                this.addSecondaryActionButton(`btnScrollToPlaceToken`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i><i class="fa6 fa6-bullseye winter_icon_locate"></i>' + _(`Locate next counter...`), () => {
+                let buttonText = _(`Locate next counter...`);
+                this.addSecondaryActionButton(`btnScrollToPlaceToken`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i><i class="fa6 fa6-bullseye winter_icon_locate"></i>' + buttonText,buttonText, () => {
                     this.nextToken = spots_for_tokens [ (spots_for_tokens.indexOf(this.nextToken) + 1) % spots_for_tokens.length ];
                     this.scrollBoardTo(this.nextToken[0], this.nextToken[1]);
                 });
@@ -365,7 +366,8 @@ function (dojo, declare) {
                 });
                 //Add a button to help locate these tokens spots :
                 this.nextTokenId = removableTokens[0];
-                this.addSecondaryActionButton(`btnScrollToPlaceToken`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i><i class="fa6 fa6-bullseye winter_icon_locate"></i>' + _(`Locate next counter...`), () => {
+                let buttonText = _(`Locate next counter...`);
+                this.addSecondaryActionButton(`btnScrollToPlaceToken`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i><i class="fa6 fa6-bullseye winter_icon_locate"></i>' + buttonText,buttonText, () => {
                     this.nextTokenId = removableTokens [ (removableTokens.indexOf(this.nextTokenId) + 1) % removableTokens.length ];
                     let nextToken = $(`winter_token-${this.nextTokenId}`);
                     if(! nextToken) return;
@@ -388,7 +390,7 @@ function (dojo, declare) {
                 let iconDiscard = `
                     <i class="fa6 fa6-trash-arrow-up winter_icon_discard"></i>
                 `;
-                this.addPrimaryActionButton('btnDiscardCard', iconDiscard + _('Discard'), () => {
+                this.addPrimaryActionButton('btnDiscardCard', iconDiscard + _('Discard'), _("Discard"), () => {
                     this.performAction('actRemoveCard', { 'cardId':cardId });
                 });
             }
@@ -396,7 +398,7 @@ function (dojo, declare) {
             if(args.movingCreates2Lakes) {
                 //IN this case we will change state to let player choose according to melt results
                 let iconMove = `<i class="fa6-solid fa6-up-down-left-right winter_icon_move"></i>`;
-                this.addPrimaryActionButton("btnMoveCardSelect", iconMove + _("Move"), (evt) => {
+                this.addPrimaryActionButton("btnMoveCardSelect", iconMove + _("Move"),_("Move"), (evt) => {
                     this.performAction('actPrepareMoveCard', { 'cardId':cardId });
                 });
             }
@@ -689,7 +691,8 @@ function (dojo, declare) {
             
             let allPlayableDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
             this.chosenDir = allPlayableDirs[0];
-            this.addSecondaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + _(`Rotate card`), () => {
+            let buttonText = _(`Rotate card`);
+            this.addSecondaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + buttonText,buttonText, () => {
                 this.chosenDir = allPlayableDirs [ (allPlayableDirs.indexOf(this.chosenDir) + 1) % allPlayableDirs.length ];
                 document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
                     oCard.dataset.dir = this.chosenDir;
@@ -728,7 +731,8 @@ function (dojo, declare) {
         displayCardSpotsSelectionForDir: function(serverAction, card, playableCoords, ) {
             let allPlayableDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
             this.chosenDir = card.dir;
-            this.addSecondaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + _(`Rotate card`), () => {
+            let buttonText = _(`Rotate card`);
+            this.addSecondaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + buttonText, () => {
                 this.chosenDir = allPlayableDirs [ (allPlayableDirs.indexOf(this.chosenDir) + 1) % allPlayableDirs.length ];
                 document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
                     oCard.dataset.dir = this.chosenDir;

@@ -176,15 +176,16 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
         if (args.args && args.args.previousSteps) {
           let lastStep = Math.max(...args.args.previousSteps);
           if (lastStep > 0){
-            this.addDangerActionButton('btnTextUndoLastStep', _('Undo last step'), () => this.undoToStep(lastStep), 'restartAction');
-            this.addDangerActionButton('btnIconUndoLastStep', '<i class="fa fa-undo"></i>', () => this.undoToStep(lastStep), 'restartAction');
-            this.addTooltip('btnIconUndoLastStep', '', _('Undo last step'));
+            this.addDangerActionButton('btnTextUndoLastStep', _('Undo last step'),_('Undo last step'), () => this.undoToStep(lastStep), 'restartAction');
+            this.addDangerActionButton('btnIconUndoLastStep', '<i class="fa fa-undo"></i>',_('Undo last step'), () => this.undoToStep(lastStep), 'restartAction');
+            //this.addTooltip('btnIconUndoLastStep', '', _('Undo last step'));
           }
         }
 
         // Restart whole turn
         this.addDangerActionButton(
           'btnTextRestartTurn',
+          _('Restart turn'),
           _('Restart turn'),
           () => {
             //this.stopActionTimer();
@@ -195,12 +196,13 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
         this.addDangerActionButton(
           'btnIconRestartTurn',
           '<i class="fa fa-undo"></i><i class="fa fa-undo"></i>',
+          _('Restart turn'),
           () => {
             this.performAction('actRestart');
           },
           'restartAction'
         );
-        this.addTooltip('btnIconRestartTurn', '', _('Restart turn'));
+        //this.addTooltip('btnIconRestartTurn', '', _('Restart turn'));
       }
 
       // Call appropriate method
@@ -445,19 +447,19 @@ define(['dojo', 'dojo/_base/declare', g_gamethemeurl + 'modules/js/vendor/nouisl
     /*
      * Add a blue/grey button if it doesn't already exists
      */
-    addPrimaryActionButton(id, text, callback, zone = 'customActions') {
-      this.addPrimaryActionButtonWithConfirm(id, text, callback, null, zone);
+    addPrimaryActionButton(id, text, title, callback, zone = 'customActions') {
+      this.addPrimaryActionButtonWithConfirm(id, text, title, callback, null, zone);
     },
 
-    addPrimaryActionButtonWithConfirm(id, text, callback, confirmText, zone = 'customActions') {
-      if (!$(id)) this.statusBar.addActionButton(text, callback, {'id': id, 'destination': $(zone), 'color': 'blue', 'confirm': confirmText, });
+    addPrimaryActionButtonWithConfirm(id, text, title, callback, confirmText, zone = 'customActions') {
+      if (!$(id)) this.statusBar.addActionButton(text, callback, {'id': id, 'destination': $(zone), 'color': 'blue', 'confirm': confirmText, 'title':title, });
     },
-    addSecondaryActionButton(id, text, callback, zone = 'customActions') {
-      if (!$(id)) this.statusBar.addActionButton(text, callback, {'id': id, 'destination': $(zone), 'color': 'gray', });
+    addSecondaryActionButton(id, text, title, callback, zone = 'customActions') {
+      if (!$(id)) this.statusBar.addActionButton(text, callback, {'id': id, 'destination': $(zone), 'color': 'gray', 'title':title, });
     },
 
-    addDangerActionButton(id, text, callback, zone = 'customActions') {
-      if (!$(id)) this.statusBar.addActionButton(text, callback, {'id': id, 'destination': $(zone), 'color': 'red', });
+    addDangerActionButton(id, text, title, callback, zone = 'customActions') {
+      if (!$(id)) this.statusBar.addActionButton(text, callback, {'id': id, 'destination': $(zone), 'color': 'red', 'title':title, });
     },
     /**
      * div_html is string not node
