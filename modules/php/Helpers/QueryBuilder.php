@@ -1,7 +1,9 @@
 <?php
 namespace Bga\Games\winter\Helpers;
 
-class QueryBuilder extends \APP_DbObject
+use Bga\GameFramework\Table;
+
+class QueryBuilder
 {
     private $table,
         $cast,
@@ -51,7 +53,7 @@ class QueryBuilder extends \APP_DbObject
         $this->multipleInsert(array_keys($fields), $overwriteIfExists)->values([
             array_values($fields),
         ]);
-        return $this->DbGetLastId();
+        return Table::DbGetLastId();
     }
 
     /*
@@ -73,7 +75,7 @@ class QueryBuilder extends \APP_DbObject
         // Fetch starting index if not provided
         $startingId = null;
         if ($this->insertPrimaryIndex === false) {
-            $startingId = (int) $this->getUniqueValueFromDB(
+            $startingId = (int) Table::getUniqueValueFromDB(
                 "SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = '{$this->table}';"
             );
         }
@@ -97,7 +99,7 @@ class QueryBuilder extends \APP_DbObject
         }
 
         $this->sql .= implode(',', $vals);
-        $this->DbQuery($this->sql);
+        Table::DbQuery($this->sql);
         if ($this->log) {
             Log::addEntry([
                 'table' => $this->table,
@@ -180,7 +182,7 @@ class QueryBuilder extends \APP_DbObject
             }
 
             $this->assembleQueryClauses();
-            $objList = $this->getObjectListFromDB($this->sql);
+            $objList = Table::getObjectListFromDB($this->sql);
             Log::addEntry([
                 'table' => $this->table,
                 'primary' => $this->primary,
@@ -191,8 +193,8 @@ class QueryBuilder extends \APP_DbObject
         }
 
         $this->assembleQueryClauses();
-        $this->DbQuery($this->sql);
-        return $this->DbAffectedRow();
+        Table::DbQuery($this->sql);
+        return Table::DbAffectedRow();
     }
 
     /*********************************
@@ -233,7 +235,7 @@ class QueryBuilder extends \APP_DbObject
         if ($debug) {
             throw new \feException($this->sql);
         }
-        $res = $this->getObjectListFromDB($this->sql);
+        $res = Table::getObjectListFromDB($this->sql);
         $oRes = [];
         foreach ($res as $row) {
             $id = $row['result_associative_index'];
@@ -278,7 +280,7 @@ class QueryBuilder extends \APP_DbObject
         $field = is_null($field) ? '*' : "`$field`";
         $this->sql = "SELECT $func($field) FROM `$this->table`";
         $this->assembleQueryClauses();
-        return (int) $this->getUniqueValueFromDB($this->sql);
+        return (int) Table::getUniqueValueFromDB($this->sql);
     }
 
     public function count($field = null)
@@ -289,7 +291,7 @@ class QueryBuilder extends \APP_DbObject
     {
         $this->sql = "SELECT COUNT( distinct $field) FROM `$this->table`";
         $this->assembleQueryClauses();
-        return (int) $this->getUniqueValueFromDB($this->sql);
+        return (int) Table::getUniqueValueFromDB($this->sql);
     }
 
     public function min($field)

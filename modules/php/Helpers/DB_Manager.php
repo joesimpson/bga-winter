@@ -2,7 +2,7 @@
 namespace Bga\Games\winter\Helpers;
 use Bga\Games\winter\Game;
 
-class DB_Manager extends \APP_DbObject
+class DB_Manager
 {
     protected static $table = null;
     protected static $primary = null;

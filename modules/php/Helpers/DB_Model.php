@@ -2,7 +2,7 @@
 namespace Bga\Games\winter\Helpers;
 use Bga\Games\winter\Game;
 
-abstract class DB_Model extends \APP_DbObject implements \JsonSerializable
+abstract class DB_Model implements \JsonSerializable
 {
   protected $table = null;
   protected $primary = null;

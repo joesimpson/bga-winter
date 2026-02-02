@@ -10,7 +10,7 @@ use Bga\Games\winter\Managers\Tokens;
 use Bga\Games\winter\Models\Card;
 use Bga\Games\winter\Models\Player;
 
-abstract class Utils extends \APP_DbObject
+abstract class Utils
 {
     public static function filter(&$data, $filter)
     {

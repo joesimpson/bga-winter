@@ -1,6 +1,7 @@
 <?php
 namespace Bga\Games\winter;
 
+use Bga\GameFramework\Table;
 use Bga\Games\winter\Core\Globals;
 use Bga\Games\winter\Core\Notifications;
 use Bga\Games\winter\Core\Stats;
@@ -127,7 +128,7 @@ trait DebugTrait
           $this->zombieTurn($this->gamestate->getCurrentState($playerId)->toArray(), $playerId);
       }
       
-      $res = (int) $this->getUniqueValueFromDB($isEndSQL) ;
+      $res = (int) Table::getUniqueValueFromDB($isEndSQL) ;
       $end = ($res > 0);
     }
   }
