@@ -246,7 +246,7 @@ function (dojo, declare) {
             let confirmText = _('Confirm');
             this.addPrimaryActionButton('btnConfirmTurn', iconConfirm +confirmText, confirmText, () => {
                     this.performAction('actConfirmTurn');
-                }, 'restartAction');
+                }, 'customActions');
         },
 
         onEnteringStateStartingCard(args){
