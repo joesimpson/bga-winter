@@ -218,8 +218,8 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (
      */
     onLeavingState(stateName) {
       debug('Leaving state: ' + stateName);
-      if (this.isFastMode()) return;
       this.clearPossible();
+      if (this.isFastMode()) return;
 
       // Call appropriate method
       var methodName = 'onLeavingState' + stateName.charAt(0).toUpperCase() + stateName.slice(1);
