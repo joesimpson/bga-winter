@@ -32,6 +32,7 @@ trait PlayerTurnPlaceCardTrait
 
     $phase = Globals::getPhase();
     $playableCoords = [];
+    $possibleActions = [];
     
     switch($phase){
       case PHASE_FREEZING:
@@ -42,6 +43,7 @@ trait PlayerTurnPlaceCardTrait
         }
         break;
       case PHASE_THAWING:
+        $possibleActions = ['actPlaceCard',];
         //In this case the card comes from a move and we NEED to add tokens
         $token_color = $player->getTokensColor();
         $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
@@ -53,6 +55,9 @@ trait PlayerTurnPlaceCardTrait
         //  $playableCoords[] = [$target['row'], $target['col']];
         //}
         $playableCoords = $targetsForCard;
+        if(count($playableCoords) == 0){
+          $possibleActions[] = 'actDiscardCard';
+        }
         break;
       default: 
         break;
@@ -61,6 +66,7 @@ trait PlayerTurnPlaceCardTrait
     $args = [
       "card" => $card,
       "playableCoords" => $playableCoords,
+      "pActions" => $possibleActions,
 
     ];
       
@@ -150,4 +156,34 @@ trait PlayerTurnPlaceCardTrait
     $this->gamestate->nextState("playCard");
   }
    
+  
+  /**
+   * Player action of removing a card in phase 2 if no possible place after a lake melts
+   *
+   * @throws BgaUserException
+   */
+  public function actDiscardCard(int $cardId,#[IntParam(name: 'v')] int $version,): void
+  {
+    Game::get()->checkVersion($version);
+
+    $player = Players::getActive();
+    $pId = $player->getId();
+    $this->addStep();
+
+    // check input values
+    $args = $this->argPlaceCard();
+    if (!in_array('actDiscardCard', $args['pActions'])) {
+      throw new UnexpectedException(130,"Invalid action actDiscardCard");
+    }
+    $card = $args['card'];
+    if($cardId != $card->getId()){
+      throw new UnexpectedException(131,"Invalid card to discard $cardId");
+    }
+
+    //ACTION EFFECT
+    //$card = Cards::get($cardId);
+    Cards::discard($player,$card);
+
+    $this->gamestate->nextState("playCard");
+  }
 }

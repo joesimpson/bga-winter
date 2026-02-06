@@ -260,6 +260,19 @@ function (dojo, declare) {
             debug('onEnteringStatePlaceCard', args);
 
             this.displayCardSpotsSelection("actPlaceCard", args.card, args.playableCoords, );
+            
+            let possibleActions = args.pActions;
+            let removableCard = (possibleActions && possibleActions.includes('actDiscardCard')) ? true : false;
+            if(removableCard){
+                let cardId = args.card.id;
+                let iconDiscard = `
+                    <i class="fa6 fa6-trash-arrow-up winter_icon_discard"></i>
+                `;
+                this.addPrimaryActionButton('btnDiscardCard', iconDiscard + _('Discard'), _("Discard"), () => {
+                    this.performAction('actDiscardCard', { 'cardId':cardId });
+                });
+            }
+
         },
         
         onEnteringStateColorChoice(args){

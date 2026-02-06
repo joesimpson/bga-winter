@@ -147,18 +147,7 @@ trait PlayerTurnTrait
     $card = Cards::get($cardId);
     $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
     $split = Utils::isCardBetween2Lakes($boardCards, $card);
-    Notifications::playAtPosition($player,$card->getRow(), $card->getCol());
-    $fromLocation = $card->coordName();
-    $card->setRow(null);
-    $card->setCol(null);
-    $card->setLocation(CARD_LOCATION_DISCARD);
-
-    Notifications::removeCard($player,$card, $fromLocation);
-
-    Globals::setLastPlayedTokens([]);
-    Globals::setLastPlayedCards([]);
-    Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
-    Stats::inc("actions_discard_card",$player);
+    Cards::discard($player,$card);
 
     if($split){
       $this->gamestate->nextState("lakeChoice");

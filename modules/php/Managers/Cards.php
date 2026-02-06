@@ -2,6 +2,7 @@
 
 namespace Bga\Games\winter\Managers;
 
+use Bga\Games\winter\Core\Globals;
 use Bga\Games\winter\Core\Notifications;
 use Bga\Games\winter\Core\Stats;
 use Bga\Games\winter\Game;
@@ -61,6 +62,22 @@ class Cards extends \Bga\Games\winter\Helpers\Pieces
   public static function getDrawnCard(Player $player)
   {
     return self::getTopOf(CARD_LOCATION_HAND);
+  }
+  
+  public static function discard(Player $player, Card $card)
+  {
+    Notifications::playAtPosition($player,$card->getRow(), $card->getCol());
+    $fromLocation = $card->coordName();
+    $card->setRow(null);
+    $card->setCol(null);
+    $card->setLocation(CARD_LOCATION_DISCARD);
+
+    Notifications::removeCard($player,$card, $fromLocation);
+
+    Globals::setLastPlayedTokens([]);
+    Globals::setLastPlayedCards([]);
+    Notifications::refreshLastPlayed(Globals::getLastPlayedDatas());
+    Stats::inc("actions_discard_card",$player);
   }
    
   ///////////////////////////////////////////////////////////////////////////////////////

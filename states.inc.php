@@ -182,6 +182,7 @@ $machinestates = [
         ->args('argPlaceCard')
         ->possibleactions([
             'actPlaceCard', 
+            'actDiscardCard',
             'actUndoToStep', 'actRestart',
         ])
         ->transitions([
