@@ -663,6 +663,7 @@ function (dojo, declare) {
         notif_newPhase: async function(args) {
             debug('notif_newPhase: ', args);
             this.gamedatas.phase = args.phase;
+            this.bga.dialogs.showMessage(this.formatPhaseName(this.gamedatas.phase),"info");
             $("winter_counter_phase").innerHTML = this.formatPhaseName(this.gamedatas.phase);
         },
         
