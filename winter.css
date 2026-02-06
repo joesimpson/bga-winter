@@ -342,7 +342,6 @@
   background-size: 100%;
   background-repeat: no-repeat;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
   z-index: 2;
 }
 
