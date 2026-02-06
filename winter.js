@@ -404,7 +404,7 @@ function (dojo, declare) {
             if(args.movingCreates2Lakes) {
                 //IN this case we will change state to let player choose according to melt results
                 let iconMove = `<i class="fa6-solid fa6-up-down-left-right winter_icon_move"></i>`;
-                this.addPrimaryActionButton("btnMoveCardSelect", iconMove + _("Move"),_("Move"), (evt) => {
+                this.addPrimaryActionButton("btnMoveCardSelect", iconMove + _("Move"),_("Prepare to move the card from its place, creating 2 lakes, and leading to different possible spots for this card"), (evt) => {
                     this.performAction('actPrepareMoveCard', { 'cardId':cardId });
                 });
             }
