@@ -380,7 +380,9 @@ trait DebugTrait
 
     $boardCards = Cards::getInLocation(CARD_LOCATION_BOARD);
     $lakes = Utils::listBoardLakesAroundCard($boardCards, $cardId);
+    $biggestLakes = array_keys(Utils::filterBiggestLakes($boardCards, $lakes));
     Notifications::message("lakes : ".json_encode($lakes),['json' => $lakes]);
+    Notifications::message("biggestLakes : ".json_encode($biggestLakes),['json' => $biggestLakes]);
   }
 
   // Objective : test different lakes configurations, and confirm we have a choice when 2 lakes of same size

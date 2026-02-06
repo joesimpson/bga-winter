@@ -642,12 +642,15 @@ abstract class Utils
         $lakes = Utils::listBoardLakes($boardCards);
         $biggestLakes = [];
         $maxSize = 0;
+        //LOOP 1 to find max lake size
         foreach($lakes as $lakeId => $lake){
             if(count($lake) > $maxSize){
                 $maxSize = count($lake);
-                $biggestLakes[$lakeId] = $lake;
             }
-            else if(count($lake) == $maxSize){
+        }
+        //LOOP 2 to save lakes of that size
+        foreach($lakes as $lakeId => $lake){
+            if(count($lake) == $maxSize){
                 $biggestLakes[$lakeId] = $lake;
             }
         }
