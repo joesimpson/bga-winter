@@ -693,6 +693,9 @@ function (dojo, declare) {
                 delete elt.dataset.lake;
                 elt.removeAttribute("title");//title hint depends on current action
             });
+            [...document.querySelectorAll('.winter_token')].forEach((elt) => { 
+                elt.removeAttribute("title");//title hint depends on current action
+            });
             let deckContainer = $('winter_cards_deck_container');
             deckContainer.removeAttribute("title");
         },
