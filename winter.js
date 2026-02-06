@@ -101,6 +101,7 @@ function (dojo, declare) {
                                 </div>
                             </div>
                             <div id="winter_cards_draw"></div>
+                            <div id="winter_leftCustomActions"></div>
                         </div>
                         <!-- BGA SCROLLMAP Component -->
                         <div id="winter_map_container">
@@ -705,14 +706,16 @@ function (dojo, declare) {
             let allPlayableDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
             this.chosenDir = allPlayableDirs[0];
             let buttonText = _(`Rotate card`);
-            this.addSecondaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + buttonText,buttonText, () => {
+            let clickAction = () => {
                 this.chosenDir = allPlayableDirs [ (allPlayableDirs.indexOf(this.chosenDir) + 1) % allPlayableDirs.length ];
                 document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
                     oCard.dataset.dir = this.chosenDir;
                 });
                 let divCard = $(`winter_card-${card.id}`);
                 if(divCard) divCard.dataset.dir = this.chosenDir;
-            });
+            };
+            this.addSecondaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + buttonText,buttonText, clickAction);
+            this.addSecondaryActionButton(`btnRotateDirLeft`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + buttonText,buttonText, clickAction, 'winter_leftCustomActions');
 
             Object.values(playableCoords).forEach( (playableCoord) => {
                 let row = playableCoord.row;

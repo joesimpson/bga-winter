@@ -4088,6 +4088,13 @@ html.winter_background_none #winter_overall_background {
   margin-left: 0.5em;
 }
 
+#btnRotateDirLeft {
+  background: #89a538;
+  border: 1px solid #697f2b;
+  color: white;
+}
+
+#btnRotateDirLeft,
 #btnRotateDir, #btnScrollToPlaceToken {
   /* BGA guideline : no custom color :( 
   background: #89a538;
@@ -4095,6 +4102,8 @@ html.winter_background_none #winter_overall_background {
   color: white;
   */
 }
+#btnRotateDirLeft .winter_icon_rotate,
+#btnRotateDirLeft .winter_icon_locate,
 #btnRotateDir .winter_icon_rotate,
 #btnRotateDir .winter_icon_locate, #btnScrollToPlaceToken .winter_icon_rotate,
 #btnScrollToPlaceToken .winter_icon_locate {
