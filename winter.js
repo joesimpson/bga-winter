@@ -701,6 +701,11 @@ function (dojo, declare) {
             deckContainer.removeAttribute("title");
         },
 
+        removeAllActionButtons(){
+            this.inherited(arguments);
+            this.empty('winter_leftCustomActions');
+        },
+
         displayCardSpotsSelection: function(serverAction, card, playableCoords, ) {
             
             let allPlayableDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
@@ -749,12 +754,14 @@ function (dojo, declare) {
             let allPlayableDirs = [CARD_DIRECTION_UP, CARD_DIRECTION_DOWN];
             this.chosenDir = card.dir;
             let buttonText = _(`Rotate card`);
-            this.addSecondaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + buttonText,buttonText, () => {
+            let clickAction = () => {
                 this.chosenDir = allPlayableDirs [ (allPlayableDirs.indexOf(this.chosenDir) + 1) % allPlayableDirs.length ];
                 document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
                     oCard.dataset.dir = this.chosenDir;
                 });
-            });
+            };
+            this.addSecondaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + buttonText,buttonText, clickAction);
+            this.addSecondaryActionButton(`btnRotateDirLeft`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + buttonText,buttonText, clickAction, 'winter_leftCustomActions');
 
             Object.values(playableCoords).forEach( (playableCoord) => {
                 let row = playableCoord.row;

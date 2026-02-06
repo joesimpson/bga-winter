@@ -470,11 +470,6 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (
       return $(id); // return node for chaining
     },
 
-    clearActionButtons() {
-      debug( "clearActionButtons()" );
-      dojo.empty('customActions');
-    },
-
     initPreferences() {
       /* 
       * REMOVED : BGA Guidelines/warnings : keep prefs/settings in BGA Hamburger menu
