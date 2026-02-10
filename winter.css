@@ -280,6 +280,11 @@
 .winter_card.lastPlayed {
   box-shadow: 0px 0px 0px 3px red;
 }
+.winter_card_back.lastPlayed.selectable,
+.winter_card_spot.lastPlayed.selectable,
+.winter_card.lastPlayed.selectable {
+  box-shadow: 0px 0px 0px 2px red, 0px 0px 0px 6px green;
+}
 
 .winter_card_tooltip {
   text-align: center;
