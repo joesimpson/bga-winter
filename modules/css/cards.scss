@@ -1,4 +1,4 @@
-
+@use "sass:math";
 
 $card_width: var(--winter_board_card_width);
 $card_height: var(--winter_board_card_height);
@@ -129,6 +129,19 @@ $card_height: var(--winter_board_card_height);
 
 .winter_card_spot{
     opacity: 0.5;
+    &:not(.selected):not(:hover){
+        background-image: unset;
+        background-color: white;
+        .winter_card_spot_rotate{
+            display: none;
+        }
+    }
+
+    &.selected {
+        opacity: 1;
+        z-index: 20;
+    }
+
     &.selectable {
         cursor: pointer;
         &:hover {
@@ -142,17 +155,19 @@ $card_height: var(--winter_board_card_height);
         }
     }
 
-        
+    /* keep the spots visible in order to click and rotate on it
     &[data-dir="1"]:not([data-dirs="undefined"]):not([data-dirs*="1"]){
         visibility: hidden;
     }
     &[data-dir="2"]:not([data-dirs="undefined"]):not([data-dirs*="2"]){//CARD_DIRECTION_DOWN
         visibility: hidden;
     }
+    */
 
     .winter_card_spot_background{
         width: 100%;
         height: 100%;
+        //background-color: white;
     }
     .winter_card_spot_click_spot{
         position: absolute;
@@ -160,6 +175,17 @@ $card_height: var(--winter_board_card_height);
         height: 45%;
         top: 10%;
         left: 5%;
+    }
+    .winter_card_spot_rotate{
+        position: absolute;
+        width: 64%;
+        height: 53%;
+        bottom: 10%;
+        right: 5%;
+        color: black;
+        .winter_icon_rotate{
+            font-size: 40px;
+        }
     }
     &[data-dir="2"]{//CARD_DIRECTION_DOWN -> card is rotated on the table
         .winter_card_spot_click_spot{
@@ -172,6 +198,12 @@ $card_height: var(--winter_board_card_height);
         .winter_card_spot_background{
             outline: 5px dashed green;
         }
+        &.selected{
+            .winter_card_spot_background{
+                outline-style: solid;
+            }
+        }
+        /* Removed to reduce the sum of visible informations
         .winter_card_spot_click_spot{
             background-image: url("img/spot.gif");
             background-size: 100%;
@@ -180,6 +212,7 @@ $card_height: var(--winter_board_card_height);
             //transition: all 0.3s ease-in-out;
             z-index: 2;
         }
+        */
     }
 }
 

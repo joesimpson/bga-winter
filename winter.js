@@ -760,11 +760,22 @@ function (dojo, declare) {
                 this.chosenDir = allPlayableDirs [ (allPlayableDirs.indexOf(this.chosenDir) + 1) % allPlayableDirs.length ];
                 document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
                     oCard.dataset.dir = this.chosenDir;
+                    let selected = oCard.classList.contains('selected');
+                    if(selected){
+                        //REFRESH selectable or not
+                        let selectableDir = oCard.dataset.dirs.split(",").includes("" +this.chosenDir);
+                        if(! selectableDir ){
+                            if($('btnConfirmPlaceCard')) $('btnConfirmPlaceCard').classList.add('disabled');
+                        }
+                        else {
+                            if($('btnConfirmPlaceCard')) $('btnConfirmPlaceCard').classList.remove('disabled');
+                        }
+                    }
                 });
                 let divCard = $(`winter_card-${card.id}`);
                 if(divCard) divCard.dataset.dir = this.chosenDir;
             };
-            this.addSecondaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + buttonText,buttonText, clickAction);
+            //this.addSecondaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + buttonText,buttonText, clickAction);
             this.addSecondaryActionButton(`btnRotateDirLeft`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + buttonText,buttonText, clickAction, 'winter_leftCustomActions');
 
             Object.values(playableCoords).forEach( (playableCoord) => {
@@ -782,9 +793,31 @@ function (dojo, declare) {
                 spot.dataset.dirs = playableDirs;
                 
                 let callbackSpotSelection = (evt) => {
-                    this.performAction(serverAction, { dir: this.chosenDir, row: row,  col: col});
+                    this.chosenRow = row;
+                    this.chosenCol = col;
+                    if(spot.classList.contains('selected')){
+                        //was PREVIOUSLY selected -> we want to rotate it
+                        clickAction();
+                    }
+                    else {
+                        //selection changed
+                        document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
+                            oCard.classList.remove('selected');
+                        });
+                        spot.classList.add('selected');
+                        
+                        if($('btnConfirmPlaceCard')) $('btnConfirmPlaceCard').remove();
+                        
+                        this.addPrimaryActionButton('btnConfirmPlaceCard', _(`Confirm card placement`), _(`Confirm card placement`), () => {
+                            this.performAction(serverAction, { dir: this.chosenDir, row: this.chosenRow,  col: this.chosenCol});
+                        }, 'customActions');
+                        //If not Hidden by CSS, let's disable the button
+                        if(playableDirs.indexOf(this.chosenDir ) < 0){ 
+                            $('btnConfirmPlaceCard').classList.add('disabled');
+                        }
+                    }
                 };
-                this.onClick(`${spot.id}`, callbackSpotSelection);
+                this.onClick(spot.id, callbackSpotSelection);
                 spot.setAttribute("title",_("Place card here"));
             });
         },
@@ -803,9 +836,20 @@ function (dojo, declare) {
                 this.chosenDir = allPlayableDirs [ (allPlayableDirs.indexOf(this.chosenDir) + 1) % allPlayableDirs.length ];
                 document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
                     oCard.dataset.dir = this.chosenDir;
+                    let selected = oCard.classList.contains('selected');
+                    if(selected){
+                        //REFRESH selectable or not
+                        let selectableDir = oCard.dataset.dirs.split(",").includes("" +this.chosenDir);
+                        if(! selectableDir ){
+                            if($('btnConfirmPlaceCard')) $('btnConfirmPlaceCard').classList.add('disabled');
+                        }
+                        else {
+                            if($('btnConfirmPlaceCard')) $('btnConfirmPlaceCard').classList.remove('disabled');
+                        }
+                    }
                 });
             };
-            this.addSecondaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + buttonText,buttonText, clickAction);
+            //this.addSecondaryActionButton(`btnRotateDir`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + buttonText,buttonText, clickAction);
             this.addSecondaryActionButton(`btnRotateDirLeft`, '<i class="fa6 fa6-rotate winter_icon_rotate"></i>' + buttonText,buttonText, clickAction, 'winter_leftCustomActions');
 
             Object.values(playableCoords).forEach( (playableCoord) => {
@@ -818,10 +862,29 @@ function (dojo, declare) {
                 spot.dataset.dirs = playableDirs;
 
                 let callbackSpotSelection = (evt) => {
-                    // Hidden by CSS
-                    //if(playableDirs.indexOf(this.chosenDir ) >0){ 
-                        this.performAction(serverAction, {'cardId':card.id, 'dir': this.chosenDir, 'row': row,  'col': col});
-                    //}
+                    this.chosenRow = row;
+                    this.chosenCol = col;
+                    if(spot.classList.contains('selected')){
+                        //was PREVIOUSLY selected -> we want to rotate it
+                        clickAction();
+                    }
+                    else {
+                        //selection changed
+                        document.querySelectorAll('.winter_card_spot').forEach((oCard) => {
+                            oCard.classList.remove('selected');
+                        });
+                        spot.classList.add('selected');
+
+                        if($('btnConfirmPlaceCard')) $('btnConfirmPlaceCard').remove();
+                        
+                        this.addPrimaryActionButton('btnConfirmPlaceCard', _(`Confirm card placement`), _(`Confirm card placement`), () => {
+                            this.performAction(serverAction, {'cardId':card.id, 'dir': this.chosenDir, 'row': this.chosenRow,  'col': this.chosenCol});
+                        }, 'customActions');
+                        //If not Hidden by CSS, let's disable the button
+                        if(playableDirs.indexOf(this.chosenDir ) < 0){ 
+                            $('btnConfirmPlaceCard').classList.add('disabled');
+                        }
+                    }
                 };
                 this.onClick(`${spot.id}`, callbackSpotSelection);
                 spot.setAttribute("title",_("Place card here"));
@@ -1202,7 +1265,9 @@ function (dojo, declare) {
                 data-dir="${datas.card.dir ? datas.card.dir : CARD_DIRECTION_UP}" data-dirs="${datas.card.playableDirs}"
             > 
                     <div class="winter_card_spot_background" data-type="${datas.card.type}" ></div>
-                    <div class="winter_card_spot_click_spot" alt="${_("Click here")}" title="${_("Click here")}"></div>
+                    <div class="winter_card_spot_click_spot" alt="${("Click here")}" title="${("Click here")}"></div>
+                    <div class="winter_card_spot_rotate" alt="${_("Rotate card")}" title="${_("Rotate card")}"><i class="fa6 fa6-rotate winter_icon_rotate"></i></div>
+
                 </div>`;
         },
     

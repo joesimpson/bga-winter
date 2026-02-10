@@ -14,13 +14,13 @@
  */
 
 @use "sass:math";
-@import "modules/css/variables";
-@import "modules/css/icons";
-@import "modules/css/player-panel";
-@import "modules/css/cards";
-@import "modules/css/meeples";
-@import "modules/css/scrollmap";
-@import "modules/css/settings";
+@use "modules/css/variables";
+@use "modules/css/icons";
+@use "modules/css/player-panel";
+@use "modules/css/cards";
+@use "modules/css/meeples";
+@use "modules/css/scrollmap";
+@use "modules/css/settings";
 /**
     PREFIX FOR THIS GAME PROJECT : "winter" because game name is short enough :)
 */
@@ -167,6 +167,12 @@ html.winter_background_none{//PREF_BACKGROUND_BGA
     }
 }
 
+#customActions,
+#restartAction {
+    button.disabled{
+        cursor:not-allowed;
+    }
+}
 html.winter_undo_style_text{//PREF_UNDO_STYLE_TEXT
     #btnIconUndoLastStep, 
     #btnIconRestartTurn

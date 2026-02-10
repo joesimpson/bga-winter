@@ -304,6 +304,25 @@
 
 .winter_card_spot {
   opacity: 0.5;
+  /* keep the spots visible in order to click and rotate on it
+  &[data-dir="1"]:not([data-dirs="undefined"]):not([data-dirs*="1"]){
+      visibility: hidden;
+  }
+  &[data-dir="2"]:not([data-dirs="undefined"]):not([data-dirs*="2"]){//CARD_DIRECTION_DOWN
+      visibility: hidden;
+  }
+  */
+}
+.winter_card_spot:not(.selected):not(:hover) {
+  background-image: unset;
+  background-color: white;
+}
+.winter_card_spot:not(.selected):not(:hover) .winter_card_spot_rotate {
+  display: none;
+}
+.winter_card_spot.selected {
+  opacity: 1;
+  z-index: 20;
 }
 .winter_card_spot.selectable {
   cursor: pointer;
@@ -314,12 +333,6 @@
 }
 .winter_card_spot.selectable:hover .winter_card_spot_click_spot {
   display: none;
-}
-.winter_card_spot[data-dir="1"]:not([data-dirs=undefined]):not([data-dirs*="1"]) {
-  visibility: hidden;
-}
-.winter_card_spot[data-dir="2"]:not([data-dirs=undefined]):not([data-dirs*="2"]) {
-  visibility: hidden;
 }
 .winter_card_spot .winter_card_spot_background {
   width: 100%;
@@ -332,22 +345,39 @@
   top: 10%;
   left: 5%;
 }
+.winter_card_spot .winter_card_spot_rotate {
+  position: absolute;
+  width: 64%;
+  height: 53%;
+  bottom: 10%;
+  right: 5%;
+  color: black;
+}
+.winter_card_spot .winter_card_spot_rotate .winter_icon_rotate {
+  font-size: 40px;
+}
 .winter_card_spot[data-dir="2"] .winter_card_spot_click_spot {
   top: 67%;
   left: 50%;
 }
 .winter_card_spot.selectable {
   box-shadow: unset;
+  /* Removed to reduce the sum of visible informations
+  .winter_card_spot_click_spot{
+      background-image: url("img/spot.gif");
+      background-size: 100%;
+      background-repeat: no-repeat;
+      cursor: pointer;
+      //transition: all 0.3s ease-in-out;
+      z-index: 2;
+  }
+  */
 }
 .winter_card_spot.selectable .winter_card_spot_background {
   outline: 5px dashed green;
 }
-.winter_card_spot.selectable .winter_card_spot_click_spot {
-  background-image: url("img/spot.gif");
-  background-size: 100%;
-  background-repeat: no-repeat;
-  cursor: pointer;
-  z-index: 2;
+.winter_card_spot.selectable.selected .winter_card_spot_background {
+  outline-style: solid;
 }
 
 #winter_map_container .winter_card_spot,
@@ -4128,6 +4158,11 @@ html.winter_background_none #winter_overall_background {
 
 .btnChooseColor .winter_icon {
   box-shadow: 0px 0px 2px 2px white;
+}
+
+#customActions button.disabled,
+#restartAction button.disabled {
+  cursor: not-allowed;
 }
 
 html.winter_undo_style_text #btnIconUndoLastStep,
