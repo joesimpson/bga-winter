@@ -45,11 +45,11 @@ $game_preferences = [
     'name' => totranslate('Ask for turn confirmation'),
     'needReload' => false,
     'values' => [
-      PREF_CONFIRM_ENABLED_START => ['name' => totranslate('Enabled for 1st card')],
+      //PREF_CONFIRM_ENABLED_START => ['name' => totranslate('Enabled for 1st card')],
       PREF_CONFIRM_ENABLED => ['name' => totranslate('Enabled')],
       PREF_CONFIRM_DISABLED => ['name' => totranslate('Disabled')],
     ],
-    "default"=> PREF_CONFIRM_ENABLED_START,
+    "default"=> PREF_CONFIRM_ENABLED,
   ],
 
   PREF_UNDO_STYLE => [
