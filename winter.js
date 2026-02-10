@@ -271,6 +271,8 @@ function (dojo, declare) {
                 this.addPrimaryActionButton('btnDiscardCard', iconDiscard + _('Discard'), _("Discard"), () => {
                     this.performAction('actDiscardCard', { 'cardId':cardId });
                 });
+                
+                this.bga.statusBar.setTitle(  _('${you} must place or discard the card') );
             }
 
         },
@@ -298,6 +300,38 @@ function (dojo, declare) {
             let possibleActions = args.pActions;
             let removableCards = args.r_cards; 
             let movableCards = args.m_cards;
+            let removableTokens = args.removableTokens;
+
+            let color = args.t_color;
+            let tokenColor = this.formatIcon('flake_color-'+color, this.formatColorName(color));
+            
+            //Display some details on possible actions :
+            if(possibleActions.includes('actDraw') 
+                && possibleActions.includes('actPlaceToken')
+            ){
+                //advanced play in phase 1
+                this.bga.statusBar.setTitle(  _('${you} must draw a new card or place a new ${token_color} counter').replace('${token_color}', tokenColor) );
+            }
+            else if(possibleActions.includes('actDraw')){
+                //default play in phase 1
+                this.bga.statusBar.setTitle(  _('${you} must draw a new card') );
+            } else if( Object.values(movableCards).length > 0 
+                    && Object.values(removableCards).length > 0
+                    && Object.values(removableTokens).length > 0
+                ){
+                //advanced play in phase 2
+                this.bga.statusBar.setTitle(  _('${you} must move a card, remove a card or remove a ${token_color} counter').replace('${token_color}', tokenColor) );
+            } 
+            else if( Object.values(removableCards).length > 0
+                    && Object.values(removableTokens).length > 0
+                ){
+                //standard play in phase 2
+                this.bga.statusBar.setTitle(  _('${you} must remove a card or remove a ${token_color} counter').replace('${token_color}', tokenColor) );
+            } else if( Object.values(removableTokens).length > 0
+                ){
+                //Default play in phase 2
+                this.bga.statusBar.setTitle(  _('${you} must remove a ${token_color} counter').replace('${token_color}', tokenColor) );
+            }
 
             if(possibleActions.includes('actDraw')){
                 let iconDraw = `<span class="fa6-stack winter_icon_draw">
@@ -348,7 +382,6 @@ function (dojo, declare) {
             
             if(possibleActions.includes('actPlaceToken')){
                 let spots_for_tokens = args.spots_for_tokens;
-                let color = args.t_color;
                 let futureToken = { type : color};
                 Object.values(spots_for_tokens).forEach( (spot) => {
                     let row = spot[0];
@@ -373,7 +406,6 @@ function (dojo, declare) {
             }
 
             if(possibleActions.includes('actRemoveToken')){
-                let removableTokens = args.removableTokens;
                 Object.values(removableTokens).forEach( (tokenId) => {
 
                     let callbackSpotSelection = (evt) => {
