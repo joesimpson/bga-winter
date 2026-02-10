@@ -3766,13 +3766,10 @@ html.winter_display_coord_on #winter_map_container .winter_card_location_label {
   text-align: center;
   margin: -5px -3px 0px;
   background: rgba(227, 188, 146, 0.5019607843);
-  padding: 8px 0px 4px;
+  padding: 8px 4px 4px;
   border-bottom: 1px solid rgba(128, 128, 128, 0.5411764706);
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
-  font-weight: bold;
-  font-size: 20px;
-  font-family: "Bernard MT Condensed";
   color: black;
   display: block;
   overflow: clip;
