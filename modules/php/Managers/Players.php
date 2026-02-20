@@ -33,7 +33,11 @@ class Players extends \Bga\Games\winter\Helpers\DB_Manager
     $gameInfos = Game::get()->getGameinfos();
     $colors = $gameInfos['player_colors'];
     shuffle($colors);//Shuffle for cases where color matters
-    $query = self::DB()->multipleInsert(['player_id', 'player_color', 'player_canal', 'player_name', 'player_avatar']);
+    $query = self::DB()->multipleInsert([
+      'player_id', 
+      'player_color', 
+      'player_name',
+      ]);
 
     $query_values = [];
    
@@ -43,9 +47,7 @@ class Players extends \Bga\Games\winter\Helpers\DB_Manager
       $query_values[] = [
           $player_id,
           $color,
-          $player["player_canal"],
           addslashes($player["player_name"]),
-          addslashes($player["player_avatar"]),
       ];
     }
     $query->values($query_values);
