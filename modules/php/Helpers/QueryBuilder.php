@@ -72,35 +72,46 @@ class QueryBuilder
 
     public function values($rows = [])
     {
-        // Fetch starting index if not provided
-        $startingId = null;
-        if ($this->insertPrimaryIndex === false) {
-            $startingId = (int) Table::getUniqueValueFromDB(
-                "SELECT `AUTO_INCREMENT` FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = '{$this->table}';"
-            );
-        }
-
         $ids = [];
         $vals = [];
+
         foreach ($rows as $row) {
             $rowValues = [];
+
             foreach ($row as $val) {
-                $rowValues[] =
-                    $val === null
-                        ? 'NULL'
-                        : "'" . mysql_escape_string($val) . "'";
+                $rowValues[] = $val === null
+                ? 'NULL'
+                : "'" . mysql_escape_string($val) . "'";
             }
+
             $vals[] = '(' . implode(',', $rowValues) . ')';
-            $ids[] =
-                $rom[$this->primary] ??
-                ($this->insertPrimaryIndex === false
-                    ? $startingId++
-                    : $row[$this->insertPrimaryIndex]);
+
+            // Case 1: Primary key explicitly provided
+            if ($this->insertPrimaryIndex !== false && $this->insertPrimaryIndex !== null) {
+                $ids[] = $row[$this->insertPrimaryIndex];
+            }
         }
 
         $this->sql .= implode(',', $vals);
+
+        // Execute INSERT
         Table::DbQuery($this->sql);
-        if ($this->log) {
+
+        // Case 2: AUTO_INCREMENT primary key
+        if ($this->insertPrimaryIndex === false) {
+            //$firstId = (int) Table::getUniqueValueFromDB("SELECT LAST_INSERT_ID()");
+            $firstId = (int) Table::DbGetLastId();
+            $count   = count($rows);
+
+            for ($i = 0; $i < $count; $i++) {
+                $ids[] = $firstId + $i;
+            }
+        }
+
+        // Case 3: No primary tracking requested (insertPrimaryIndex === null)
+        // $ids remains as collected (possibly empty)
+
+        if ($this->log && !empty($ids)) {
             Log::addEntry([
                 'table' => $this->table,
                 'primary' => $this->primary,

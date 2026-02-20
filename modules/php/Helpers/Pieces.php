@@ -253,7 +253,7 @@ class Pieces extends DB_Manager
       ->get(false);
     if (count($result) != count($ids) && $raiseExceptionIfNotEnough) {
       // throw new \feException(print_r(\debug_print_backtrace()));
-      throw new \feException('Class Pieces: getMany, some pieces have not been found !' . json_encode($ids));
+      throw new \feException('Class Pieces: getMany, some pieces have not been found ! Table '.static::$table. ' ' . json_encode($ids));
     }
 
     // Preserve ids order!
