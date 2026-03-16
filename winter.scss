@@ -14,13 +14,13 @@
  */
 
 @use "sass:math";
-@use "modules/css/variables";
-@use "modules/css/icons";
-@use "modules/css/player-panel";
-@use "modules/css/cards";
-@use "modules/css/meeples";
-@use "modules/css/scrollmap";
-@use "modules/css/settings";
+@use "src/css/variables";
+@use "src/css/icons";
+@use "src/css/player-panel";
+@use "src/css/cards";
+@use "src/css/meeples";
+@use "src/css/scrollmap";
+@use "src/css/settings";
 /**
     PREFIX FOR THIS GAME PROJECT : "winter" because game name is short enough :)
 */
