@@ -35,6 +35,12 @@ abstract class Utils
     public static function array_of_uniquearrays(array $array): array {
         return array_intersect_key($array, array_unique(array_map('serialize', $array)));
     }
+    public static function gameVersion() : int
+    {
+        $options = Game::get()->bga->tableOptions;
+        $gameVersion = $options->get(BGA_GAMESTATE_GAMEVERSION);
+        return intval($gameVersion);
+    }
 
     ////////////////////////////////////////////////////////////////
     //////// GAME SPECIFIC

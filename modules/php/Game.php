@@ -22,6 +22,7 @@ use Bga\Games\winter\Core\Globals;
 use Bga\Games\winter\Core\Notifications;
 use Bga\Games\winter\Core\Preferences;
 use Bga\Games\winter\Exceptions\UserException;
+use Bga\Games\winter\Helpers\Utils;
 use Bga\Games\winter\Managers\Cards;
 use Bga\Games\winter\Managers\Players;
 use Bga\Games\winter\Managers\Tokens;
@@ -144,21 +145,20 @@ class Game extends \Bga\GameFramework\Table
      */
     public function upgradeTableDb($from_version)
     {
-//       if ($from_version <= 1404301345)
-//       {
-//            // ! important ! Use DBPREFIX_<table_name> for all tables
-//
-//            $sql = "ALTER TABLE DBPREFIX_xxxxxxx ....";
-//            $this->applyDbUpgradeToAllDB( $sql );
-//       }
-//
-//       if ($from_version <= 1405061421)
-//       {
-//            // ! important ! Use DBPREFIX_<table_name> for all tables
-//
-//            $sql = "CREATE TABLE DBPREFIX_xxxxxxx ....";
-//            $this->applyDbUpgradeToAllDB( $sql );
-//       }
+        if ($from_version <= 2602201727)
+        {
+            //Migrate from 'bga_globals' to 'my_global_variables'
+            $sql = "CREATE TABLE IF NOT EXISTS  `DBPREFIX_my_global_variables` (
+                        `name` varchar(50) NOT NULL,
+                        `value` JSON,
+                        PRIMARY KEY (`name`)
+                    ) ENGINE = InnoDB DEFAULT CHARSET = UTF8MB4
+                    SELECT * FROM `bga_globals`";
+            $this->applyDbUpgradeToAllDB( $sql );
+
+            $sql = "UPDATE `DBPREFIX_log` SET `table` = 'my_global_variables' WHERE `table` = 'bga_globals'" ;
+            $this->applyDbUpgradeToAllDB( $sql );
+        }
     }
 
     /*
@@ -184,7 +184,7 @@ class Game extends \Bga\GameFramework\Table
         $result["lastPlayed"] = Globals::getLastPlayedDatas();
         $result["tokens"] = Tokens::getUiData($current_player_id);
         $result["prefs"] = Preferences::getUiData($current_player_id);
-        $result["version"] = intval($this->bga->tableOptions->get(BGA_GAMESTATE_GAMEVERSION));
+        $result["version"] = Utils::gameVersion();
 
         return $result;
     }
@@ -271,7 +271,7 @@ class Game extends \Bga\GameFramework\Table
     */
     public function checkVersion(int $clientVersion)
     {
-        $gameVersion = $this->bga->tableOptions->get(BGA_GAMESTATE_GAMEVERSION);
+        $gameVersion = Utils::gameVersion();
         if ($clientVersion != intval($gameVersion)) {
             throw new UserException(555,'!!!checkVersion');
         }

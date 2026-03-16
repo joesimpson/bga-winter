@@ -54,6 +54,12 @@ CREATE TABLE IF NOT EXISTS `tokens` (
 -- ALTER TABLE `player` ADD `player_my_custom_field` INT UNSIGNED NOT NULL DEFAULT '0';
 
 -- CORE TABLES from tisaac boilerplate --
+CREATE TABLE IF NOT EXISTS `my_global_variables` (
+  `name` varchar(50) NOT NULL,
+  `value` JSON,
+  PRIMARY KEY (`name`)
+) ENGINE = InnoDB DEFAULT CHARSET = UTF8MB4;
+
 CREATE TABLE IF NOT EXISTS `log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `date` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,

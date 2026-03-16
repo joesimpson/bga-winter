@@ -3,8 +3,7 @@
 namespace Bga\Games\winter\Core;
 
 use Bga\Games\winter\Game;
-use Bga\Games\winter\Exceptions\UnexpectedException;
-use Bga\Games\winter\Helpers\Collection;
+use Bga\GameFramework\Table;
 use Bga\Games\winter\Helpers\Utils;
 
 /** 
@@ -13,8 +12,7 @@ use Bga\Games\winter\Helpers\Utils;
 
 class Globals extends \Bga\Games\winter\Helpers\DB_Manager
 {
-  ////////// !! reuse the same table  as BGA framework but with boilerplate Logger and cache
-  protected static $table = 'bga_globals';
+  protected static $table = 'my_global_variables';
   protected static $primary = 'name';
 
   protected static $initialized = false;
@@ -92,6 +90,19 @@ class Globals extends \Bga\Games\winter\Helpers\DB_Manager
     // Turn of LOG to avoid infinite loop (Globals::isLogging() calling itself for fetching)
     $tmp = self::$log;
     self::$log = false;
+
+    //Migrate from 'bga_globals' to 'my_global_variables', like I do in upgradeTableDb, but this method is called before
+    $version = Utils::gameVersion();
+    if($version <= 2602201727 && $version != 999999999){
+      Game::get()->error(__CLASS__.".".__FUNCTION__."() Version $version needs a new globals table ");
+      $sql = "CREATE TABLE IF NOT EXISTS  `my_global_variables` (
+                  `name` varchar(50) NOT NULL,
+                  `value` JSON,
+                  PRIMARY KEY (`name`)
+              ) ENGINE = InnoDB DEFAULT CHARSET = UTF8MB4
+              SELECT * FROM `bga_globals`";
+      Table::DbQuery($sql);
+    }
 
     foreach (self::DB()
         ->select(['value', 'name'])
