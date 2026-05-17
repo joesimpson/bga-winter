@@ -407,10 +407,10 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (
     /*
      * Play a given sound that should be first added in the tpl file
      */
-    playSound(sound, playNextMoveSound = true) {
-      playSound(sound);
-      playNextMoveSound && this.disableNextMoveSound();
-    },
+    //playSound(sound, playNextMoveSound = true) {
+    //  playSound(sound);
+    //  playNextMoveSound && this.disableNextMoveSound();
+    //},
 
     resetPageTitle() {
       this.changePageTitle();
