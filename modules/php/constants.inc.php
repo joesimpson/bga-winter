@@ -7,7 +7,7 @@ const PHASE_FREEZING = 1;
 const PHASE_THAWING = 2;
 
 const SCORE_LOOSER = 0;
-const SCORE_WINNER = 10;
+const SCORE_WINNER = 1;
 
 /*
  * Game Constants
