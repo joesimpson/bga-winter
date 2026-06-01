@@ -1289,9 +1289,10 @@ var ScrollmapWithZoomNS;
                                 <input type="checkbox" id="bRestoreZoom" value="true">
                                 <label for="bRestoreZoom">${_("Restore zoom level")}</label>
                             </div>
-                            <div>
+                            <!-- WINTER Game : HIDE -->
+                            <div style="display:none">
                                 <input type="checkbox" id="bShowHeightControls" value="true">
-                                <label for="bShowHeightControls">${_("Show height controls")}</label>
+                                <label for="bShowHeightControls">${""/*_("Show height controls")*/}</label>
                             </div>
                             <div>
                                 <input type="checkbox" id="bUseOldTouchAndMouseEvent" value="true">
@@ -3026,8 +3027,10 @@ var ScrollmapWithZoomNS;
             if (!this._btnReset) {
                 this._btnReset = this._initButton(this._btnResetNames, this.btnResetHtml, _("Center"), this.onReset);
             }
+            /*WINTER HIDE + hide from translation HQ: removed because it doesn't work and we have enough buttons
             if (!this._btnZoomToFit)
                 this._btnZoomToFit = this._initButton(this._btnZoomToFitNames, this.btnZoomToFitHtml, _('Fit map to display area'), () => this.zoomToFitAndScrollToCenter());
+            */
             // this.showOnScreenResetButtons();
         }
         showOnScreenResetButtons() {
@@ -3058,6 +3061,7 @@ var ScrollmapWithZoomNS;
             // this._bIncrHeightBtnIsShort = bShort;
             // this._bIncrHeightBtnGroupedWithOthers = bGroupedWithOthers;
             var btnsProps = this._getEnlargeReduceButtonsProps(bInsideMap);
+            /* WINTER game :  HIDE + hide from translation HQ
             if (!this._btnIncreaseHeight)
                 this._btnIncreaseHeight = this._initButton(this._btnIncreaseHeightNames, bInsideMap ? (bShort ? this.btnIncreaseHeightShortHtml : this.btnIncreaseHeightHtml) : null, _('Increase height'), this._onIncreaseDisplayHeight, () => {
                     this.changeDisplayHeight(5);
@@ -3066,6 +3070,7 @@ var ScrollmapWithZoomNS;
                 this._btnDecreaseHeight = this._initButton(this._btnDecreaseHeightNames, bInsideMap ? (bShort ? this.btnDecreaseHeightShortHtml : this.btnDecreaseHeightHtml) : null, _('Decrease height'), this._onDecreaseDisplayHeight, () => {
                     this.changeDisplayHeight(-5);
                 }, bShort ? destDiv : null, btnsProps.idSuffix, btnsProps.display);
+            */
             if (this._btnDecreaseHeight || this._btnIncreaseHeight) {
                 this._bEnlargeReduceButtonsInsideMap = bInsideMap;
                 return true;
@@ -3085,6 +3090,7 @@ var ScrollmapWithZoomNS;
             //     this._setupEnlargeReduceButtons(true, bShort, buttonsDiv);
             // }
             this._setupEnlargeReduceButtons(true, bShort, buttonsDiv);
+            /* WINTER game :  HIDE + hide from translation HQ
             this._btnResetHeight = this._initButton("reset_height", this.btnResetHeightHtml, _("Reset Height"), this._onResetHeight, null, buttonsDiv);
             this._btnMaximizeHeight = this._initButton("maximize_height", this.btnMaximizeHeightHtml, _("Maximize Height"), this._onMaximizeHeight, null, buttonsDiv);
             if (this._bMaxHeight) {
@@ -3094,6 +3100,7 @@ var ScrollmapWithZoomNS;
                 this._disableButton(this._btnResetHeight);
                 this._enableButton(this._btnMaximizeHeight);
             }
+            */
             this.incrHeightDelta = incrHeightDelta;
             this.bIncrHeightKeepInPos = bIncrHeightKeepInPos;
             if (minHeight)
