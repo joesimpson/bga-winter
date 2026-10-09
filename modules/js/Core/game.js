@@ -73,7 +73,7 @@ define(['dojo', 'dojo/_base/declare', 'ebg/core/gamegui'], (
         console.error(msg);
         if (msg && msg.startsWith("!!!")) {
           if (msg == "!!!checkVersion") {
-            this.infoDialog(  _("A new version of this game is now available"),_("Reload Required"), () => {window.location.reload(true);},true);
+            this.infoDialog(  _("A new version of this game is now available"),_("Reload Required"), () => {window.location.reload(true);}); 
           }
           return; // suppress red banner and gamelog message
         }

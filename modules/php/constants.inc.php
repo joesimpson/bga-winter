@@ -1,6 +1,5 @@
 <?php
  
-const BGA_GAMESTATE_GAMEVERSION = 300;
 
 const PHASE_BEGINNING = 0;
 const PHASE_FREEZING = 1;
