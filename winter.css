@@ -3771,6 +3771,10 @@ html.winter_display_coord_on #winter_map_container .winter_card_location_label {
   z-index: 11;
 }
 
+#winter_map_container .scrollmap_btns_divs_wrapper .scrollmap_button_wrapper#winter_map_container_info, #winter_map_container .scrollmap_btns_divs_wrapper .scrollmap_button_wrapper.show_settings, #winter_map_container .scrollmap_btns_divs_wrapper .scrollmap_button_wrapper.reset {
+  display: none;
+}
+
 /**
  * Player panel settings
  * AUTHOR : © Tisaac + update after BGA guideline to remove it from right panel

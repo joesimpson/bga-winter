@@ -90,3 +90,17 @@
         z-index: 11; //Spots over tokens
     }
 }
+
+// BUTTONS LAYOUT MODIFICATIONS : hide a maximum of buttons
+#winter_map_container {
+    .scrollmap_btns_divs_wrapper{
+        .scrollmap_button_wrapper {
+            &#winter_map_container_info,
+            &.show_settings,
+            &.reset
+            {
+                display: none;
+            }
+        }
+    }
+}
