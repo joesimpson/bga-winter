@@ -2556,9 +2556,11 @@ var ScrollmapWithZoomNS;
             if (zoom >= this.maxZoom) {
                 zoom = this.maxZoom;
                 this._disableButton(this._btnZoomPlus);
+                this._enableButton(this._btnZoomMinus);
             } else if (zoom <= this.minZoom) {
                 zoom = this.minZoom;
                 this._disableButton(this._btnZoomMinus);
+                this._enableButton(this._btnZoomPlus);
             } else {
                 if (this._btnZoomMinus && (this._prevZoom <= this.minZoom))
                     this._enableButton(this._btnZoomMinus);

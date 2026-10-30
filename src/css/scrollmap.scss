@@ -72,6 +72,19 @@
 
 
 #winter_map_container{
+    #winter_map_elements_frame{
+        //outline: 4px solid red;//TEST ONLY
+        position: absolute;
+        //calc offset + size /2 (because 2 snowflakes / card) * ( border? + card_size )
+        $width:  calc( (0 + 0.5 * abs((var(--winter_map_col_max) + 2 - var(--winter_map_col_min)) ) ) * (0px +  var(--winter_board_card_width)  ) );
+        $height: calc( (0 + 0.5 * abs((var(--winter_map_row_max) + 2 - var(--winter_map_row_min)) ) ) * (0px +  var(--winter_board_card_height) ) );
+        width:  $width;
+        height: $height;
+        //top:   calc( -0.5 * $height);
+        //left:  calc( -0.5 * $width);
+        top:  calc(0.5 * var(--winter_map_row_min) * (var(--winter_board_card_height)));
+        left: calc(0.5 * var(--winter_map_col_min) * (var(--winter_board_card_width)));
+    }
     #winter_map_cards{
         position: absolute;
         z-index: 2; 

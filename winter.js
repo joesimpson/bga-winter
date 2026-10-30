@@ -108,10 +108,12 @@ function (dojo, declare) {
                             <div id="winter_map_scrollable"></div>
                             <div id="winter_map_surface"></div>
                             <div id="winter_map_scrollable_oversurface">
+                                <div id="winter_map_elements_frame"></div>
                                 <div id="winter_map_cards"></div> 
                                 <div id="winter_map_card_places"></div> 
                                 <div id="winter_map_tokens"></div> 
                                 <div id="winter_map_token_places"></div> 
+                                
                             </div>
                         
                             <div class="movetop"></div> 
@@ -222,6 +224,12 @@ function (dojo, declare) {
         },
         onChangeBoardArrowsSizeSetting(val) {
            document.documentElement.style.setProperty('--winter_map_arrows_size', val +`px`);
+        },
+        onScreenWidthChange() {
+            if(this.scrollmap){
+                //this.scrollmap.zoomToFit();
+                this.scrollBoardToCardsBarycenter();
+            }
         },
         ///////////////////////////////////////////////////
         //     _____ _______    _______ ______  _____ 
@@ -558,6 +566,7 @@ function (dojo, declare) {
             await this.slide(divCard.id, this.getCardContainer(pcard), {
                 from: deckContainer,
             });
+            this.updateCardsMapDim();
         },
         
         notif_cardPlayed: async function(args) {
@@ -570,6 +579,7 @@ function (dojo, declare) {
             await this.slide(`winter_card-${pcard.id}`, this.getCardContainer(pcard), { duration: 650,});
             //update card tooltip
             this.addCustomTooltip(divCard.id, this.getCardTooltip(pcard));
+            this.updateCardsMapDim();
         },
 
         notif_cardMoved: async function(args) {
@@ -600,6 +610,7 @@ function (dojo, declare) {
                 this.destroy(spotSrc);
                 this.destroy(spotDest);
             }
+            this.updateCardsMapDim();
         },
         
         notif_removeCard: async function(args) {
@@ -610,6 +621,7 @@ function (dojo, declare) {
                     destroy: true,
                     phantom: false,
                  });
+                this.updateCardsMapDim();
             }
         },
         notif_prepareMoveCard: async function(args) {
@@ -657,6 +669,7 @@ function (dojo, declare) {
                     );
                 })
             );
+            this.updateCardsMapDim();
         },
 
         notif_newPlayerColor: async function(args) {
@@ -820,6 +833,7 @@ function (dojo, declare) {
                 this.onClick(spot.id, callbackSpotSelection);
                 spot.setAttribute("title",_("Place card here"));
             });
+            this.updateCardsMapDim();
         },
 
         /**
@@ -889,10 +903,12 @@ function (dojo, declare) {
                 this.onClick(`${spot.id}`, callbackSpotSelection);
                 spot.setAttribute("title",_("Place card here"));
             });
+            this.updateCardsMapDim();
         },
 
         scrollBoardTo: async function(row, col) {
             debug("scrollBoardTo()",row, col);
+            await this.scrollmap.zoomToFit();
             //each row/col takes half a card
             let animDuration = 400;
             this.scrollmap.scrollto(-col*CARD_WIDTH/2,-row*CARD_HEIGHT/2, animDuration);
@@ -927,6 +943,8 @@ function (dojo, declare) {
             let boardMaxCol = Math.max(...cardCols);
             let boardCenterRow = boardMinRow + (boardMaxRow-boardMinRow)/2;
             let boardCenterCol = boardMinCol + (boardMaxCol-boardMinCol)/2;
+            boardCenterRow += 1; //arrow icon top
+            boardCenterCol += 1; //arrow icon left
             await this.scrollBoardTo(boardCenterRow,boardCenterCol);
         },
         
@@ -1194,6 +1212,7 @@ function (dojo, declare) {
             Object.values(lastPlayedCards).forEach( (cardId) => {
                 $(`winter_card-${cardId}`).classList.add("lastPlayed");
             });
+            this.updateCardsMapDim();
             if(initScrollMap){
                 await this.wait(350);//Wait for scrollmap creation, then scroll to specific position
                 await this.scrollBoardToCardsBarycenter();
@@ -1283,6 +1302,41 @@ function (dojo, declare) {
             return 'winter_game_container';
         },
 
+        /**
+         * computes max row/col and min row/col of scroll map cards frame for auto "zoom to fit" function
+         */
+        updateCardsMapDim: async function(){
+            debug("updateCardsMapDim");
+            let maxRow = undefined;
+            let minRow = undefined;
+            let maxCol = undefined;
+            let minCol = undefined;
+            let frameContainer = document.getElementById('winter_map_elements_frame');
+            document.querySelectorAll('#winter_map_cards .winter_card, #winter_map_card_places .winter_card_spot').forEach((card) => {
+                    let r = parseInt(card.dataset.row);
+                    if(maxRow === undefined || r > maxRow) maxRow = r;
+                    if(minRow === undefined || r < minRow) minRow = r;
+                    let c = parseInt(card.dataset.col);
+                    if(maxCol === undefined || c > maxCol) maxCol = c;
+                    if(minCol === undefined || c < minCol) minCol = c;
+
+                });
+            if(!maxRow) maxRow = 0;
+            if(!minRow) minRow = 0;
+            if(!maxCol) maxCol = 0;
+            if(!minCol) minCol = 0;
+            frameContainer.dataset.row_max = maxRow;
+            frameContainer.dataset.row_min = minRow ;
+            frameContainer.dataset.col_max = maxCol ;
+            frameContainer.dataset.col_min = minCol ;
+            frameContainer.style.setProperty('--winter_map_row_max', maxRow);
+            frameContainer.style.setProperty('--winter_map_row_min', minRow);
+            frameContainer.style.setProperty('--winter_map_col_max', maxCol);
+            frameContainer.style.setProperty('--winter_map_col_min', minCol);
+
+            await this.wait(1000);
+            await this.scrollBoardToCardsBarycenter();
+        },
         
         ////////////////////////////////////////
         //  _______    _                   

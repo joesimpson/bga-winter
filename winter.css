@@ -3754,6 +3754,13 @@ html.winter_display_coord_on #winter_map_container .winter_card_location_label {
   background-position: 100% 100%;
 }
 
+#winter_map_container #winter_map_elements_frame {
+  position: absolute;
+  width: calc((0 + 0.5 * abs(var(--winter_map_col_max) + 2 - var(--winter_map_col_min))) * (0px + var(--winter_board_card_width)));
+  height: calc((0 + 0.5 * abs(var(--winter_map_row_max) + 2 - var(--winter_map_row_min))) * (0px + var(--winter_board_card_height)));
+  top: calc(0.5 * var(--winter_map_row_min) * (var(--winter_board_card_height)));
+  left: calc(0.5 * var(--winter_map_col_min) * (var(--winter_board_card_width)));
+}
 #winter_map_container #winter_map_cards {
   position: absolute;
   z-index: 2;
