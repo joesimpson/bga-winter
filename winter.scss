@@ -312,3 +312,21 @@ body.lockedInterface{
     pointer-events: all;
  } 
 // ------------------------------------------------------------------------------
+
+// ------------------------------------------------------------------------------
+/* ----------- MOBILE LAYOUT : left zone placed on top as a row ---------------*/
+body.mobile_version{
+  #winter_main_zone{
+    flex-flow: column;
+    flex-direction: column;
+
+    #winter_left_zone{
+      flex-flow: row;
+      flex-direction: row;
+      /** remove calculation of width */
+      width: auto; 
+    }
+  }
+
+}
+// ------------------------------------------------------------------------------
